@@ -18,13 +18,13 @@ contract EligibilityRegistry is AccessControl, Pausable {
         _grantRole(PAUSER_ROLE, admin);
     }
 
-    function setEligible(address account, bool eligible) external onlyRole(REGISTRAR_ROLE) {
+    function setEligible(address account, bool eligible) external onlyRole(REGISTRAR_ROLE) whenNotPaused {
         _eligible[account] = eligible;
         emit EligibilityUpdated(account, eligible);
     }
 
     function isEligible(address account) external view returns (bool) {
-        return !paused() && _eligible[account];
+        return _eligible[account];
     }
 
     function pause() external onlyRole(PAUSER_ROLE) {

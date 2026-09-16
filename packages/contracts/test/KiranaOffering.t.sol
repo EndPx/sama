@@ -189,8 +189,12 @@ contract KiranaOfferingTest is Test {
     }
 
     function testCancelDuringRevealRefundsRevealedAndUnrevealed() public {
-        _commitAndReveal(a, 10_000 * USDC, 4_000_000 * USDC, bytes32("ra"));
+        _commitOnly(a, 10_000 * USDC, bytes32("ra"));
         _commitOnly(b, 20_000 * USDC, bytes32("rb"));
+        vm.warp(offering.commitEnd());
+        vm.prank(a);
+        offering.revealBid(uint128(10_000 * USDC), uint64(4_000_000 * USDC), bytes32("ra"));
+        assertEq(uint256(offering.currentPhase()), uint256(KiranaOffering.Phase.REVEAL));
         vm.prank(admin);
         offering.cancel();
         vm.prank(b);
@@ -202,17 +206,18 @@ contract KiranaOfferingTest is Test {
         assertEq(kira.balanceOf(b), 0);
     }
 
-    function testRegistryPauseBlocksEligibilityDependentCommit() public {
+    function testRegistryPauseBlocksRegistrarWritesButPreservesEligibility() public {
         vm.prank(admin);
         registry.pause();
-        assertFalse(registry.isEligible(a));
-        vm.warp(offering.commitStart());
-        vm.prank(a);
-        vm.expectRevert(KiranaOffering.NotEligible.selector);
-        offering.commitBid(bytes32(uint256(1)), 1);
+        assertTrue(registry.isEligible(a));
+        vm.prank(admin);
+        vm.expectRevert();
+        registry.setEligible(a, false);
         vm.prank(admin);
         registry.unpause();
-        assertTrue(registry.isEligible(a));
+        vm.prank(admin);
+        registry.setEligible(a, false);
+        assertFalse(registry.isEligible(a));
     }
 
     function _commitAndReveal(address bidder, uint256 amount, uint256 fdv, bytes32 nonce) internal {
