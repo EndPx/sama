@@ -9,6 +9,11 @@ import {MockUSDC} from "./mocks/MockUSDC.sol";
 
 contract KiranaOfferingTest is Test {
     uint256 internal constant USDC = 1e6;
+    uint256 internal constant MAXIMUM_SETTLEMENT_BIDDER_COUNT = 64;
+    uint256 internal constant MAX_SETTLE_GAS = 2_500_000;
+    uint256 internal constant MAXIMUM_SETTLEMENT_CAPACITY = 480_000 * USDC;
+    uint256 internal constant MAXIMUM_SETTLEMENT_REGULAR_BID = 7_500 * USDC;
+    uint256 internal constant MAXIMUM_SETTLEMENT_FDV = 4_800_000 * USDC;
     address internal admin = makeAddr("admin");
     address internal a = makeAddr("a");
     address internal b = makeAddr("b");
@@ -323,6 +328,56 @@ contract KiranaOfferingTest is Test {
         assertFalse(registry.isEligible(a));
     }
 
+    function testSettlementOf64MarginalBidsStaysWithinGasCeiling() public {
+        address[] memory ordered = _prepareMaximumMarginalTierFixture();
+
+        vm.warp(offering.revealEnd());
+        uint256 gasBefore = gasleft();
+        offering.settle(ordered);
+        uint256 settleGas = gasBefore - gasleft();
+
+        emit log_named_uint("settle(64) gas", settleGas);
+        assertLe(settleGas, MAX_SETTLE_GAS);
+        assertTrue(offering.successful());
+        assertEq(offering.clearingFdv(), MAXIMUM_SETTLEMENT_FDV);
+        for (uint256 i; i < ordered.length; ++i) {
+            assertEq(offering.revealedBidders(i), ordered[i]);
+            assertEq(offering.acceptedOf(ordered[i]), MAXIMUM_SETTLEMENT_REGULAR_BID);
+        }
+        assertEq(offering.acceptedTotal(), MAXIMUM_SETTLEMENT_CAPACITY);
+        assertEq(offering.totalCommitted(), MAXIMUM_SETTLEMENT_CAPACITY + 1);
+        assertEq(offering.totalRefundLiability(), 1);
+        assertEq(offering.acceptedTotal() + offering.totalRefundLiability(), offering.totalCommitted());
+        assertGe(usdc.balanceOf(address(offering)), offering.totalRefundLiability() + offering.issuerProceeds());
+    }
+
+    function testRevealBidLimitRejectsSixtyFifthBid() public {
+        address[] memory ordered = _prepareMaximumMarginalTierFixture();
+        address sixtyFifth = address(uint160(MAXIMUM_SETTLEMENT_BIDDER_COUNT + 1));
+        uint128 amount = uint128(MAXIMUM_SETTLEMENT_REGULAR_BID);
+        bytes32 nonce = bytes32(MAXIMUM_SETTLEMENT_BIDDER_COUNT + 1);
+
+        vm.startPrank(admin);
+        registry.setEligible(sixtyFifth, true);
+        usdc.mint(sixtyFifth, amount);
+        vm.stopPrank();
+        vm.prank(sixtyFifth);
+        usdc.approve(address(offering), type(uint256).max);
+        vm.warp(offering.commitStart());
+        bytes32 commitment = offering.commitmentFor(sixtyFifth, amount, MAXIMUM_SETTLEMENT_FDV, nonce);
+        vm.prank(sixtyFifth);
+        offering.commitBid(commitment, amount);
+
+        vm.warp(offering.commitEnd());
+        for (uint256 i; i < ordered.length; ++i) {
+            assertEq(offering.revealedBidders(i), ordered[i]);
+        }
+        vm.prank(sixtyFifth);
+        vm.expectRevert(KiranaOffering.BidLimit.selector);
+        offering.revealBid(amount, uint64(MAXIMUM_SETTLEMENT_FDV), nonce);
+        assertEq(offering.revealedBidders(MAXIMUM_SETTLEMENT_BIDDER_COUNT - 1), ordered[ordered.length - 1]);
+    }
+
     function _commitAndReveal(address bidder, uint256 amount, uint256 fdv, bytes32 nonce) internal {
         uint128 amount128 = uint128(amount);
         uint64 fdv64 = uint64(fdv);
@@ -360,5 +415,31 @@ contract KiranaOfferingTest is Test {
         assertEq(offering.acceptedOf(ordered[1]), 1);
         assertEq(offering.acceptedOf(ordered[2]), 0);
         refundableBidder = ordered[2];
+    }
+
+    function _prepareMaximumMarginalTierFixture() internal returns (address[] memory ordered) {
+        ordered = new address[](MAXIMUM_SETTLEMENT_BIDDER_COUNT);
+        vm.warp(offering.commitStart());
+        for (uint256 i; i < ordered.length; ++i) {
+            address bidder = address(uint160(i + 1));
+            uint128 amount = uint128(MAXIMUM_SETTLEMENT_REGULAR_BID + (i + 1 == ordered.length ? 1 : 0));
+            bytes32 nonce = bytes32(i + 1);
+            ordered[i] = bidder;
+            vm.startPrank(admin);
+            registry.setEligible(bidder, true);
+            usdc.mint(bidder, amount);
+            vm.stopPrank();
+            vm.prank(bidder);
+            usdc.approve(address(offering), type(uint256).max);
+            bytes32 commitment = offering.commitmentFor(bidder, amount, MAXIMUM_SETTLEMENT_FDV, nonce);
+            vm.prank(bidder);
+            offering.commitBid(commitment, amount);
+        }
+        vm.warp(offering.commitEnd());
+        for (uint256 i; i < ordered.length; ++i) {
+            uint128 amount = uint128(MAXIMUM_SETTLEMENT_REGULAR_BID + (i + 1 == ordered.length ? 1 : 0));
+            vm.prank(ordered[i]);
+            offering.revealBid(amount, uint64(MAXIMUM_SETTLEMENT_FDV), bytes32(i + 1));
+        }
     }
 }
