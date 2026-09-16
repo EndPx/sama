@@ -143,6 +143,76 @@ contract KiranaOfferingTest is Test {
         assertEq(usdc.balanceOf(address(offering)), offering.totalRefundLiability());
     }
 
+    function testRoundingDustIssuerWithdrawalThenRefundSucceeds() public {
+        address refundableBidder = _settleMicroDustFixture();
+        uint256 issuerBefore = usdc.balanceOf(admin);
+        uint256 bidderBefore = usdc.balanceOf(refundableBidder);
+        assertEq(usdc.balanceOf(address(offering)), offering.issuerProceeds() + offering.totalRefundLiability());
+        vm.prank(admin);
+        offering.withdrawIssuerProceeds();
+        assertEq(usdc.balanceOf(admin), issuerBefore + offering.issuerProceeds());
+        assertEq(usdc.balanceOf(address(offering)), offering.totalRefundLiability());
+        uint256 refund = offering.refundable(refundableBidder);
+        vm.prank(refundableBidder);
+        offering.claimRefund();
+        assertEq(usdc.balanceOf(refundableBidder), bidderBefore + refund);
+        assertEq(offering.totalRefundLiability(), 0);
+        assertEq(usdc.balanceOf(address(offering)), 0);
+    }
+
+    function testRoundingDustRefundThenIssuerWithdrawalDischargesEscrow() public {
+        address refundableBidder = _settleMicroDustFixture();
+        uint256 bidderBefore = usdc.balanceOf(refundableBidder);
+        uint256 refund = offering.refundable(refundableBidder);
+        vm.prank(refundableBidder);
+        offering.claimRefund();
+        assertEq(usdc.balanceOf(refundableBidder), bidderBefore + refund);
+        assertEq(usdc.balanceOf(address(offering)), offering.issuerProceeds());
+        vm.prank(admin);
+        offering.withdrawIssuerProceeds();
+        assertEq(offering.totalRefundLiability(), 0);
+        assertEq(usdc.balanceOf(address(offering)), 0);
+    }
+
+    function testSuccessfulOfferingRefundsUnrevealedBidAndMintsNoKira() public {
+        _commitAndReveal(a, 450_000 * USDC, 4_000_000 * USDC, bytes32("winner"));
+        _commitOnly(b, 20_000 * USDC, bytes32("sealed"));
+        vm.warp(offering.revealEnd());
+        address[] memory ordered = new address[](1);
+        ordered[0] = a;
+        offering.settle(ordered);
+        assertEq(offering.acceptedOf(b), 0);
+        assertEq(offering.tokenAllocation(b), 0);
+        assertEq(kira.balanceOf(b), 0);
+        assertEq(offering.refundable(b), 20_000 * USDC);
+        vm.prank(b);
+        offering.claimRefund();
+        assertEq(offering.totalRefundLiability(), 50_000 * USDC);
+        vm.prank(b);
+        vm.expectRevert(KiranaOffering.AlreadyClaimed.selector);
+        offering.claimRefund();
+    }
+
+    function testUnsuccessfulSettlementRefundsRevealedAndUnrevealedInAnyOrder() public {
+        _commitAndReveal(a, 100_000 * USDC, 4_000_000 * USDC, bytes32("failed-revealed"));
+        _commitOnly(b, 20_000 * USDC, bytes32("failed-sealed"));
+        vm.warp(offering.revealEnd());
+        address[] memory ordered = new address[](1);
+        ordered[0] = a;
+        offering.settle(ordered);
+        assertFalse(offering.successful());
+        assertEq(offering.totalRefundLiability(), 120_000 * USDC);
+        assertEq(kira.balanceOf(a), 0);
+        assertEq(kira.balanceOf(b), 0);
+        vm.prank(b);
+        offering.claimRefund();
+        assertEq(offering.totalRefundLiability(), 100_000 * USDC);
+        vm.prank(a);
+        offering.claimRefund();
+        assertEq(offering.totalRefundLiability(), 0);
+        assertEq(usdc.balanceOf(address(offering)), 0);
+    }
+
     function testCancellationRefundRestoresBidderAndClearsLiability() public {
         vm.warp(offering.commitStart());
         uint256 beforeBalance = usdc.balanceOf(a);
@@ -237,5 +307,25 @@ contract KiranaOfferingTest is Test {
         bytes32 commitment = offering.commitmentFor(bidder, amount, 4_000_000 * USDC, nonce);
         vm.prank(bidder);
         offering.commitBid(commitment, uint128(amount));
+    }
+
+    function _settleMicroDustFixture() internal returns (address refundableBidder) {
+        _commitAndReveal(a, 479_999_999_999, 5_000_000 * USDC, bytes32("micro-a"));
+        _commitAndReveal(b, 1, 4_800_000 * USDC, bytes32("micro-b"));
+        _commitAndReveal(c, 1, 4_800_000 * USDC, bytes32("micro-c"));
+        vm.warp(offering.revealEnd());
+        address[] memory ordered = new address[](3);
+        ordered[0] = a;
+        if (uint160(b) < uint160(c)) {
+            ordered[1] = b;
+            ordered[2] = c;
+        } else {
+            ordered[1] = c;
+            ordered[2] = b;
+        }
+        offering.settle(ordered);
+        assertEq(offering.acceptedOf(ordered[1]), 1);
+        assertEq(offering.acceptedOf(ordered[2]), 0);
+        refundableBidder = ordered[2];
     }
 }
