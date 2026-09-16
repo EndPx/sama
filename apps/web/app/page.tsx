@@ -1,1 +1,15 @@
-export default function Home() { return <section className="hero"><p>ARBITRUM SEPOLIA · TESTNET DEMO</p><h1>Invest in what comes next.</h1><p>SAMA is a transparent, simulated startup-offering lifecycle: discover, commit, reveal, settle, claim, and trade—on testnet.</p><a href="/startups/kirana-ai">Explore Kirana AI →</a></section>; }
+import Link from "next/link";
+
+export default function Home() {
+  return (
+    <section className="hero">
+      <p>ARBITRUM SEPOLIA · TESTNET DEMO</p>
+      <h1>Invest in what comes next.</h1>
+      <p>
+        SAMA is a transparent, simulated startup-offering lifecycle: discover,
+        commit, reveal, settle, claim, and trade—on testnet.
+      </p>
+      <Link href="/startups/kirana-ai">Explore Kirana AI →</Link>
+    </section>
+  );
+}

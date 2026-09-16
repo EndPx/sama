@@ -11,7 +11,7 @@
     "build": "pnpm --filter @sama/web build && forge build --root packages/contracts",
     "contracts:test": "forge test --root packages/contracts -vvv",
     "contracts:invariant": "forge test --root packages/contracts --match-test invariant -vvv",
-    "contracts:gas": "forge snapshot --root packages/contracts",
+    "contracts:gas": "forge snapshot --root packages/contracts --check packages/contracts/.gas-snapshot",
     "contracts:coverage": "forge coverage --root packages/contracts",
     "security:secrets": "gitleaks git --no-banner",
     "security:slither": "slither packages/contracts/src --config-file packages/contracts/slither.config.json",
