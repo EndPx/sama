@@ -9,6 +9,9 @@ export type RevealRecord = {
 };
 
 const prefix = "sama:reveal:";
+const addressPattern = /^0x[0-9a-fA-F]{40}$/;
+const bytes32Pattern = /^0x[0-9a-fA-F]{64}$/;
+const positiveDecimalPattern = /^[1-9][0-9]*$/;
 
 function parseReveal(serialized: string): RevealRecord {
   const record: unknown = JSON.parse(serialized);
@@ -28,7 +31,15 @@ function parseReveal(serialized: string): RevealRecord {
     typeof record.chainId !== "number" ||
     typeof record.amountUSDC !== "string" ||
     typeof record.maxFDV !== "string" ||
-    typeof record.transactionHash !== "string"
+    typeof record.transactionHash !== "string" ||
+    !Number.isSafeInteger(record.chainId) ||
+    record.chainId <= 0 ||
+    !addressPattern.test(record.offeringAddress) ||
+    !addressPattern.test(record.bidder) ||
+    !bytes32Pattern.test(record.nonce) ||
+    !bytes32Pattern.test(record.transactionHash) ||
+    !positiveDecimalPattern.test(record.amountUSDC) ||
+    !positiveDecimalPattern.test(record.maxFDV)
   ) {
     throw new Error("Invalid reveal backup");
   }
