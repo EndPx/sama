@@ -143,6 +143,34 @@ contract KiranaOfferingTest is Test {
         assertEq(usdc.balanceOf(address(offering)), offering.totalRefundLiability());
     }
 
+    function testCancellationRefundRestoresBidderAndClearsLiability() public {
+        vm.warp(offering.commitStart());
+        uint256 beforeBalance = usdc.balanceOf(a);
+        bytes32 commitment = offering.commitmentFor(a, 100_000 * USDC, 4_000_000 * USDC, bytes32("cancel"));
+        vm.prank(a);
+        offering.commitBid(commitment, uint128(100_000 * USDC));
+        vm.prank(admin);
+        offering.cancel();
+        assertEq(offering.totalRefundLiability(), 100_000 * USDC);
+        vm.prank(a);
+        offering.claimRefund();
+        assertEq(usdc.balanceOf(a), beforeBalance);
+        assertEq(offering.totalRefundLiability(), 0);
+        vm.prank(a);
+        vm.expectRevert(KiranaOffering.AlreadyClaimed.selector);
+        offering.claimRefund();
+        vm.prank(admin);
+        vm.expectRevert(KiranaOffering.WrongPhase.selector);
+        offering.cancel();
+    }
+
+    function testCancelBeforeCommitHasNoLiability() public {
+        vm.prank(admin);
+        offering.cancel();
+        assertEq(uint256(offering.currentPhase()), uint256(KiranaOffering.Phase.CANCELLED));
+        assertEq(offering.totalRefundLiability(), 0);
+    }
+
     function _commitAndReveal(address bidder, uint256 amount, uint256 fdv, bytes32 nonce) internal {
         uint128 amount128 = uint128(amount);
         uint64 fdv64 = uint64(fdv);

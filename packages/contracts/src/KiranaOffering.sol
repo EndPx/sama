@@ -313,6 +313,7 @@ contract KiranaOffering is AccessControl, Pausable, ReentrancyGuard {
     function cancel() external onlyRole(CANCELLER_ROLE) {
         if (finalized || cancelled) revert WrongPhase();
         cancelled = true;
+        totalRefundLiability = totalCommitted;
         emit Cancelled();
     }
 
