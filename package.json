@@ -1,0 +1,20 @@
+{
+  "name": "sama",
+  "private": true,
+  "packageManager": "pnpm@10.19.0",
+  "scripts": {
+    "format": "pnpm --filter @sama/web format",
+    "format:check": "pnpm --filter @sama/web format:check && forge fmt --check --root packages/contracts",
+    "lint": "pnpm --filter @sama/web lint",
+    "typecheck": "pnpm --filter @sama/web typecheck",
+    "test": "pnpm --filter @sama/web test && forge test --root packages/contracts",
+    "build": "pnpm --filter @sama/web build && forge build --root packages/contracts",
+    "contracts:test": "forge test --root packages/contracts -vvv",
+    "contracts:invariant": "forge test --root packages/contracts --match-test invariant -vvv",
+    "contracts:gas": "forge snapshot --root packages/contracts",
+    "contracts:coverage": "forge coverage --root packages/contracts",
+    "security:secrets": "gitleaks git --no-banner",
+    "security:slither": "slither packages/contracts/src --config-file packages/contracts/slither.config.json",
+    "acceptance:local": "pnpm contracts:test && pnpm --filter @sama/web test && pnpm --filter @sama/web build"
+  }
+}
