@@ -171,6 +171,50 @@ contract KiranaOfferingTest is Test {
         assertEq(offering.totalRefundLiability(), 0);
     }
 
+    function testCancelDuringCommitRefundsThreeBiddersInAnyOrder() public {
+        _commitOnly(a, 10_000 * USDC, bytes32("ca"));
+        _commitOnly(b, 20_000 * USDC, bytes32("cb"));
+        _commitOnly(c, 30_000 * USDC, bytes32("cc"));
+        vm.prank(admin);
+        offering.cancel();
+        assertEq(offering.totalRefundLiability(), 60_000 * USDC);
+        address[3] memory order = [c, b, a];
+        for (uint256 i; i < order.length; ++i) {
+            vm.prank(order[i]);
+            offering.claimRefund();
+            assertGe(usdc.balanceOf(address(offering)), offering.totalRefundLiability());
+        }
+        assertEq(offering.totalRefundLiability(), 0);
+        assertEq(usdc.balanceOf(address(offering)), 0);
+    }
+
+    function testCancelDuringRevealRefundsRevealedAndUnrevealed() public {
+        _commitAndReveal(a, 10_000 * USDC, 4_000_000 * USDC, bytes32("ra"));
+        _commitOnly(b, 20_000 * USDC, bytes32("rb"));
+        vm.prank(admin);
+        offering.cancel();
+        vm.prank(b);
+        offering.claimRefund();
+        vm.prank(a);
+        offering.claimRefund();
+        assertEq(offering.totalRefundLiability(), 0);
+        assertEq(usdc.balanceOf(address(offering)), 0);
+        assertEq(kira.balanceOf(b), 0);
+    }
+
+    function testRegistryPauseBlocksEligibilityDependentCommit() public {
+        vm.prank(admin);
+        registry.pause();
+        assertFalse(registry.isEligible(a));
+        vm.warp(offering.commitStart());
+        vm.prank(a);
+        vm.expectRevert(KiranaOffering.NotEligible.selector);
+        offering.commitBid(bytes32(uint256(1)), 1);
+        vm.prank(admin);
+        registry.unpause();
+        assertTrue(registry.isEligible(a));
+    }
+
     function _commitAndReveal(address bidder, uint256 amount, uint256 fdv, bytes32 nonce) internal {
         uint128 amount128 = uint128(amount);
         uint64 fdv64 = uint64(fdv);
@@ -181,5 +225,12 @@ contract KiranaOfferingTest is Test {
         vm.warp(offering.commitEnd());
         vm.prank(bidder);
         offering.revealBid(amount128, fdv64, nonce);
+    }
+
+    function _commitOnly(address bidder, uint256 amount, bytes32 nonce) internal {
+        vm.warp(offering.commitStart());
+        bytes32 commitment = offering.commitmentFor(bidder, amount, 4_000_000 * USDC, nonce);
+        vm.prank(bidder);
+        offering.commitBid(commitment, uint128(amount));
     }
 }

@@ -24,7 +24,7 @@ contract EligibilityRegistry is AccessControl, Pausable {
     }
 
     function isEligible(address account) external view returns (bool) {
-        return _eligible[account];
+        return !paused() && _eligible[account];
     }
 
     function pause() external onlyRole(PAUSER_ROLE) {
