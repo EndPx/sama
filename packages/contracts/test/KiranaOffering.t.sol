@@ -168,8 +168,10 @@ contract KiranaOfferingTest is Test {
         offering.claimRefund();
         assertEq(usdc.balanceOf(refundableBidder), bidderBefore + refund);
         assertEq(usdc.balanceOf(address(offering)), offering.issuerProceeds());
+        uint256 issuerBefore = usdc.balanceOf(admin);
         vm.prank(admin);
         offering.withdrawIssuerProceeds();
+        assertEq(usdc.balanceOf(admin), issuerBefore + offering.issuerProceeds());
         assertEq(offering.totalRefundLiability(), 0);
         assertEq(usdc.balanceOf(address(offering)), 0);
     }
@@ -177,6 +179,8 @@ contract KiranaOfferingTest is Test {
     function testSuccessfulOfferingRefundsUnrevealedBidAndMintsNoKira() public {
         _commitAndReveal(a, 450_000 * USDC, 4_000_000 * USDC, bytes32("winner"));
         _commitOnly(b, 20_000 * USDC, bytes32("sealed"));
+        uint256 winnerBefore = usdc.balanceOf(a);
+        uint256 sealedBefore = usdc.balanceOf(b);
         vm.warp(offering.revealEnd());
         address[] memory ordered = new address[](1);
         ordered[0] = a;
@@ -187,28 +191,57 @@ contract KiranaOfferingTest is Test {
         assertEq(offering.refundable(b), 20_000 * USDC);
         vm.prank(b);
         offering.claimRefund();
+        assertEq(usdc.balanceOf(b), sealedBefore + 20_000 * USDC);
         assertEq(offering.totalRefundLiability(), 50_000 * USDC);
         vm.prank(b);
         vm.expectRevert(KiranaOffering.AlreadyClaimed.selector);
         offering.claimRefund();
+        vm.prank(b);
+        vm.expectRevert(KiranaOffering.NothingToClaim.selector);
+        offering.claimTokens();
+        vm.prank(a);
+        offering.claimRefund();
+        assertEq(usdc.balanceOf(a), winnerBefore + 50_000 * USDC);
+        uint256 issuerBefore = usdc.balanceOf(admin);
+        vm.prank(admin);
+        offering.withdrawIssuerProceeds();
+        assertEq(usdc.balanceOf(admin), issuerBefore + 400_000 * USDC);
+        assertEq(offering.totalRefundLiability(), 0);
+        assertEq(usdc.balanceOf(address(offering)), 0);
+        assertEq(kira.balanceOf(b), 0);
     }
 
     function testUnsuccessfulSettlementRefundsRevealedAndUnrevealedInAnyOrder() public {
         _commitAndReveal(a, 100_000 * USDC, 4_000_000 * USDC, bytes32("failed-revealed"));
         _commitOnly(b, 20_000 * USDC, bytes32("failed-sealed"));
+        _commitOnly(c, 30_000 * USDC, bytes32("failed-sealed-two"));
+        uint256 aBefore = usdc.balanceOf(a);
+        uint256 bBefore = usdc.balanceOf(b);
+        uint256 cBefore = usdc.balanceOf(c);
         vm.warp(offering.revealEnd());
         address[] memory ordered = new address[](1);
         ordered[0] = a;
         offering.settle(ordered);
         assertFalse(offering.successful());
-        assertEq(offering.totalRefundLiability(), 120_000 * USDC);
+        assertEq(offering.totalRefundLiability(), 150_000 * USDC);
         assertEq(kira.balanceOf(a), 0);
         assertEq(kira.balanceOf(b), 0);
+        vm.prank(a);
+        vm.expectRevert(KiranaOffering.NotSuccessful.selector);
+        offering.claimTokens();
         vm.prank(b);
         offering.claimRefund();
+        assertEq(usdc.balanceOf(b), bBefore + 20_000 * USDC);
+        assertEq(offering.totalRefundLiability(), 130_000 * USDC);
+        assertEq(usdc.balanceOf(address(offering)), offering.totalRefundLiability());
+        vm.prank(c);
+        offering.claimRefund();
+        assertEq(usdc.balanceOf(c), cBefore + 30_000 * USDC);
         assertEq(offering.totalRefundLiability(), 100_000 * USDC);
+        assertEq(usdc.balanceOf(address(offering)), offering.totalRefundLiability());
         vm.prank(a);
         offering.claimRefund();
+        assertEq(usdc.balanceOf(a), aBefore + 100_000 * USDC);
         assertEq(offering.totalRefundLiability(), 0);
         assertEq(usdc.balanceOf(address(offering)), 0);
     }
