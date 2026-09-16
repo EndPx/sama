@@ -1,0 +1,1 @@
+export default function Portfolio() { return <section className="card"><h1>Your portfolio</h1><p>Connect an eligible Arbitrum Sepolia wallet to view onchain bids, claimable refunds, KIRA holdings, and activity.</p><p><small>SAMA never fabricates a portfolio balance or transaction success.</small></p></section>; }
