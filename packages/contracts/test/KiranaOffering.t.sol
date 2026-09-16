@@ -89,6 +89,60 @@ contract KiranaOfferingTest is Test {
         offering.settle(new address[](0));
     }
 
+    function testRevealBoundaryIsExclusive() public {
+        uint128 amount = uint128(450_000 * USDC);
+        uint64 fdv = uint64(6_000_000 * USDC);
+        vm.warp(offering.commitStart());
+        bytes32 commitment = offering.commitmentFor(a, amount, fdv, bytes32("late"));
+        vm.prank(a);
+        offering.commitBid(commitment, amount);
+        vm.warp(offering.revealEnd());
+        vm.prank(a);
+        vm.expectRevert(KiranaOffering.WrongPhase.selector);
+        offering.revealBid(amount, fdv, bytes32("late"));
+        vm.warp(offering.revealEnd() + 1);
+        vm.prank(a);
+        vm.expectRevert(KiranaOffering.WrongPhase.selector);
+        offering.revealBid(amount, fdv, bytes32("late"));
+    }
+
+    function testFloorFallbackAllocatesOnlyFloorCapacity() public {
+        _commitAndReveal(a, 450_000 * USDC, 6_000_000 * USDC, bytes32("floor"));
+        vm.warp(offering.revealEnd());
+        address[] memory ordered = new address[](1);
+        ordered[0] = a;
+        offering.settle(ordered);
+        assertEq(offering.clearingFdv(), 4_000_000 * USDC);
+        assertEq(offering.acceptedOf(a), 400_000 * USDC);
+        assertEq(offering.refundable(a), 50_000 * USDC);
+    }
+
+    function testRoundingDustIsDeterministicAndRefundsThenProceedsSucceed() public {
+        _commitAndReveal(a, 479_999_999_999, 5_000_000 * USDC, bytes32("ra"));
+        _commitAndReveal(b, 1, 4_800_000 * USDC, bytes32("rb"));
+        _commitAndReveal(c, 1, 4_800_000 * USDC, bytes32("rc"));
+        vm.warp(offering.revealEnd());
+        address[] memory ordered = new address[](3);
+        ordered[0] = a;
+        if (uint160(b) < uint160(c)) {
+            ordered[1] = b;
+            ordered[2] = c;
+        } else {
+            ordered[1] = c;
+            ordered[2] = b;
+        }
+        offering.settle(ordered);
+        assertEq(offering.acceptedOf(a), 479_999_999_999);
+        assertEq(offering.acceptedOf(ordered[1]), 1);
+        assertEq(offering.acceptedOf(ordered[2]), 0);
+        assertEq(offering.acceptedTotal() + offering.totalRefundLiability(), offering.totalCommitted());
+        vm.prank(ordered[2]);
+        offering.claimRefund();
+        vm.prank(admin);
+        offering.withdrawIssuerProceeds();
+        assertEq(usdc.balanceOf(address(offering)), offering.totalRefundLiability());
+    }
+
     function _commitAndReveal(address bidder, uint256 amount, uint256 fdv, bytes32 nonce) internal {
         uint128 amount128 = uint128(amount);
         uint64 fdv64 = uint64(fdv);
