@@ -14,12 +14,20 @@ typechain-types/
 .env
 .env.*
 !.env.example
+.envrc
+.direnv/
+.npmrc
 *.pem
 *.key
 *.p12
 *.pfx
 *.keystore
+*.secret
+*.mnemonic
+credentials*.json
+service-account*.json
 keystore/
+wallets/
 secrets/
 
 # Local tool state
@@ -35,4 +43,3 @@ secrets/
 .DS_Store
 Thumbs.db
 Desktop.ini
-
