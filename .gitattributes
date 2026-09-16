@@ -1,0 +1,7 @@
+* text=auto eol=lf
+*.sol linguist-language=Solidity
+*.md text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+

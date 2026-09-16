@@ -1,0 +1,38 @@
+# Dependencies and build outputs
+node_modules/
+.next/
+dist/
+build/
+coverage/
+out/
+cache/
+broadcast/
+artifacts/
+typechain-types/
+
+# Environment files and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+keystore/
+secrets/
+
+# Local tool state
+.omc/
+.turbo/
+.vercel/
+.ponder/
+.idea/
+.vscode/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+

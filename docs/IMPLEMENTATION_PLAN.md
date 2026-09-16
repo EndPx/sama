@@ -1,0 +1,76 @@
+# Implementation Plan
+
+Status: approved scope, implementation pending.
+
+## P0 outcome
+
+A reviewer can use the deployed application to connect, inspect Kirana AI, commit and reveal a bid, settle the auction, claim KIRA and a refund, create a listing, buy it from a second eligible wallet, and verify every transaction on Arbiscan.
+
+## Milestones
+
+### 1. Economics and interfaces
+
+- Convert `docs/AUCTION_SPEC.md` into executable reference tests.
+- Define events, errors, roles, units, rounding direction, and contract interfaces.
+
+Exit gate: the five-bid reference case and every failure branch have expected results.
+
+### 2. Repository and harness
+
+- Add the pnpm workspace, Next.js application, Foundry package, shared ABI/address package, and CI.
+- Add mock USDC and five-wallet Anvil fixtures.
+
+Exit gate: clean web build, contract build, local deployment, and CI run.
+
+### 3. Offering kernel
+
+- Implement eligibility, commit/reveal escrow, bounded verified settlement, claims, refunds, proceeds, pause, and cancellation.
+- Add unit, fuzz, invariant, and integration tests.
+
+Exit gate: all conservation properties pass and the reference case clears at 4.8M.
+
+### 4. KIRA and marketplace
+
+- Add capped restricted KIRA.
+- Add escrowed listings, cancellation, partial/full purchase, and atomic settlement.
+
+Exit gate: two local wallets end with the expected USDC and KIRA balances with no stranded assets.
+
+### 5. Security gate
+
+- Run Slither, coverage review, gas snapshots, and maximum-bid settlement.
+- Update `docs/THREAT_MODEL.md` with every accepted limitation.
+
+Exit gate: no unresolved critical/high finding and settlement fits safely within the measured block limit.
+
+### 6. Investor application
+
+- Build landing, Explore, Kirana detail, Privy onboarding, network/faucet guidance, approve/commit/reveal, settlement/claim, portfolio, and explorer flows.
+- Persist and export reveal material without sending the nonce to a server.
+
+Exit gate: a user completes the local lifecycle without developer tools and every transaction has honest intermediate states.
+
+### 7. Testnet proof
+
+- Deploy and verify on Arbitrum Sepolia.
+- Fund and prepare two interactive wallets plus five seeded bidders.
+- Execute the full lifecycle from the production URL.
+
+Exit gate: all acceptance transactions and verified contracts are publicly linked.
+
+### 8. Submission
+
+- Record the three-minute demo, finalize the pitch deck and README evidence, rehearse failure recovery, and complete the portal checklist.
+
+Exit gate: an uninvolved reviewer can understand, reproduce, and verify the submission.
+
+## P1 after P0
+
+- compact founder/admin views;
+- Ponder/Postgres activity read model;
+- reveal notifications;
+- gas sponsorship;
+- lightweight analytics.
+
+P1 work stops immediately if it risks the P0 path, security evidence, or submission deadline.
+
