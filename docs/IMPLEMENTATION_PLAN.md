@@ -32,9 +32,9 @@ Exit gate: all conservation properties pass and the reference case clears at 4.8
 ### 4. KIRA and marketplace
 
 - Add capped restricted KIRA.
-- Add escrowed listings, cancellation, partial/full purchase, and atomic settlement.
+- Implement `docs/MARKETPLACE_SPEC.md`: escrowed listings, seller-controlled cancellation, deterministic partial/full purchase, and atomic settlement.
 
-Exit gate: two local wallets end with the expected USDC and KIRA balances with no stranded assets.
+Exit gate: unit, fuzz, and stateful marketplace conservation tests pass, and two local buyers end with the expected USDC and KIRA balances with no stranded protocol-accounted assets.
 
 ### 5. Security gate
 
@@ -73,4 +73,3 @@ Exit gate: an uninvolved reviewer can understand, reproduce, and verify the subm
 - lightweight analytics.
 
 P1 work stops immediately if it risks the P0 path, security evidence, or submission deadline.
-
