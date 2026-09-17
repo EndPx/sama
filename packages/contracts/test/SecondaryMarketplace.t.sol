@@ -156,6 +156,33 @@ contract SecondaryMarketplaceTest is Test {
         assertEq(market.outstandingKiraEscrow(), 0);
     }
 
+    function testUnauthorizedCancellationPreservesAllBalancesAndEscrow() public {
+        uint256 id = _create(100 * KIRA, 500_000_000);
+        (
+            address storedSeller,
+            uint128 originalAmount,
+            uint128 originalPrice,
+            uint128 remainingAmount,
+            uint128 remainingPrice,
+            SecondaryMarketplace.ListingStatus status
+        ) = market.listings(id);
+        uint256 outstandingBefore = market.outstandingKiraEscrow();
+        uint256 marketKiraBefore = kira.balanceOf(address(market));
+        uint256 sellerKiraBefore = kira.balanceOf(seller);
+        uint256 recipientKiraBefore = kira.balanceOf(recipient);
+
+        vm.prank(stranger);
+        vm.expectRevert(SecondaryMarketplace.NotSeller.selector);
+        market.cancelListing(id, recipient);
+
+        _assertListing(id, originalAmount, originalPrice, remainingAmount, remainingPrice, status);
+        assertEq(storedSeller, seller);
+        assertEq(market.outstandingKiraEscrow(), outstandingBefore);
+        assertEq(kira.balanceOf(address(market)), marketKiraBefore);
+        assertEq(kira.balanceOf(seller), sellerKiraBefore);
+        assertEq(kira.balanceOf(recipient), recipientKiraBefore);
+    }
+
     function testPauseRegistryPauseAndKiraPausePreserveEscapePath() public {
         uint256 id = _create(100 * KIRA, 500_000_000);
         vm.prank(admin);
@@ -188,6 +215,55 @@ contract SecondaryMarketplaceTest is Test {
         _buy(buyer, id, 100 ether, 500_000_000);
     }
 
+    function testKiraPauseRollsBackCreateBuyAndCancellation() public {
+        uint256 nextIdBefore = market.nextListingId();
+        uint256 sellerKiraBefore = kira.balanceOf(seller);
+        vm.prank(admin);
+        kira.pause();
+        vm.prank(seller);
+        vm.expectRevert(Pausable.EnforcedPause.selector);
+        market.createListing(100 * KIRA, 500_000_000);
+        assertEq(market.nextListingId(), nextIdBefore);
+        assertEq(market.outstandingKiraEscrow(), 0);
+        assertEq(kira.balanceOf(seller), sellerKiraBefore);
+
+        vm.prank(admin);
+        kira.unpause();
+        uint256 id = _create(100 * KIRA, 500_000_000);
+        uint256 escrowBefore = market.outstandingKiraEscrow();
+        uint256 marketKiraBefore = kira.balanceOf(address(market));
+        uint256 buyerKiraBefore = kira.balanceOf(buyer);
+        uint256 sellerUsdcBefore = usdc.balanceOf(seller);
+
+        vm.prank(admin);
+        kira.pause();
+        vm.prank(buyer);
+        vm.expectRevert(Pausable.EnforcedPause.selector);
+        market.buy(id, 10 ether, 50_000_000);
+        _assertListing(id, 100 * KIRA, 500_000_000, 100 * KIRA, 500_000_000, SecondaryMarketplace.ListingStatus.ACTIVE);
+        assertEq(market.outstandingKiraEscrow(), escrowBefore);
+        assertEq(kira.balanceOf(address(market)), marketKiraBefore);
+        assertEq(kira.balanceOf(buyer), buyerKiraBefore);
+        assertEq(usdc.balanceOf(seller), sellerUsdcBefore);
+
+        vm.prank(seller);
+        vm.expectRevert(Pausable.EnforcedPause.selector);
+        market.cancelListing(id, recipient);
+        _assertListing(id, 100 * KIRA, 500_000_000, 100 * KIRA, 500_000_000, SecondaryMarketplace.ListingStatus.ACTIVE);
+        assertEq(market.outstandingKiraEscrow(), escrowBefore);
+        assertEq(kira.balanceOf(address(market)), marketKiraBefore);
+        assertEq(kira.balanceOf(recipient), 0);
+
+        vm.prank(admin);
+        kira.unpause();
+        vm.prank(seller);
+        market.cancelListing(id, recipient);
+        _assertListing(id, 100 * KIRA, 500_000_000, 0, 0, SecondaryMarketplace.ListingStatus.CANCELLED);
+        assertEq(market.outstandingKiraEscrow(), 0);
+        assertEq(kira.balanceOf(address(market)), 0);
+        assertEq(kira.balanceOf(recipient), 100 * KIRA);
+    }
+
     function testTerminalListingsRejectRepeatedTransitions() public {
         uint256 filled = _create(10 * KIRA, 10);
         _buy(buyer, filled, 10 ether, 10);
@@ -201,9 +277,34 @@ contract SecondaryMarketplaceTest is Test {
         uint256 cancelled = _create(10 * KIRA, 10);
         vm.prank(seller);
         market.cancelListing(cancelled, seller);
+        uint256 sellerKiraBefore = kira.balanceOf(seller);
+        uint256 marketKiraBefore = kira.balanceOf(address(market));
+        uint256 escrowBefore = market.outstandingKiraEscrow();
+        vm.prank(buyer);
+        vm.expectRevert(SecondaryMarketplace.InactiveListing.selector);
+        market.buy(cancelled, 1, 10);
         vm.prank(seller);
         vm.expectRevert(SecondaryMarketplace.InactiveListing.selector);
         market.cancelListing(cancelled, seller);
+        _assertListing(cancelled, 10 * KIRA, 10, 0, 0, SecondaryMarketplace.ListingStatus.CANCELLED);
+        assertEq(kira.balanceOf(seller), sellerKiraBefore);
+        assertEq(kira.balanceOf(address(market)), marketKiraBefore);
+        assertEq(market.outstandingKiraEscrow(), escrowBefore);
+    }
+
+    function testListingEventsReconstructPartialLifecycle() public {
+        vm.expectEmit(true, true, false, true, address(market));
+        emit SecondaryMarketplace.ListingCreated(1, seller, 100 * KIRA, 500_000_000);
+        uint256 id = _create(100 * KIRA, 500_000_000);
+
+        vm.expectEmit(true, true, false, true, address(market));
+        emit SecondaryMarketplace.ListingPurchased(id, buyer, 30 ether, 150_000_000, 70 ether, 350_000_000);
+        _buy(buyer, id, 30 ether, 150_000_000);
+
+        vm.expectEmit(true, true, true, true, address(market));
+        emit SecondaryMarketplace.ListingCancelled(id, seller, recipient, 70 ether, 350_000_000);
+        vm.prank(seller);
+        market.cancelListing(id, recipient);
     }
 
     function _create(uint128 amount, uint128 price) internal returns (uint256 id) {
