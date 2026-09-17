@@ -14,7 +14,7 @@
     "contracts:gas": "forge snapshot --root packages/contracts --no-match-path \"test/*Property.t.sol\" --check packages/contracts/.gas-snapshot",
     "contracts:coverage": "forge coverage --root packages/contracts",
     "security:secrets": "gitleaks git --no-banner",
-    "security:slither": "slither packages/contracts/src --config-file packages/contracts/slither.config.json",
+    "security:slither": "python -m slither packages/contracts --config-file packages/contracts/slither.config.json --fail-high",
     "acceptance:local": "pnpm contracts:test && pnpm --filter @sama/web test && pnpm --filter @sama/web build"
   }
 }
