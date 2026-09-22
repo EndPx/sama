@@ -1,0 +1,534 @@
+.sama-landing em {
+  font-style: normal;
+  color: var(--ring);
+}
+.marketing-button {
+  padding-inline: 24px;
+  min-height: 48px !important;
+}
+.sama-campus-hero {
+  overflow: clip;
+}
+.sama-campus-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: center;
+  position: relative;
+  gap: 32px;
+  padding-block: 56px 80px;
+}
+.sama-campus-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+  position: relative;
+  z-index: 2;
+}
+.sama-campus-intro h1 {
+  font-size: clamp(48px, 6.25vw, 80px);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 1.04;
+}
+.sama-hero-description {
+  font-size: 18px;
+  color: var(--muted-foreground);
+  max-width: 42ch;
+  line-height: 1.65;
+}
+.sama-quiet-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  padding-block: 12px;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  transition:
+    color 160ms var(--ease-state),
+    text-decoration-color 160ms var(--ease-state);
+}
+.sama-quiet-link:hover {
+  color: var(--ring);
+  text-decoration-color: currentColor;
+}
+.sama-demo-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  max-width: 36ch;
+}
+.sama-demo-note > span {
+  width: 6px;
+  height: 6px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: var(--ring);
+  flex-shrink: 0;
+}
+.sama-campus-art {
+  width: 136%;
+  margin-left: -8%;
+  position: relative;
+}
+.sama-campus-art img {
+  width: 100%;
+  height: auto;
+  mix-blend-mode: multiply;
+}
+.sama-campus-art figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-inline: 64px;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  margin-top: 16px;
+}
+.sama-field-note {
+  grid-column: 1 / -1;
+  max-width: 760px;
+  margin-top: 64px;
+  padding: 0 0 0 32px;
+  border-left: 2px solid var(--ring);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+.sama-field-note h2 {
+  font-size: 40px;
+}
+.sama-field-note > p:not(.eyebrow) {
+  color: var(--muted-foreground);
+  max-width: 46ch;
+}
+.sama-field-note ol {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.sama-field-note li {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 16px;
+}
+.sama-field-note li > span {
+  color: var(--ring);
+  font-size: 12px;
+  padding-top: 3px;
+}
+.sama-field-note strong {
+  font-size: 16px;
+  font-weight: 600;
+}
+.sama-field-note li p {
+  font-size: 14px;
+  color: var(--muted-foreground);
+  margin-top: 4px;
+}
+.sama-scroll-caption {
+  display: none;
+}
+.sama-principles-band {
+  border-block: 1px solid var(--border);
+  background: var(--secondary);
+}
+.sama-principles-band .page-shell {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-block: 24px;
+  font-size: 14px;
+}
+.sama-editorial-section {
+  padding-block: 96px;
+}
+.sama-section-lead {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+.sama-section-lead h2 {
+  max-width: 24ch;
+}
+.sama-section-lead > p:last-child:not(.eyebrow) {
+  color: var(--muted-foreground);
+  font-size: 18px;
+  max-width: 65ch;
+}
+.sama-principle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.sama-principle {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 32px 24px;
+  border-top: 1px solid var(--border);
+}
+.sama-principle:nth-child(2) {
+  background: var(--secondary);
+  border-radius: 16px;
+  border-top-color: transparent;
+}
+.sama-principle-top {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 14px;
+  color: var(--ring);
+  margin-bottom: 16px;
+}
+.sama-principle-top svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 1.5;
+}
+.sama-principle h3 {
+  font-size: 24px;
+  line-height: 1.25;
+}
+.sama-principle > p {
+  color: var(--muted-foreground);
+  font-size: 14px;
+}
+.sama-principle .sama-quiet-link {
+  margin-top: auto;
+}
+.sama-mechanism-section {
+  padding-block: 80px;
+  background: var(--muted);
+  border-block: 1px solid var(--border);
+}
+.sama-mechanism-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 80px;
+}
+.sama-check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 14px;
+}
+.sama-check-list li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.sama-check-list svg {
+  width: 16px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--ring);
+}
+.sama-limit-visual {
+  background: var(--card);
+  padding: 32px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.sama-limit-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  margin-bottom: 48px;
+}
+.sama-visual-index {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.sama-limit-rows {
+  display: flex;
+  flex-direction: column;
+}
+.sama-limit-rows > div {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding-block: 20px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.sama-limit-rows span {
+  color: var(--muted-foreground);
+}
+.sama-limit-rows strong {
+  font-weight: 500;
+}
+.sama-limit-seal {
+  padding-top: 40px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: var(--ring);
+}
+.sama-limit-seal p {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.sama-journey {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px;
+}
+.sama-journey li {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
+.sama-journey-number {
+  color: var(--ring);
+  font-size: 32px;
+  line-height: 1;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+.sama-journey h3 {
+  font-size: 20px;
+}
+.sama-journey p {
+  color: var(--muted-foreground);
+  font-size: 14px;
+}
+.sama-proof-section {
+  background: var(--forest-deep);
+  color: var(--card);
+  padding-block: 80px;
+}
+.sama-proof-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: 80px;
+}
+.sama-proof-section .eyebrow,
+.sama-proof-section p {
+  color: var(--secondary);
+}
+.sama-proof-section p {
+  max-width: 56ch;
+}
+.sama-proof-section a:focus-visible {
+  outline-color: var(--secondary);
+}
+.sama-proof-index {
+  display: flex;
+  flex-direction: column;
+}
+.sama-proof-index a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-block: 24px;
+  border-top: 1px solid rgb(203 212 199 / 30%);
+  font-size: 16px;
+}
+.sama-proof-index a:hover {
+  color: var(--secondary);
+}
+.sama-proof-index p {
+  font-size: 12px;
+  padding-top: 24px;
+}
+.sama-proof-link {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-size: 14px;
+}
+.sama-closing-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.65fr);
+  gap: 64px;
+  align-items: center;
+  padding-block: 96px;
+}
+.sama-closing-section h2 {
+  font-size: clamp(40px, 4.8vw, 64px);
+}
+.sama-closing-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  border-left: 1px solid var(--border);
+  padding-left: 48px;
+}
+.sama-closing-action p {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+@media (min-width: 1024px) and (min-height: 650px) {
+  .has-scroll-story .sama-campus-stage {
+    height: 100svh;
+    min-height: 650px;
+    max-height: 1000px;
+    padding-block: 32px 80px;
+  }
+  .has-scroll-story .sama-field-note {
+    position: absolute;
+    right: 32px;
+    top: 50%;
+    width: 40%;
+    max-width: 448px;
+    margin-top: 0;
+    transform: translateY(-50%);
+    visibility: hidden;
+    z-index: 3;
+  }
+  .has-scroll-story .sama-field-note h2 {
+    font-size: 32px;
+  }
+  .has-scroll-story .sama-scroll-caption {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: absolute;
+    bottom: 32px;
+    left: 32px;
+    font-size: 12px;
+    color: var(--muted-foreground);
+  }
+}
+@media (max-width: 1023px) {
+  .sama-campus-intro {
+    gap: 24px;
+  }
+  .sama-campus-stage {
+    padding-block: 40px 64px;
+    gap: 24px;
+  }
+  .sama-campus-intro h1 {
+    font-size: 56px;
+  }
+  .sama-campus-art {
+    width: 136%;
+    margin-left: -16%;
+  }
+  .sama-campus-art figcaption {
+    padding-inline: 32px;
+  }
+  .sama-campus-art figcaption span:last-child {
+    display: none;
+  }
+  .sama-mechanism-grid,
+  .sama-proof-grid {
+    gap: 40px;
+  }
+  .sama-principle-grid {
+    gap: 16px;
+  }
+  .sama-principle {
+    padding-inline: 16px;
+  }
+  .sama-principle .sama-quiet-link {
+    font-size: 12px;
+  }
+  .sama-principles-band .eyebrow {
+    width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .sama-campus-stage {
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: 32px 48px;
+    gap: 24px;
+  }
+  .sama-campus-intro h1 {
+    font-size: 64px;
+  }
+  .sama-hero-description {
+    font-size: 16px;
+    max-width: 40ch;
+  }
+  .sama-campus-art {
+    width: 112%;
+    margin-left: -6%;
+  }
+  .sama-campus-art figcaption {
+    padding-inline: 20px;
+    margin-top: 0;
+  }
+  .sama-field-note {
+    margin-top: 24px;
+    padding-left: 24px;
+    gap: 24px;
+  }
+  .sama-field-note h2 {
+    font-size: 32px;
+  }
+  .sama-principles-band .page-shell {
+    gap: 16px 24px;
+    font-size: 12px;
+  }
+  .sama-editorial-section,
+  .sama-mechanism-section,
+  .sama-proof-section {
+    padding-block: 64px;
+  }
+  .sama-section-lead {
+    margin-bottom: 32px;
+  }
+  .sama-section-lead > p:last-child:not(.eyebrow) {
+    font-size: 16px;
+  }
+  .sama-principle-grid,
+  .sama-mechanism-grid,
+  .sama-proof-grid,
+  .sama-closing-section {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sama-principle {
+    padding: 24px;
+    gap: 20px;
+  }
+  .sama-principle-top {
+    margin-bottom: 8px;
+  }
+  .sama-principle .sama-quiet-link {
+    font-size: 14px;
+  }
+  .sama-limit-visual {
+    padding: 24px;
+  }
+  .sama-limit-top {
+    margin-bottom: 24px;
+  }
+  .sama-limit-seal {
+    padding-top: 24px;
+  }
+  .sama-journey {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px 24px;
+  }
+  .sama-closing-section {
+    padding-block: 64px;
+    gap: 32px;
+  }
+  .sama-closing-action {
+    border-left: none;
+    padding-left: 0;
+  }
+}

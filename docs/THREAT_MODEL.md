@@ -75,6 +75,10 @@ Status: required release gate for the testnet prototype.
 
 These controls have unit and integration coverage in the repository. A complete interactive browser lifecycle and public deployment acceptance are separate release gates; this section does not claim either is finished.
 
+## Development inspection boundary
+
+React inspection tools are development-only, served from pinned local packages, and return no scripts in production. Disable them with `NEXT_PUBLIC_DISABLE_REACT_DEVTOOLS=1` when testing sensitive reveal material. The same-origin tool route accepts a fixed allowlist of two package assets, not arbitrary paths. The component showcase is also unavailable in production.
+
 ## Static-analysis disposition
 
 The baseline at `af34ea7` passed Slither 0.11.6 with no High findings. Adding the testnet helpers produces fourteen findings across the same five detector categories, including the faucet's intended timestamp-based cooldown; see [security evidence](SECURITY_EVIDENCE.md). Static analysis and passing tests are not an independent audit.
