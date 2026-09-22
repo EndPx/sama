@@ -103,9 +103,9 @@ export default function Home() {
               <ArrowUpRight size={16} aria-hidden="true" />
             </Link>
           </article>
-          <span className="sama-scroll-caption" aria-hidden="true">
-            Explore the common ground <ArrowDown size={14} />
-          </span>
+          <Link href="/explore" className="sama-story-action sama-quiet-link">
+            Open the prototype <ArrowUpRight size={16} aria-hidden="true" />
+          </Link>
         </div>
       </section>
       <div className="sama-principles-band">

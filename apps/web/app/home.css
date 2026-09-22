@@ -133,7 +133,7 @@
   color: var(--muted-foreground);
   margin-top: 4px;
 }
-.sama-scroll-caption {
+.sama-story-action {
   display: none;
 }
 .sama-principles-band {
@@ -401,14 +401,14 @@
   .has-scroll-story .sama-field-note h2 {
     font-size: 32px;
   }
-  .has-scroll-story .sama-scroll-caption {
+  .has-scroll-story .sama-story-action {
     display: flex;
     align-items: center;
     gap: 12px;
     position: absolute;
     bottom: 32px;
     left: 32px;
-    font-size: 12px;
+    min-height: 44px;
     color: var(--muted-foreground);
   }
 }

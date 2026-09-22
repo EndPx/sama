@@ -37,7 +37,6 @@ export function LandingMotion({ children }: { children: ReactNode }) {
           });
           timeline
             .to(intro, { y: -64, autoAlpha: 0, duration: 0.32 }, 0)
-            .to(".sama-scroll-caption", { autoAlpha: 0, duration: 0.12 }, 0)
             .to(
               art,
               {
