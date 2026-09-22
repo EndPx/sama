@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Badge } from "@/components/ui/badge";
 import { OfferingPanel } from "@/components/offering-panel";
 import { PageIntro } from "@/components/page-intro";
+import { WalletWorkspace } from "@/components/wallet/workspace";
 export const metadata: Metadata = { title: "Your testnet portfolio" };
 export default function Portfolio() {
   return (
@@ -15,7 +16,9 @@ export default function Portfolio() {
           Unavailable data is never shown as zero
         </Badge>
       </PageIntro>
-      <OfferingPanel portfolio />
+      <WalletWorkspace>
+        <OfferingPanel portfolio />
+      </WalletWorkspace>
     </section>
   );
 }

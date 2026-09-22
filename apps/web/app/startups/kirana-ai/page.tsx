@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { OfferingPanel } from "@/components/offering-panel";
 import { PageIntro } from "@/components/page-intro";
+import { WalletWorkspace } from "@/components/wallet/workspace";
 
 export const metadata: Metadata = { title: "Kirana AI demo auction" };
 const terms = [
@@ -65,7 +66,9 @@ export default function Kirana() {
           id="participate"
           aria-label="Participate in the Kirana AI demo auction"
         >
-          <OfferingPanel />
+          <WalletWorkspace>
+            <OfferingPanel />
+          </WalletWorkspace>
         </section>
       </div>
     </section>

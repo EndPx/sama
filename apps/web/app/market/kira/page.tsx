@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Badge } from "@/components/ui/badge";
 import { MarketplacePanel } from "@/components/marketplace-panel";
 import { PageIntro } from "@/components/page-intro";
+import { WalletWorkspace } from "@/components/wallet/workspace";
 export const metadata: Metadata = { title: "KIRA testnet marketplace" };
 export default function Market() {
   return (
@@ -17,7 +18,9 @@ export default function Market() {
           Testnet only · demo assets
         </Badge>
       </PageIntro>
-      <MarketplacePanel />
+      <WalletWorkspace>
+        <MarketplacePanel />
+      </WalletWorkspace>
     </section>
   );
 }
