@@ -65,6 +65,16 @@ Status: required release gate for the testnet prototype.
 - Public RPC endpoints have no availability guarantee. The client retries reads against a fallback and reports errors instead of presenting empty balances as confirmed data.
 - Privy authenticates and connects wallets; the web client needs only its public App ID. No Privy app secret or deployment signing key belongs in the browser bundle.
 
+## Browser transaction boundaries
+
+- Wallet onboarding introduces Privy as an external authentication and wallet-availability dependency. Local development can use an injected wallet without Privy. Every signing request is bound to the selected account and chain, with provider identity checked again after simulation.
+- A simulated call is not proof of execution. The transaction runner distinguishes signing, pending, confirmed, reverted, rejected, and unknown outcomes. Repricing follows the replacement receipt; a cancellation or a different-call replacement cannot confirm the original action. An unknown hash blocks resubmission and supports explicit receipt rechecking without a new signature.
+- Offering and listing reads share a fixed block tag within each snapshot. A failed refresh must be presented as unavailable or stale data, not a zero balance. Transactions that depend on those reads fail closed; `maxCost` still protects a purchase against movement after a successful read.
+- Reveal backups are unencrypted browser-local JSON and private downloadable files. Validation binds them to chain, offering, wallet, and the onchain commitment. Persisting and exporting a backup precede commitment signing. A corrupt stored draft is not silently overwritten. Browser extensions, compromised dependencies, XSS, a shared computer, and insecure backup storage remain threats; local storage is not a secure enclave.
+- The nonce is never included in application telemetry or a server-side form. The reveal action necessarily sends its calldata, including the nonce, to the RPC and then publishes it onchain. Users must not share backups with support services.
+
+These controls have unit and integration coverage in the repository. A complete interactive browser lifecycle and public deployment acceptance are separate release gates; this section does not claim either is finished.
+
 ## Static-analysis disposition
 
 The baseline at `af34ea7` passed Slither 0.11.6 with no High findings. Adding the testnet helpers produces fourteen findings across the same five detector categories, including the faucet's intended timestamp-based cooldown; see [security evidence](SECURITY_EVIDENCE.md). Static analysis and passing tests are not an independent audit.
