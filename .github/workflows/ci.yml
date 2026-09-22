@@ -28,6 +28,7 @@ jobs:
         with:
           version: v1.5.1
       - run: pnpm install --frozen-lockfile
+      - run: node scripts/check-docs.mjs
       - run: pnpm format:check
       - run: pnpm lint
       - run: pnpm typecheck
