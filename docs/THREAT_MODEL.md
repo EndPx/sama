@@ -19,6 +19,7 @@ Status: required release gate for the testnet prototype.
 - SAMA demoUSDC is a standard, six-decimal ERC-20 without transfer fees, callbacks, or rebasing. It is not Circle USDC.
 - Arbitrum Sepolia and the selected RPC expose canonical chain state.
 - The administrator can update the simulated allowlist and pause contracts but cannot alter settled balances or auction arithmetic.
+- Role administration remains centralized. An administrator can add or revoke KIRA minters; an unauthorized configuration can consume the fixed cap or prevent winner claims. Deployment must assign the offering as the sole intended minter, and role integrity is a trust assumption rather than an immutable restriction.
 - Users protect their wallet access and locally stored reveal material.
 - Startup and legal information is simulated repository content, not an onchain legal attestation.
 - The testnet-only enrollment helper holds registrar authority to enroll its caller. Public enrollment is simulation access, not identity verification.

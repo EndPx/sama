@@ -16,7 +16,7 @@ Owns bid escrow and auction accounting. Terms and timestamps are immutable. Anyo
 
 ### EquityLinkedToken
 
-Represents the simulated offering allocation as capped KIRA units. Minting is restricted to the offering. Non-mint/burn transfers require eligible endpoints and respect pause state.
+Represents the simulated offering allocation as capped KIRA units. Deployment assigns minting to the offering, but the role administrator can grant or revoke minters. Non-mint/burn transfers require eligible endpoints and respect pause state.
 
 ### SecondaryMarketplace
 
@@ -56,7 +56,7 @@ P0 reads bounded state and logs directly through Viem. Ponder and Postgres are a
 | Pauser | Pause risky writes | Cannot redirect assets; marketplace cancellation remains available unless the KIRA token itself is paused |
 | Issuer | Withdraw accepted proceeds | Only after successful finalization and only once |
 
-No role may rewrite bids, clearing results, balances, timestamps, or completed claims.
+The role interfaces cannot rewrite existing bids, timestamps, finalized settlement accounting, or completed claim flags. The role administrator remains trusted to preserve the intended minter configuration: an extra minter could consume the fixed KIRA cap and obstruct later winner claims. The supply cap itself is always enforced.
 
 ## Deployment boundary
 

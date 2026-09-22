@@ -1,133 +1,87 @@
 <div align="center">
 
+<img src="apps/web/public/brand/sama-mark.png" alt="SAMA" width="88" />
+
 # SAMA
 
 ### Invest in what comes next.
 
-**A testnet marketplace for market-priced startup offerings, equity-linked demo tokens, and transparent settlement on Arbitrum.**
+A testnet startup marketplace for explicit valuation preferences, uniform-price allocation, and verifiable settlement on Arbitrum.
 
-[![Arbitrum Sepolia](https://img.shields.io/badge/network-Arbitrum%20Sepolia-213147?logo=arbitrum)](https://docs.arbitrum.io/for-devs/dev-tools-and-resources/chain-info)
-[![Solidity](https://img.shields.io/badge/contracts-Solidity-363636?logo=solidity)](https://soliditylang.org/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-20A66A.svg)](LICENSE)
-[![Secret scan](https://github.com/EndPx/sama/actions/workflows/security.yml/badge.svg)](https://github.com/EndPx/sama/actions/workflows/security.yml)
+[Documentation](https://sama-3.gitbook.io/sama-product-and-protocol/) · [Judge's guide](https://sama-3.gitbook.io/sama-product-and-protocol/judges-guide) · [Release status](docs/RELEASE_STATUS.md) · [Implementation PR](https://github.com/EndPx/sama/pull/3)
 
-**Built for the Arbitrum Open House Singapore Online Buildathon 2026.**
+[![CI](https://github.com/EndPx/sama/actions/workflows/ci.yml/badge.svg?branch=feat%2Fp0-vertical-slice)](https://github.com/EndPx/sama/actions/workflows/ci.yml)
+[![Security](https://github.com/EndPx/sama/actions/workflows/security.yml/badge.svg?branch=feat%2Fp0-vertical-slice)](https://github.com/EndPx/sama/actions/workflows/security.yml)
+[![Arbitrum Sepolia](https://img.shields.io/badge/Arbitrum-Sepolia-213147)](https://docs.arbitrum.io/for-devs/dev-tools-and-resources/chain-info)
+[![License: MIT](https://img.shields.io/badge/license-MIT-173F35.svg)](LICENSE)
 
 </div>
 
+![SAMA's imagined innovation campus — original generated artwork, not a real company facility](apps/web/public/brand/sama-campus.png)
+
 > [!IMPORTANT]
-> SAMA is an in-development, testnet-only hackathon prototype. Every startup, offering, valuation, token, and transaction shown by the demo is simulated. Nothing in this repository constitutes an investment product, securities offering, legal ownership claim, financial advice, or representation of regulatory approval.
+> In-development, testnet-only prototype. Kirana AI is fictional. SAMA demoUSDC is valueless and is **not Circle USDC**. KIRA is a simulated equity-linked demo token with no legal or economic rights. No regulatory approval, returns, liquidity, independent audit, or production readiness is claimed.
 
-## The thesis
+## The problem
 
-The next big startup should not be accessible only through closed networks. SAMA explores a more transparent path from discovery to price formation and ownership records:
+Discovering a startup is only the beginning. A prospective backer still needs to understand the terms, express a valuation limit, and verify how allocation and subsequent transfers happen. SAMA explores that connected workflow—without claiming that Indonesia lacks existing crowdfunding access.
+
+[Problem statement and validation plan](docs/PROBLEM.md) · [Product thesis and trade-offs](docs/PRODUCT.md)
+
+## One startup. One complete path.
 
 ```text
-Discover -> Evaluate -> Commit -> Reveal -> Clear -> Claim -> Hold -> Transfer
+Discover → Evaluate → Commit → Reveal → Settle → Claim → List → Buy
 ```
 
-The interface speaks the language of startups and investing. Arbitrum stays underneath as the settlement and audit layer.
+The auction commits each bidder's deposit and sealed maximum fully diluted valuation (FDV). After reveal, the contract selects one clearing FDV, checks the complete bidder set, records accepted capital and refunds, and enables pull-based claims. Deposit amounts are public; maximum FDV is sealed only until reveal.
 
-## What makes SAMA different
+The marketplace escrows KIRA, supports deterministic partial fills, protects a buyer's maximum cost, and returns unsold tokens through seller-controlled cancellation. It does not guarantee a buyer or liquidity.
 
-- **Market-based price discovery:** bidders commit USDC and seal the highest company valuation they are willing to accept.
-- **One clearing valuation:** every winner receives the same uniform price rather than paying their maximum bid.
-- **Auditable settlement:** eligibility, commitments, reveals, allocations, refunds, claims, listings, and purchases are verifiable onchain.
-- **Human-first onboarding:** embedded wallets and plain-language transaction flows reduce Web3 friction.
-- **Disciplined scope:** one startup, one complete lifecycle, and no simulated success states.
+## The reference round
 
-## Demo offering
-
-The submission focuses on one fictional Indonesian AI infrastructure startup:
-
-| Term | Value |
+| Term | Locked value |
 |---|---:|
-| Startup | Kirana AI |
-| Network | Arbitrum Sepolia |
-| Payment asset | Circle test USDC |
-| Simulated allocation | 10% |
-| KIRA offered supply | 1,000,000 |
-| FDV range | 4M-6M USDC |
-| Minimum raise | 400,000 USDC |
+| Startup | Kirana AI — fictional Indonesian AI infrastructure company |
+| Network | Arbitrum Sepolia, 421614 |
+| Payment asset | SAMA demoUSDC, 6 decimals, no monetary value |
+| Simulated allocation / KIRA supply | 10% / 1,000,000 KIRA |
+| FDV range / minimum raise | 4M–6M / 400,000 demoUSDC |
+| Five-bid fixture | 700,000 deposited → 480,000 accepted + 220,000 refundable |
+| Clearing FDV / price | 4.8M / 0.48 demoUSDC per KIRA |
 
-At a 4.8M clearing FDV, the full 10% allocation is worth 480,000 USDC and each KIRA is priced at 0.48 USDC. The arithmetic, contract tests, interface, and demo must all use these same numbers.
+The [auction specification](docs/AUCTION_SPEC.md) is authoritative for economics. The [marketplace specification](docs/MARKETPLACE_SPEC.md) is authoritative for partial fills and rounding.
+
+## Evidence, with limits
+
+- **44 contract tests** pass locally after the demo-helper addition, including reference-model fuzzing and **six stateful invariants**.
+- **64-bid settlement:** 2,120,427 isolated execution gas against a 2,500,000 ceiling. This is a local regression measurement, not an Arbitrum fee quote.
+- **Static analysis:** 14 reviewed Slither findings, none High; lower-severity findings and assumptions remain documented.
+- **CI:** format, lint, type checks, frontend/contract tests, build, deterministic snapshots, Slither and secret scanning. Inspect the run SHA before treating a badge as release evidence.
+- **Still open:** the complete transaction UI, local browser acceptance, verified public deployment and production two-wallet proof.
+
+[Security evidence](docs/SECURITY_EVIDENCE.md) · [Gas methodology](docs/GAS_EVIDENCE.md) · [Threat model](docs/THREAT_MODEL.md) · [Current release status](docs/RELEASE_STATUS.md)
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    Investor[Investor] --> Web[Next.js application]
-    Founder[Founder / Admin] --> Web
-    Web --> Wallet[Privy + wagmi + viem]
-    Wallet --> Registry[EligibilityRegistry]
-    Wallet --> Offering[KiranaOffering]
-    Offering --> Token[EquityLinkedToken]
-    Wallet --> Market[SecondaryMarketplace]
-    Market --> Token
-    Offering --> USDC[Circle test USDC]
-    Market --> USDC
-    Registry --> Token
-    Registry --> Offering
-    Registry --> Market
-```
+The four protocol contracts are `EligibilityRegistry`, `KiranaOffering`, `EquityLinkedToken` and `SecondaryMarketplace`. Testnet-only `DemoUSDC` and `DemoAccess` provide valueless faucet funds and self-enrollment. Open enrollment is not identity verification.
 
-The critical path contains four contracts:
+Solidity / Foundry / OpenZeppelin form the tested core. The investor application is being built with Next.js, TypeScript, shadcn/ui, Privy, wagmi and viem. There is no database or trusted offchain settlement service on the P0 financial path.
 
-1. `EligibilityRegistry` — a simulated testnet allowlist and role boundary.
-2. `KiranaOffering` — commit/reveal escrow, uniform-price settlement, claims, refunds, and issuer proceeds.
-3. `EquityLinkedToken` — capped KIRA with eligible-address transfer restrictions.
-4. `SecondaryMarketplace` — escrowed listings and atomic USDC/KIRA settlement.
+[Architecture and role boundaries](docs/ARCHITECTURE.md) · [Why Arbitrum](docs/WHY_ARBITRUM.md) · [demoUSDC decision](docs/decisions/0001-testnet-demo-currency.md)
 
-Read the authoritative specifications before changing protocol behavior:
+## Reproduce and review
 
-- [Auction specification](docs/AUCTION_SPEC.md)
-- [Architecture and trust boundaries](docs/ARCHITECTURE.md)
-- [Threat model](docs/THREAT_MODEL.md)
-- [Implementation plan](docs/IMPLEMENTATION_PLAN.md)
-- [Demo runbook](docs/DEMO_RUNBOOK.md)
-- [Submission checklist](docs/SUBMISSION_CHECKLIST.md)
+Use the [clean-clone developer guide](docs/DEVELOPER_GUIDE.md). Initialize only the two direct submodules, use the pinned toolchain, and run the verification gates against the exact commit under review.
 
-## Technology
+Read [SECURITY.md](SECURITY.md) before configuring credentials. Browser configuration is public; signing keys belong in an isolated Foundry keystore, never a repository env file.
 
-- Solidity, Foundry, and OpenZeppelin Contracts 5.x
-- Next.js, TypeScript, Tailwind CSS, and shadcn/ui
-- Privy, wagmi, viem, and TanStack Query
-- Arbitrum Sepolia and Circle test USDC
-- Ponder and Postgres only after the core onchain lifecycle is complete
-- Slither, Foundry fuzz/invariant tests, Gitleaks, and GitHub Actions
+## Hackathon
 
-## Security posture
+Built for the [Arbitrum Open House Singapore Online Buildathon](https://www.hackquest.io/hackathons/Arbitrum-Open-House-Singapore-Online-Buildathon). The [judge's guide](docs/JUDGES_GUIDE.md) maps the story to inspectable evidence. The [demo runbook](docs/DEMO_RUNBOOK.md) preserves the reference arithmetic and labels seeded activity honestly.
 
-SAMA treats security evidence as part of the submission, not a final-day task:
-
-- pull-based token, refund, and proceeds claims;
-- bounded settlement and fully verified sorted inputs;
-- fund and token conservation invariants;
-- role-based access control, pause/cancel escape paths, safe ERC-20 operations, and reentrancy protection;
-- automated secret scanning on every push and pull request;
-- raw deployer private keys are prohibited from repository env files.
-
-Read [SECURITY.md](SECURITY.md) before configuring wallets, RPC credentials, CI, or deployments.
-
-## Current status
-
-The product and protocol specifications are locked. Implementation proceeds contract-first, with executable auction tests as the first milestone. Deployment addresses and the public demo URL will be published only after the complete two-wallet Arbitrum Sepolia lifecycle passes.
-
-## Hackathon alignment
-
-| Judging criterion | SAMA evidence |
-|---|---|
-| Smart-contract quality | Commit/reveal lifecycle, bounded verified settlement, restricted token, invariant suite, Slither report |
-| Product-market fit | Indonesia-first startup discovery and fundraising experience |
-| Innovation and creativity | Uniform-price startup allocation with equity-linked demo tokens |
-| Real problem solving | More transparent discovery, pricing, ownership records, and secondary settlement |
-| Arbitrum requirement | Verified deployment and transaction evidence on Arbitrum Sepolia |
-
-## Working name
-
-SAMA is a hackathon working name and has not completed trademark or domain clearance.
+The project owner handles the submission portal. SAMA's working name has not completed trademark clearance. Original generated artwork is documented in the [brand notes](docs/BRAND.md).
 
 ## License
 
-Released under the [MIT License](LICENSE). This license covers the source code only; it does not grant rights to third-party names, logos, or services.
-
+[MIT](LICENSE) for source code. Third-party names identify integrations, not endorsement.
