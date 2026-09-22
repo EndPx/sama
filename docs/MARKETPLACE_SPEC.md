@@ -8,6 +8,8 @@ Allow eligible holders to sell the simulated equity-linked KIRA demo token for t
 
 This specification is authoritative for P0 marketplace accounting. `docs/AUCTION_SPEC.md` remains authoritative for offering economics.
 
+In the public prototype, every USDC-denominated amount in this document means the valueless SAMA demoUSDC asset accepted in [ADR 0001](decisions/0001-testnet-demo-currency.md), not Circle USDC or real money.
+
 ## Units and listing state
 
 - KIRA amounts use ERC-20 base units with 18 decimals.

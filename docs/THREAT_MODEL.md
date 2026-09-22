@@ -4,7 +4,7 @@ Status: required release gate for the testnet prototype.
 
 ## Protected assets
 
-- escrowed Circle test USDC;
+- escrowed SAMA demoUSDC (a test currency with no monetary value);
 - KIRA held in active marketplace listings;
 - KIRA supply and allocations;
 - bidder commitment/reveal integrity;
@@ -16,11 +16,14 @@ Status: required release gate for the testnet prototype.
 
 ## Trust assumptions
 
-- Circle test USDC behaves as the configured ERC-20 test token.
+- SAMA demoUSDC is a standard, six-decimal ERC-20 without transfer fees, callbacks, or rebasing. It is not Circle USDC.
 - Arbitrum Sepolia and the selected RPC expose canonical chain state.
 - The administrator can update the simulated allowlist and pause contracts but cannot alter settled balances or auction arithmetic.
 - Users protect their wallet access and locally stored reveal material.
 - Startup and legal information is simulated repository content, not an onchain legal attestation.
+- The testnet-only enrollment helper holds registrar authority to enroll its caller. Public enrollment is simulation access, not identity verification.
+- The public faucet creates valueless demoUSDC. Multiple identities can bypass per-address limits; demo demand is not evidence of product traction or financial interest.
+- While the enrollment helper retains its registrar role, an address whose eligibility was revoked can enroll again. The administrator must revoke the helper's registrar role to stop public enrollment; individual revocation is not a durable access restriction in this simulation.
 
 ## Primary threats and controls
 
@@ -45,6 +48,8 @@ Status: required release gate for the testnet prototype.
 | Secret committed to Git | Ignore rules, Gitleaks CI, GitHub push protection | Clean scan on every push/PR |
 | RPC outage or stale response | Primary/fallback providers and receipt verification | Failure rehearsal |
 | Misleading transaction success | Wait for canonical receipt and surface reverts | UI integration test |
+| Demo helper used on a live-money chain | Constructor chain restriction to 421614 or 31337 | Wrong-chain deployment tests |
+| Enrollment helper redirects authority | Enroll only the caller; no role-management or arbitrary-call functions | Caller-scope and unauthorized-role tests |
 
 ## Known limitations
 
@@ -56,6 +61,12 @@ Status: required release gate for the testnet prototype.
 - Pausing KIRA temporarily blocks listing creation, purchase, and cancellation because every path transfers KIRA; unpausing restores the unchanged escrow state.
 - KIRA creates no real legal or economic right.
 - Testnet RPCs, faucets, and embedded-wallet vendors remain external availability dependencies.
+- Public RPC endpoints have no availability guarantee. The client retries reads against a fallback and reports errors instead of presenting empty balances as confirmed data.
+- Privy authenticates and connects wallets; the web client needs only its public App ID. No Privy app secret or deployment signing key belongs in the browser bundle.
+
+## Static-analysis disposition
+
+The baseline at `af34ea7` passed Slither 0.11.6 with no High findings. Adding the testnet helpers produces fourteen findings across the same five detector categories, including the faucet's intended timestamp-based cooldown; see [security evidence](SECURITY_EVIDENCE.md). Static analysis and passing tests are not an independent audit.
 
 ## Release-blocking findings
 

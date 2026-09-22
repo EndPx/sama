@@ -24,7 +24,11 @@ Escrows KIRA at listing creation and tracks aggregate outstanding escrow. Partia
 
 ### Web application
 
-Next.js renders startup content and transaction flows. Privy handles authentication and embedded/external wallets. wagmi and viem perform reads, simulations, writes, receipt tracking, and explorer linking.
+The investor application is under construction. Its target architecture uses Next.js for startup content and transaction flows, Privy for authentication and embedded/external wallets, and wagmi/viem for reads, simulations, writes, receipt tracking, and explorer linking. These integration choices are not evidence of a completed browser lifecycle.
+
+### Testnet access and currency
+
+`DemoUSDC` provides six-decimal, valueless test currency. Its public faucet grants 250,000 units per address per 24-hour cooldown. `DemoAccess` can enroll only its caller through a registrar role; it cannot move escrow or mint KIRA. Both helpers restrict deployment to Arbitrum Sepolia or local chain 31337. They are simulation utilities, not stablecoin issuance or identity verification. See [ADR 0001](decisions/0001-testnet-demo-currency.md).
 
 ### Read model
 
@@ -57,7 +61,7 @@ No role may rewrite bids, clearing results, balances, timestamps, or completed c
 ## Deployment boundary
 
 - Chain: Arbitrum Sepolia, chain ID 421614.
-- Payment asset: Circle test USDC at `0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d`.
-- Primary RPC: authenticated third-party endpoint.
-- Fallback RPC: official public endpoint.
-- Explorer evidence: Arbiscan verified source and transaction links.
+- Payment asset: dedicated SAMA demoUSDC; the release manifest will identify its deployed address. It is not Circle USDC.
+- RPC: public Arbitrum Sepolia endpoints; availability is not guaranteed.
+- Signing: dedicated local Foundry keystore, never a private key in a browser or repository file.
+- Release gate: verified source, addresses, deployment block, and transaction evidence. No deployment is claimed until those records exist.

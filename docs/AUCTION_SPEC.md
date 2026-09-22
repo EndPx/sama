@@ -10,7 +10,7 @@ Sell a fixed simulated company allocation through sealed maximum-FDV bids and se
 
 | Parameter | Value |
 |---|---:|
-| Payment token | Circle test USDC on Arbitrum Sepolia |
+| Payment token | SAMA demoUSDC on Arbitrum Sepolia (six-decimal test currency) |
 | Payment decimals | 6 |
 | Offered allocation | 10% |
 | Offered KIRA supply | 1,000,000 KIRA |
@@ -18,6 +18,8 @@ Sell a fixed simulated company allocation through sealed maximum-FDV bids and se
 | FDV ceiling | 6,000,000 USDC |
 | Minimum raise | 400,000 USDC |
 | Maximum revealed bids | 64, subject to gas measurement |
+
+The project owner approved the dedicated test currency in [ADR 0001](decisions/0001-testnet-demo-currency.md). All USDC-denominated amounts below are demoUSDC units in the public prototype; contract identifiers retain their original names. The token is not Circle USDC and has no monetary value.
 
 ## Commitment
 
@@ -102,4 +104,3 @@ SCHEDULED -> COMMIT -> REVEAL -> SETTLED_SUCCESS | SETTLED_FAILED
 - bidder lists cannot omit, duplicate, or reorder revealed bids;
 - reveal, settlement, token claim, refund claim, and proceeds withdrawal cannot execute twice;
 - rounding never creates assets or exceeds caps.
-

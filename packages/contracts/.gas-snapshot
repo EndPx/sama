@@ -1,5 +1,8 @@
 AuctionEconomicsSpecification:testReferenceExpectedAcceptancesAreConservative() (gas: 615)
 AuctionEconomicsSpecification:testReferenceTermsAreLocked() (gas: 668)
+DemoAccessTest:testEnrollmentOnlyChangesCallerAndRespectsRegistrarControls() (gas: 79087)
+DemoAccessTest:testFaucetCooldownAndTransfersConserveSupply() (gas: 131180)
+DemoAccessTest:testHelpersRejectMainnetDeployment() (gas: 745143)
 KiranaOfferingTest:testCancelBeforeCommitHasNoLiability() (gas: 45070)
 KiranaOfferingTest:testCancelDuringCommitRefundsThreeBiddersInAnyOrder() (gas: 377316)
 KiranaOfferingTest:testCancelDuringRevealRefundsRevealedAndUnrevealed() (gas: 333081)
