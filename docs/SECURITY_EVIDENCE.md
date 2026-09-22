@@ -36,6 +36,8 @@ Slither 0.11.6 reports fourteen findings: six Medium `uninitialized-local`, four
 
 Gitleaks 8.30.1 reports no leaks in the inspected 22-commit baseline history. This is not a guarantee about credentials shared outside Git, and each pushed revision still needs its own CI checks. The deployment and browser acceptance gates remain open.
 
+The first documented follow-up revision `7eeb5f19245ae1c676fd4c161f7965d3d984e654` includes the helper contracts and passes both [GitHub CI](https://github.com/EndPx/sama/actions/runs/35766120786) and [Slither / secret scan](https://github.com/EndPx/sama/actions/runs/35766120583).
+
 ## Release criteria
 
 1. Run contract unit/property tests, deterministic gas checks, and Slither against the release revision. Resolve any finding that can violate the [threat model](THREAT_MODEL.md).

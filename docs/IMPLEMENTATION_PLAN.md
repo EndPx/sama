@@ -1,6 +1,6 @@
 # Implementation Plan
 
-Status: approved scope, implementation pending.
+Status: contract and marketplace baselines reviewed; security tooling passes at `af34ea7`. Investor application, deployment, and public documentation are in progress. The project owner handles the submission portal.
 
 ## P0 outcome
 
@@ -38,6 +38,8 @@ Exit gate: unit, fuzz, and stateful marketplace conservation tests pass, and two
 
 ### 5. Security gate
 
+Baseline exit gate passed: 39 contract tests, Slither with no High findings, secret scan, and bounded settlement gas. See [security evidence](SECURITY_EVIDENCE.md). Repeat this gate whenever contracts or trust boundaries change.
+
 - Run Slither, coverage review, gas snapshots, and maximum-bid settlement.
 - Update `docs/THREAT_MODEL.md` with every accepted limitation.
 
@@ -51,6 +53,8 @@ Exit gate: no unresolved critical/high finding and settlement fits safely within
 Exit gate: a user completes the local lifecycle without developer tools and every transaction has honest intermediate states.
 
 ### 7. Testnet proof
+
+Use the owner-approved test currency described in [ADR 0001](decisions/0001-testnet-demo-currency.md), the existing dedicated deployment keystore, and chain ID 421614. Keep public deployment addresses separate from local fixture addresses.
 
 - Deploy and verify on Arbitrum Sepolia.
 - Fund and prepare two interactive wallets plus five seeded bidders.
