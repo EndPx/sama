@@ -42,12 +42,40 @@ beforeEach(() => {
 
 describe("bid backup", () => {
   it("unlocks only the matching submission after a proven terminal failure", () => {
-    const submitted = "0x1111111111111111111111111111111111111111111111111111111111111111" as const;
-    expect(isSubmissionProvenFailed(submitted, { stage: "reverted", hash: submitted })).toBe(true);
-    expect(isSubmissionProvenFailed(submitted, { stage: "rejected", hash: submitted, replacementHash: "0x2222222222222222222222222222222222222222222222222222222222222222" })).toBe(true);
-    expect(isSubmissionProvenFailed(submitted, { stage: "unknown", hash: submitted })).toBe(false);
-    expect(isSubmissionProvenFailed(submitted, { stage: "confirmed", hash: submitted })).toBe(false);
-    expect(isSubmissionProvenFailed(submitted, { stage: "reverted", hash: "0x3333333333333333333333333333333333333333333333333333333333333333" })).toBe(false);
+    const submitted =
+      "0x1111111111111111111111111111111111111111111111111111111111111111" as const;
+    expect(
+      isSubmissionProvenFailed(submitted, {
+        stage: "reverted",
+        hash: submitted,
+      }),
+    ).toBe(true);
+    expect(
+      isSubmissionProvenFailed(submitted, {
+        stage: "rejected",
+        hash: submitted,
+        replacementHash:
+          "0x2222222222222222222222222222222222222222222222222222222222222222",
+      }),
+    ).toBe(true);
+    expect(
+      isSubmissionProvenFailed(submitted, {
+        stage: "unknown",
+        hash: submitted,
+      }),
+    ).toBe(false);
+    expect(
+      isSubmissionProvenFailed(submitted, {
+        stage: "confirmed",
+        hash: submitted,
+      }),
+    ).toBe(false);
+    expect(
+      isSubmissionProvenFailed(submitted, {
+        stage: "reverted",
+        hash: "0x3333333333333333333333333333333333333333333333333333333333333333",
+      }),
+    ).toBe(false);
   });
   it("requires a complete canonical schema and returns an immutable copy", () => {
     const parsed = parseBackup(JSON.stringify(raw));

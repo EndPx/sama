@@ -168,8 +168,15 @@ export function isSubmissionProvenFailed(
   submittedHash: Hex | undefined,
   state: TransactionState,
 ) {
-  if (!submittedHash || state.hash?.toLowerCase() !== submittedHash.toLowerCase()) return false;
-  return state.stage === "reverted" || (state.stage === "rejected" && !!state.replacementHash);
+  if (
+    !submittedHash ||
+    state.hash?.toLowerCase() !== submittedHash.toLowerCase()
+  )
+    return false;
+  return (
+    state.stage === "reverted" ||
+    (state.stage === "rejected" && !!state.replacementHash)
+  );
 }
 export function downloadBackup(backup: BidBackup) {
   const safe = parseBackup(JSON.stringify(backup));

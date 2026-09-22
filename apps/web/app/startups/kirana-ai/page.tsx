@@ -1,41 +1,73 @@
+import type { Metadata } from "next";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { OfferingPanel } from "@/components/offering-panel";
+import { PageIntro } from "@/components/page-intro";
+
+export const metadata: Metadata = { title: "Kirana AI demo auction" };
 const terms = [
-  ["Allocation", "10%"],
-  ["KIRA offered", "1,000,000"],
-  ["FDV range", "4M–6M USDC"],
-  ["Minimum raise", "400,000 USDC"],
+  ["Offered allocation", "10%"],
+  ["KIRA offered", "1,000,000 KIRA"],
+  ["Maximum FDV range", "4,000,000–6,000,000 demoUSDC"],
+  ["Minimum raise", "400,000 demoUSDC"],
+  ["Revealed-bid cap", "64 bids"],
 ];
 export default function Kirana() {
   return (
-    <>
-      <section className="hero">
-        <p>SIMULATED COMPANY · ARBITRUM SEPOLIA</p>
-        <h1>Kirana AI</h1>
-        <p>A sealed maximum-FDV auction with a uniform clearing price.</p>
-        <div className="terms">
-          {terms.map(([label, value]) => (
-            <div key={label}>
-              <small>{label}</small>
-              <br />
-              <strong>{value}</strong>
-            </div>
-          ))}
+    <section className="page-shell page-section space-y-10">
+      <PageIntro
+        eyebrow="Fictional startup · Arbitrum Sepolia"
+        title="Kirana AI auction demo."
+      >
+        A sealed maximum-FDV auction that settles eligible revealed bids at one
+        uniform clearing price. KIRA and demoUSDC are test assets with no
+        monetary value.
+      </PageIntro>
+      <div className="grid gap-8 lg:grid-cols-2 lg:items-start">
+        <div className="space-y-6">
+          <Card>
+            <CardHeader className="gap-3">
+              <Badge variant="secondary">Fixed testnet terms</Badge>
+              <CardTitle>A small, reproducible auction</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <dl className="terms">
+                {terms.map(([label, value]) => (
+                  <div key={label}>
+                    <dt>{label}</dt>
+                    <dd>{value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Before you commit</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3 text-sm text-muted-foreground">
+              <p>
+                Your deposit amount and commitment transaction are public; your
+                maximum FDV stays sealed until reveal.
+              </p>
+              <p>
+                Save and export the reveal backup before signing. The backup
+                contains a private nonce needed for reveal—do not share it.
+              </p>
+              <p>
+                Transactions are only shown as confirmed after a successful
+                receipt.
+              </p>
+            </CardContent>
+          </Card>
         </div>
-      </section>
-      <section className="card">
-        <h2>How bidding works</h2>
-        <p>
-          Approve test USDC, then commit your deposit and sealed maximum FDV.
-          Your maximum valuation stays sealed until reveal. Your onchain deposit
-          amount may be visible.
-        </p>
-        <button disabled>Connect a configured testnet wallet to invest</button>
-        <p>
-          <small>
-            Transactions are only shown as confirmed after a canonical receipt.
-            This deployment has not yet been configured.
-          </small>
-        </p>
-      </section>
-    </>
+        <section
+          id="participate"
+          aria-label="Participate in the Kirana AI demo auction"
+        >
+          <OfferingPanel />
+        </section>
+      </div>
+    </section>
   );
 }
