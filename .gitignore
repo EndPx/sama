@@ -1,6 +1,8 @@
 # Dependencies and build outputs
 node_modules/
 .next/
+.next-dev/
+apps/web/next-env.d.ts
 dist/
 build/
 coverage/
