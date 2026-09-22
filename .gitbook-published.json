@@ -3,8 +3,8 @@
   "organizationId": "LK8smR7zW0i2kkjHonHg",
   "siteId": "site_KxqG4",
   "spaceId": "ZMNGTlCkEDGD8b1RV3Vc",
-  "revision": "pQ8oNFohDimxZ1SaWPJa",
-  "sourceCommit": "958d923a5db90b87ce67d84a3d63804e79c23033",
+  "revision": "tif2Kyj0dzfca0GyCBSJ",
+  "sourceCommit": "dd8a186072866db18137d97d0009fa7c4953124b",
   "publication": "GitBook plugin change requests; automatic Git Sync is not configured.",
   "pages": [
     {
@@ -75,12 +75,12 @@
     {
       "file": "RELEASE_STATUS.md",
       "pageId": "u0WaWeVtoFH3jQI0ve07",
-      "sha256": "fd2f8d8e8c74e99050f4906ff8221f3b0cfe2a7ac81528073841214cbc917d65"
+      "sha256": "07c0d17632f67ba6a23bfceb56c47ae1e40b70bc6407852b6570aad2e0622b71"
     },
     {
       "file": "SECURITY_EVIDENCE.md",
       "pageId": "Y3m1QVu5D5TcQYzqFVkW",
-      "sha256": "74ab649d25007889bd2cdb5bd95911381f20599e873d142deb47ae6c41d62fea"
+      "sha256": "04b031524f0cd96a2b4d9c802cd3fb36f456088380bb672ca4f547f02c88f80c"
     },
     {
       "file": "GAS_EVIDENCE.md",
