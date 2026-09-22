@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent } from "react";
 import Link from "next/link";
 import { useAccount } from "wagmi";
 import { formatUnits, type Address, type Hex } from "viem";
@@ -575,12 +575,6 @@ function CommitForm({
   const [review, setReview] = useState(false);
   const [submittedCommitment, setSubmittedCommitment] = useState<Hex>();
   const [submittedHash, setSubmittedHash] = useState<Hex>();
-  useEffect(() => {
-    if (isSubmissionProvenFailed(submittedHash, transactionState)) {
-      setSubmittedCommitment(undefined);
-      setSubmittedHash(undefined);
-    }
-  }, [submittedHash, transactionState]);
   const prepare = () => {
     setError("");
     try {
@@ -628,6 +622,12 @@ function CommitForm({
   };
   const commit = async () => {
     if (!backup || !acknowledged || !exported) return;
+    // This is the only user action that releases a historically failed lock.
+    // Derivation below keeps unknown/pending/confirmed submissions fail-closed.
+    if (isSubmissionProvenFailed(submittedHash, transactionState)) {
+      setSubmittedCommitment(undefined);
+      setSubmittedHash(undefined);
+    }
     setError("");
     try {
       validateBackupContext(backup, chain.id, contracts.offering!, address);
@@ -663,7 +663,9 @@ function CommitForm({
     }
   };
   const deposit = backup ? BigInt(backup.amountUSDC) : 0n;
-  const submissionLocked = isSubmittedCommitment(backup, submittedCommitment);
+  const submissionLocked =
+    isSubmittedCommitment(backup, submittedCommitment) &&
+    !isSubmissionProvenFailed(submittedHash, transactionState);
   return (
     <Card>
       <CardHeader>
