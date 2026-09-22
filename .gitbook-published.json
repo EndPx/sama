@@ -3,8 +3,8 @@
   "organizationId": "LK8smR7zW0i2kkjHonHg",
   "siteId": "site_KxqG4",
   "spaceId": "ZMNGTlCkEDGD8b1RV3Vc",
-  "revision": "8OfSyCAuiG9JNlBLkoSO",
-  "sourceCommit": "e67bdee8df7181b76402bf0ca0badbcaf8d4f5fa",
+  "revision": "pQ8oNFohDimxZ1SaWPJa",
+  "sourceCommit": "958d923a5db90b87ce67d84a3d63804e79c23033",
   "publication": "GitBook plugin change requests; automatic Git Sync is not configured.",
   "pages": [
     {
@@ -65,7 +65,7 @@
     {
       "file": "THREAT_MODEL.md",
       "pageId": "f0oB5WteWX0RkORfcaIt",
-      "sha256": "3acec1cb53b560efa715674c848520ed6d3adafea1881305608f56ea9a9a170c"
+      "sha256": "b31846ee38521d69668eff709c02129e9117ce6fcb5b3656477573742d098a11"
     },
     {
       "file": "decisions/0001-testnet-demo-currency.md",
@@ -75,12 +75,12 @@
     {
       "file": "RELEASE_STATUS.md",
       "pageId": "u0WaWeVtoFH3jQI0ve07",
-      "sha256": "2aa25927a64590c4e49b78be1bc1ca5853f85d4c62f11dbc100c77b51e1facf8"
+      "sha256": "fd2f8d8e8c74e99050f4906ff8221f3b0cfe2a7ac81528073841214cbc917d65"
     },
     {
       "file": "SECURITY_EVIDENCE.md",
       "pageId": "Y3m1QVu5D5TcQYzqFVkW",
-      "sha256": "1c0c061e360d22994249c23ad9c084d6b0721a7c2c0382fa192a0a0a4b0e6ec3"
+      "sha256": "74ab649d25007889bd2cdb5bd95911381f20599e873d142deb47ae6c41d62fea"
     },
     {
       "file": "GAS_EVIDENCE.md",
@@ -90,12 +90,12 @@
     {
       "file": "DEVELOPER_GUIDE.md",
       "pageId": "T1MWn3v5TwCNhz28UUUt",
-      "sha256": "cbb4594170cb4341a8acaf603cee6a22b26c416f6c8d909ee2383a63a3d95654"
+      "sha256": "836237257ab749abcc072ee1b57b7df7657ef356a7ccb2d94ac3509c7f8d39d6"
     },
     {
       "file": "IMPLEMENTATION_PLAN.md",
       "pageId": "m8NtZo2QdeIbq9QHDyym",
-      "sha256": "e97b25392fd3d635d02318477e48fe44d65ea5db863b846008bae768787598ce"
+      "sha256": "deb8edd37e3822879a40e81c65130074e7983841fedf737d9125ceadb58dbcae"
     },
     {
       "file": "DEMO_RUNBOOK.md",
