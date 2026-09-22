@@ -79,6 +79,12 @@ These controls have unit and integration coverage in the repository. A complete 
 
 React inspection tools are development-only, served from pinned local packages, and return no scripts in production. Disable them with `NEXT_PUBLIC_DISABLE_REACT_DEVTOOLS=1` when testing sensitive reveal material. The same-origin tool route accepts a fixed allowlist of two package assets, not arbitrary paths. The component showcase is also unavailable in production.
 
+## Deployment tooling boundary
+
+- The deployment script accepts only chain 31337 or 421614, a nonzero administrator, and an ordered schedule within uint64 bounds. Deployment authority remains centralized. A successful script invocation does not establish verified sources or correct public release metadata.
+- The local acceptance runner uses only a loopback Anvil RPC with chain ID 31337 and disposable unlocked development accounts. It does not retrieve a signing key or use the public deployment keystore. Local fixture output stays separate from the public release manifest.
+- Manifest import validates addresses, schedule, chain, and deployment block before writing. Local output is restricted to ignored paths; canonical containment is checked before directory creation, and symlink destinations are rejected. This is a local developer tool, not a service accepting untrusted remote requests. A malicious process racing filesystem changes remains outside its protection boundary.
+
 ## Static-analysis disposition
 
 The baseline at `af34ea7` passed Slither 0.11.6 with no High findings. Adding the testnet helpers produces fourteen findings across the same five detector categories, including the faucet's intended timestamp-based cooldown; see [security evidence](SECURITY_EVIDENCE.md). Static analysis and passing tests are not an independent audit.

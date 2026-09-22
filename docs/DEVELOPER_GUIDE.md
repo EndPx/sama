@@ -35,6 +35,40 @@ Start with the current implementation branch, not an assumed deployed release. C
 
 Completion means the commands pass on the exact checkout being reviewed. Prior green runs are not evidence for an untested local diff. Gitleaks requires a separate installation; local helper verification used version 8.30.1. The application and testnet gates remain distinct from contract-test success.
 
+## Local deployment lifecycle
+
+Start a dedicated development chain in one terminal:
+
+```sh
+anvil --port 8547 --chain-id 31337
+```
+
+In another terminal, deploy and execute the five-bid reference lifecycle plus partial and full secondary purchases:
+
+```sh
+node --test scripts/import-deployment.test.mjs
+node apps/web/scripts/local-acceptance.mjs
+```
+
+The runner checks the loopback host and chain before writing. It uses disposable Anvil accounts, not a keystore or private production credentials. Evidence is written to ignored `.omc/local-acceptance/`, including exact accepted capital, refund conservation, token allocation, and final protocol escrow balances. Allocation rounding may leave bounded unminted KIRA dust; it must not be hidden by a rounded assertion.
+
+To prepare a fresh interactive fixture without automatically completing it:
+
+```sh
+node apps/web/scripts/local-acceptance.mjs --prepare-only
+```
+
+This produces an ignored `web.env` containing only local public configuration. It does not overwrite `apps/web/.env.local`. Import the prepared manifest using the deployment block recorded in the output when you are ready to configure the local UI:
+
+```sh
+node scripts/import-deployment.mjs .omc/local-acceptance/deployment-31337.json <deployment-block>
+pnpm --filter @sama/web dev --port 3017
+```
+
+Run the preparation close to browser testing: its commit window is fifteen minutes, followed by a sixty-second reveal window. A full acceptance run ends with a settled offering; it is not a reusable open auction. Restart the Next development process after changing public environment configuration.
+
+The importer validates chain, addresses, uniqueness, schedule, and block number. It keeps local output in ignored environment paths and refuses traversal. Only an Arbitrum Sepolia manifest can populate the tracked public deployment artifact. No local address belongs in a public release manifest.
+
 ## Where protocol changes belong
 
 Read the [auction specification](AUCTION_SPEC.md), [marketplace specification](MARKETPLACE_SPEC.md), and [threat model](THREAT_MODEL.md) before modifying financial behavior. Every changed financial value or state transition needs a corresponding test. An asset-moving entry point also needs property coverage.
