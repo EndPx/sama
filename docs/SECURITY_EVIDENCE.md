@@ -40,6 +40,14 @@ The first documented follow-up revision `7eeb5f19245ae1c676fd4c161f7965d3d984e65
 
 ## Release criteria
 
+### Browser and deployment-tooling checkpoint
+
+At `fa13d8a`, local verification passes 50 frontend tests, seven manifest-importer tests, and 47 contract tests including six stateful invariants. The deterministic snapshot contains 36 entries; randomized property aggregates remain excluded. Added deployment tests reject a zero administrator, an overflowing schedule, and incorrectly ordered phase windows. Client unit and hook tests cover decimal boundaries, backup isolation/validation, fixed-block reads, wallet identity, replacement receipts, and unknown-outcome rechecking.
+
+Slither 0.11.6 analyzed 28 contracts with 102 detectors and retained fourteen non-high findings in the reviewed categories. The redacted Gitleaks history scan inspected 34 commits and found no leaks. Neither result guarantees the safety of credentials shared outside Git. The full wallet-driven browser lifecycle, production bundle verification, and public source verification remain distinct open gates.
+
+### Required release checks
+
 1. Run contract unit/property tests, deterministic gas checks, and Slither against the release revision. Resolve any finding that can violate the [threat model](THREAT_MODEL.md).
 2. Run the frontend tests, build, and local wallet lifecycle. Every success message must follow a successful receipt on the configured chain.
 3. Scan tracked content and Git history for credentials. Keep generated secret-bearing material outside version control and public artifacts.
