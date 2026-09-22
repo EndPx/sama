@@ -46,6 +46,8 @@ At `fa13d8a`, local verification passes 50 frontend tests, seven manifest-import
 
 Slither 0.11.6 analyzed 28 contracts with 102 detectors and retained fourteen non-high findings in the reviewed categories. The redacted Gitleaks history scan inspected 34 commits and found no leaks. Neither result guarantees the safety of credentials shared outside Git. The full wallet-driven browser lifecycle, production bundle verification, and public source verification remain distinct open gates.
 
+Follow-up `cc1cf93` closes the production build check: all nine pages generate, [CI passes](https://github.com/EndPx/sama/actions/runs/35777348792), and [Slither plus secret scan pass](https://github.com/EndPx/sama/actions/runs/35777348782). It also pins the optional Privy peer packages required by its bundled imports; this does not enable another chain in SAMA. Local production smoke checks cover hydration, honest unconfigured state, and the disabled component showcase. Full wallet lifecycle and public source verification remain open.
+
 ### Required release checks
 
 1. Run contract unit/property tests, deterministic gas checks, and Slither against the release revision. Resolve any finding that can violate the [threat model](THREAT_MODEL.md).
