@@ -52,6 +52,8 @@ Base unit 4 px. Spacing scale 4, 8, 12, 16, 20, 24, 28, 32, 40, 48, 64, 80, 96. 
 
 The document owns vertical scroll on all pages. Header stays in document flow; landing scene alone may pin for a bounded 1.25 viewport-height transition above 1024 px when motion is allowed. Offering detail uses a main column and 400 px transaction aside above 1024 px; below that the aside follows the overview and is not sticky. Dialogs alone may have bounded internal scrolling. Children have min-inline-size:0; long addresses wrap anywhere. Breakpoint QA: 375, 768, 1280 px. Grids use minmax(0,1fr); no horizontal body scrolling.
 
+Education routes use the existing page-grid pattern: a two-column editorial hero with a short explanation and one factual protocol artifact, then full-width numbered sections below. The document owns scroll, and the hero becomes one column below 768 px. Navigation groups the five explanatory routes in the header; Explore, Portfolio, Marketplace, source, and GitBook remain reachable from the footer and demo CTA. Links wrap at small widths, stay in document order, and never become a hidden menu.
+
 ## 5. Primitives and states
 
 Installed shadcn/Radix is the reusable source layer. Primitive showcase `/design-system` is development-only and precedes product-screen work.
@@ -73,6 +75,7 @@ Installed shadcn/Radix is the reusable source layer. Primitive showcase `/design
 | Stat | Label, exact/formatted value, optional unit; no invented live values. |
 | TransactionStatus | Preparing/signing/pending/confirmed/reverted/rejected/unknown; persistent hash link, live region, retry only when safe. |
 | WalletGate | Disconnected/loading/wrong network/connected; explicit wallet identity, no silent account substitution. |
+| EducationHero | Eyebrow, one h1, one bounded introductory paragraph, primary/secondary links, and a factual visual panel; static across Investors, Founders, Token model, Auction, and Getting started. The panel has paper and forest variants, and holds real fixture or protocol terms, never invented live numbers. |
 
 ## 6. Motion and interaction
 
@@ -89,3 +92,5 @@ Primary personas: a first-time wallet user on a narrow phone; a keyboard-only re
 Visible focus, skip navigation, semantic headings, labeled inputs, 44 px primary controls, text error messages, reduced-motion support, and a readable 200% zoom layout are required. Never put nonce material into analytics, server requests, screenshots, or logs. Development React inspection tools are local-only and disabled in production; disable them when real reveal material is present.
 
 Open gates: primitive showcase at three widths; full keyboard/mobile lifecycle; independent visual review; static React audit; production browser performance/accessibility measurements. No accessibility or performance debt has been accepted, and these gates are not claimed passed by the presence of this document.
+
+Education-page content addresses three readers: a first-time bidder, a founder assessing the mechanism, and a hackathon reviewer checking claims. Each page states one role-specific question, links to the next useful step, and puts release-state limits next to any demo action. Long tables reflow into labeled rows below 768 px so they do not create horizontal scrolling. Educational examples do not become simulated wallet transactions or false live state.

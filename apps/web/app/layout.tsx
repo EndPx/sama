@@ -32,12 +32,11 @@ export default function RootLayout({
             sama<span className="wordmark-dot">.</span>
           </Link>
           <nav aria-label="Main navigation">
-            <Link href="/explore">Explore</Link>
-            <Link href="/portfolio">Portfolio</Link>
-            <Link href="/market/kira">Marketplace</Link>
-            <a href="https://sama-3.gitbook.io/sama-product-and-protocol/">
-              Our docs
-            </a>
+            <Link href="/investors">Investors</Link>
+            <Link href="/founders">Founders</Link>
+            <Link href="/token-model">Token model</Link>
+            <Link href="/auction">Auction</Link>
+            <Link href="/docs/getting-started">Start here</Link>
           </nav>
           <Button variant="outline" asChild>
             <Link href="/startups/kirana-ai#participate">
@@ -56,6 +55,17 @@ export default function RootLayout({
               Built in the open
             </a>
           </div>
+          <nav
+            className="footer-links"
+            aria-label="Prototype and documentation"
+          >
+            <Link href="/explore">Explore Kirana AI</Link>
+            <Link href="/portfolio">Portfolio</Link>
+            <Link href="/market/kira">Marketplace</Link>
+            <a href="https://sama-3.gitbook.io/sama-product-and-protocol/">
+              GitBook docs
+            </a>
+          </nav>
           <p>
             Kirana AI is fictional. KIRA is a simulated equity-linked demo token
             with no legal or economic rights. demoUSDC has no monetary value. No
