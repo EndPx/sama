@@ -225,6 +225,115 @@
   border-collapse: collapse;
   font-variant-numeric: tabular-nums;
 }
+.settlement-trace {
+  margin-bottom: 48px;
+  padding: clamp(22px, 4vw, 48px);
+  background: #e9eee3;
+  border: 1px solid #93ac98;
+}
+.settlement-trace-intro,
+.settlement-trace-legend,
+.settlement-trace-total {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+}
+.settlement-trace-intro h3 {
+  margin-top: 10px;
+  font-size: clamp(26px, 3vw, 40px);
+  letter-spacing: -0.04em;
+}
+.settlement-trace-legend {
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 12px;
+  font-family: ui-monospace, monospace;
+}
+.settlement-trace-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.settlement-trace-legend i {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+}
+.trace-key-accepted,
+.trace-accepted {
+  background: #315c4c;
+}
+.trace-key-refund,
+.trace-refund {
+  background: #ba805d;
+}
+.settlement-trace-rows {
+  list-style: none;
+  padding: 0;
+  margin: 32px 0 0;
+  border-top: 1px solid #93ac98;
+}
+.settlement-trace-rows li {
+  display: grid;
+  grid-template-columns: 136px minmax(0, 1fr) 84px;
+  align-items: center;
+  gap: 20px;
+  min-height: 68px;
+  border-bottom: 1px solid #b6c8b4;
+}
+.trace-label {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.trace-label strong {
+  font-size: 24px;
+  line-height: 1;
+}
+.trace-label span,
+.trace-deposit {
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.trace-bars {
+  min-width: 0;
+  height: 24px;
+  background: #d3dfd0;
+}
+.trace-bar {
+  display: flex;
+  height: 100%;
+}
+.trace-accepted,
+.trace-refund {
+  display: block;
+  height: 100%;
+}
+.trace-deposit {
+  text-align: right;
+}
+.settlement-trace-total {
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 700;
+}
+.settlement-trace-total span:not(:last-child)::after {
+  content: " /";
+  color: #ba805d;
+}
+.settlement-trace-note {
+  margin-top: 24px;
+  max-width: 75ch;
+  color: #465e50;
+  font-size: 14px;
+}
 .education-table th,
 .education-table td {
   padding: 16px 12px;
@@ -258,6 +367,30 @@
   padding-bottom: 12px;
 }
 @media (max-width: 767px) {
+  .settlement-trace-intro {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .settlement-trace-rows li {
+    grid-template-columns: 1fr 75px;
+    gap: 6px 10px;
+    padding-block: 12px;
+  }
+  .trace-bars {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  .trace-deposit {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .settlement-trace-total {
+    display: grid;
+    gap: 4px;
+  }
+  .settlement-trace-total span:not(:last-child)::after {
+    content: "";
+  }
   .education-hero {
     grid-template-columns: minmax(0, 1fr);
     gap: 40px;

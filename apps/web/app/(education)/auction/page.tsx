@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { EducationHero } from "@/components/education-hero";
 import { EducationVisual } from "@/components/education-visual";
+import { SettlementTrace } from "@/components/settlement-trace";
 import {
   formatWholeUnits,
   referenceAuction,
@@ -94,6 +95,7 @@ export default function AuctionPage() {
             </p>
           </div>
         </div>
+        <SettlementTrace />
         <table className="education-table">
           <caption className="sr-only">
             Five-bid reference auction: deposit, maximum FDV, accepted amount,
