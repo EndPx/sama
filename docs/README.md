@@ -4,6 +4,8 @@ What happens between finding a startup you like and receiving an allocation? SAM
 
 In our demo, five people make valuation-limited bids for a fictional startup called Kirana AI. The auction finds one price for everyone who gets an allocation. Each person can then check the result, claim their KIRA, and take back any unused deposit. A simple marketplace shows what happens when a holder lists some of those tokens and another person buys them.
 
+![An original illustration of SAMA's imagined innovation campus, with green pavilions and an open courtyard](assets/sama-campus.png)
+
 > SAMA is a testnet prototype. Kirana AI is fictional. demoUSDC has no monetary value and is not Circle USDC. KIRA is a simulated equity-linked demo token; it is not a legal share and gives no economic rights. The contracts have not been independently audited.
 
 ## Start with the story
