@@ -8,7 +8,7 @@
 
 A testnet startup marketplace for explicit valuation preferences, uniform-price allocation, and verifiable settlement on Arbitrum.
 
-[Documentation](https://sama-3.gitbook.io/sama-product-and-protocol/) · [Judge's guide](https://sama-3.gitbook.io/sama-product-and-protocol/judges-guide) · [Release status](docs/RELEASE_STATUS.md) · [Implementation PR](https://github.com/EndPx/sama/pull/3)
+[Documentation source](docs/README.md) · [GitBook](https://sama-3.gitbook.io/sama-product-and-protocol/) · [Judge's guide](docs/JUDGES_GUIDE.md) · [Release status](docs/RELEASE_STATUS.md) · [Implementation PR](https://github.com/EndPx/sama/pull/3)
 
 [![CI](https://github.com/EndPx/sama/actions/workflows/ci.yml/badge.svg?branch=feat%2Fp0-vertical-slice)](https://github.com/EndPx/sama/actions/workflows/ci.yml)
 [![Security](https://github.com/EndPx/sama/actions/workflows/security.yml/badge.svg?branch=feat%2Fp0-vertical-slice)](https://github.com/EndPx/sama/actions/workflows/security.yml)
@@ -26,7 +26,7 @@ A testnet startup marketplace for explicit valuation preferences, uniform-price 
 
 Discovering a startup is only the beginning. A prospective backer still needs to understand the terms, express a valuation limit, and verify how allocation and subsequent transfers happen. SAMA explores that connected workflow—without claiming that Indonesia lacks existing crowdfunding access.
 
-[Problem statement and validation plan](docs/PROBLEM.md) · [Product thesis and trade-offs](docs/PRODUCT.md)
+[The problem](docs/PROBLEM.md) · [How SAMA works](docs/PRODUCT.md) · [Five-bid walkthrough](docs/AUCTION_WALKTHROUGH.md)
 
 ## One startup. One complete path.
 
@@ -54,11 +54,12 @@ The [auction specification](docs/AUCTION_SPEC.md) is authoritative for economics
 
 ## Evidence, with limits
 
-- **44 contract tests** pass locally after the demo-helper addition, including reference-model fuzzing and **six stateful invariants**.
+- **47 contract tests** pass locally, including reference-model fuzzing and **six stateful invariants**. The local lifecycle runner reproduces the five-bid round and secondary purchases.
+- **51 frontend tests** pass, and the production build includes five original explanatory pages for participants, founders, the KIRA token model, the auction, and getting started.
 - **64-bid settlement:** 2,120,427 isolated execution gas against a 2,500,000 ceiling. This is a local regression measurement, not an Arbitrum fee quote.
 - **Static analysis:** 14 reviewed Slither findings, none High; lower-severity findings and assumptions remain documented.
 - **CI:** format, lint, type checks, frontend/contract tests, build, deterministic snapshots, Slither and secret scanning. Inspect the run SHA before treating a badge as release evidence.
-- **Still open:** the complete transaction UI, local browser acceptance, verified public deployment and production two-wallet proof.
+- **Still open:** full interactive wallet acceptance, verified public deployment, a hosted application, and production two-wallet proof.
 
 [Security evidence](docs/SECURITY_EVIDENCE.md) · [Gas methodology](docs/GAS_EVIDENCE.md) · [Threat model](docs/THREAT_MODEL.md) · [Current release status](docs/RELEASE_STATUS.md)
 
