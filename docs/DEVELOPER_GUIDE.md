@@ -65,6 +65,8 @@ node scripts/import-deployment.mjs .omc/local-acceptance/deployment-31337.json <
 pnpm --filter @sama/web dev --port 3017
 ```
 
+When another development server is already using this checkout, set `SAMA_ISOLATED_PREVIEW=1` for the second process and choose another port. The isolated preview uses its own Next build directory, so the two servers do not overwrite each other's compiled files.
+
 Run the preparation close to browser testing: its commit window is fifteen minutes, followed by a sixty-second reveal window. A full acceptance run ends with a settled offering; it is not a reusable open auction. Restart the Next development process after changing public environment configuration.
 
 The importer validates chain, addresses, uniqueness, schedule, and block number. It keeps local output in ignored environment paths and refuses traversal. Only an Arbitrum Sepolia manifest can populate the tracked public deployment artifact. No local address belongs in a public release manifest.
