@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { EducationHero } from "@/components/education-hero";
 import { EducationVisual } from "@/components/education-visual";
+import { ParticipantPath } from "@/components/participant-path";
 
 export const metadata: Metadata = {
   title: "For participants",
@@ -40,43 +41,7 @@ export default function InvestorsPage() {
             </p>
           </div>
         </div>
-        <div className="education-rows">
-          <div className="education-row">
-            <span>01 / Read</span>
-            <h3>Understand the offering</h3>
-            <p>
-              Kirana AI is fictional. Its offered allocation, FDV range, minimum
-              raise, and deadlines are fixed before anyone bids.
-            </p>
-          </div>
-          <div className="education-row">
-            <span>02 / Commit</span>
-            <h3>Set your ceiling</h3>
-            <p>
-              Escrow demoUSDC and commit a maximum FDV. Your deposit is public;
-              the FDV is hidden by a nonce until you reveal it. Export the
-              backup before signing.
-            </p>
-          </div>
-          <div className="education-row">
-            <span>03 / Reveal</span>
-            <h3>Bring your bid into the calculation</h3>
-            <p>
-              Return before the reveal deadline. A bid that is never revealed
-              cannot win KIRA and becomes fully refundable only after the round
-              is finalized or cancelled.
-            </p>
-          </div>
-          <div className="education-row">
-            <span>04 / Claim</span>
-            <h3>Check what is yours</h3>
-            <p>
-              Inspect the clearing result, then claim any KIRA and positive
-              refund separately. The app waits for a confirmed receipt before
-              reporting success.
-            </p>
-          </div>
-        </div>
+        <ParticipantPath />
       </section>
 
       <section
