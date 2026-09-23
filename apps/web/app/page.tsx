@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LandingMotion } from "@/components/landing-motion";
+import { currentNetwork } from "@/lib/network-label";
 import "./home.css";
 
 export default function Home() {
@@ -20,23 +21,20 @@ export default function Home() {
       <section className="sama-campus-hero" aria-labelledby="home-title">
         <div className="sama-campus-stage page-shell">
           <div className="sama-campus-intro">
-            <p className="eyebrow">Startup funding, made visible</p>
+            <p className="sama-kicker">A testnet auction for startup ideas</p>
             <h1 id="home-title">
-              Big ideas.
+              A price you
               <br />
-              Shared
-              <br />
-              <em>conviction.</em>
+              can trace.
             </h1>
             <p className="sama-hero-description">
-              Bring conviction and clear rules to the same table. Sealed
-              valuation limits, one clearing price, and an allocation you can
-              verify.
+              Set the highest valuation you would accept. Reveal it later. Check
+              the clearing price and your allocation against the rules.
             </p>
             <div className="cluster">
               <Button size="lg" className="marketing-button" asChild>
                 <Link href="/explore">
-                  Explore SAMA <ArrowUpRight data-icon="inline-end" />
+                  Explore the demo <ArrowUpRight data-icon="inline-end" />
                 </Link>
               </Button>
               <a className="sama-quiet-link" href="#how-it-works">
@@ -44,8 +42,7 @@ export default function Home() {
               </a>
             </div>
             <p className="sama-demo-note">
-              <span aria-hidden="true" />
-              An Arbitrum Sepolia prototype. No real equity or money.
+              {currentNetwork.name} prototype. No real equity or money.
             </p>
           </div>
           <figure className="sama-campus-art">
@@ -57,64 +54,48 @@ export default function Home() {
               priority
               sizes="(max-width: 767px) 100vw, 65vw"
             />
-            <figcaption>
-              <span>SAMA / A common ground</span>
-              <span>Built for shared ambition</span>
-            </figcaption>
           </figure>
           <article
             className="sama-field-note"
             aria-labelledby="field-note-title"
           >
-            <p className="eyebrow">Field notes / 001</p>
             <h2 id="field-note-title">
-              A common ground.
-              <br />A clear set of rules.
+              A sealed limit.
+              <br />A public result.
             </h2>
             <p>
-              A startup offering should be understandable before you
-              participate—and verifiable after you do.
+              Your deposit is visible from the start. Your maximum valuation
+              stays sealed until you reveal it.
             </p>
-            <ol>
-              <li>
-                <span>01</span>
-                <div>
-                  <strong>Bring your own conviction</strong>
-                  <p>Choose your deposit and maximum valuation.</p>
-                </div>
-              </li>
-              <li>
-                <span>02</span>
-                <div>
-                  <strong>Meet at one clearing price</strong>
-                  <p>The same published rules determine each allocation.</p>
-                </div>
-              </li>
-              <li>
-                <span>03</span>
-                <div>
-                  <strong>Follow the evidence</strong>
-                  <p>Inspect settlement and claim what is yours.</p>
-                </div>
-              </li>
-            </ol>
-            <Link href="/explore" className="sama-quiet-link">
-              Step into the prototype{" "}
+            <dl className="sama-disclosure">
+              <div>
+                <dt>Commit</dt>
+                <dd>Deposit and commitment are public.</dd>
+              </div>
+              <div>
+                <dt>Reveal</dt>
+                <dd>Your maximum FDV becomes public.</dd>
+              </div>
+              <div>
+                <dt>Settle</dt>
+                <dd>
+                  One price for accepted bids; unused deposits refundable.
+                </dd>
+              </div>
+            </dl>
+            <Link href="/auction" className="sama-quiet-link">
+              Read the auction rules{" "}
               <ArrowUpRight size={16} aria-hidden="true" />
             </Link>
           </article>
-          <Link href="/explore" className="sama-story-action sama-quiet-link">
-            Open the prototype <ArrowUpRight size={16} aria-hidden="true" />
-          </Link>
         </div>
       </section>
       <div className="sama-principles-band">
         <div className="page-shell">
-          <span className="eyebrow">Built around clarity</span>
-          <span>Sealed valuation limits</span>
-          <span>Uniform clearing</span>
-          <span>Onchain evidence</span>
-          <span>Open-source rules</span>
+          <span>10% offered allocation</span>
+          <span>4–6M demoUSDC FDV limits</span>
+          <span>64 revealed bids maximum</span>
+          <span>One clearing FDV</span>
         </div>
       </div>
       <section

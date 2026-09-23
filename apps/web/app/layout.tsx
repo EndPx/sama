@@ -10,7 +10,7 @@ import { currentNetwork } from "@/lib/network-label";
 
 export const metadata: Metadata = {
   title: {
-    default: "SAMA — A place for early conviction",
+    default: "SAMA — A price you can trace",
     template: "%s | SAMA",
   },
   description: `Discover a simulated startup offering, set your valuation limit, and follow every allocation on ${currentNetwork.name}. Demo only; no real equity or monetary value.`,
@@ -70,10 +70,6 @@ export default function RootLayout({
             Kirana AI is fictional. KIRA is a simulated equity-linked demo token
             with no legal or economic rights. demoUSDC has no monetary value. No
             guaranteed returns or liquidity.
-          </p>
-          <p>
-            Made for the next generation of builders. A prototype, not an
-            investment offering.
           </p>
         </footer>
       </body>

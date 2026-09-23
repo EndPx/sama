@@ -40,24 +40,17 @@ export function LandingMotion({ children }: { children: ReactNode }) {
             .to(
               art,
               {
-                x: () => -scene.clientWidth * 0.44,
-                y: -12,
-                scale: 0.9,
+                x: () => -scene.clientWidth * 0.46,
+                scale: 0.97,
                 duration: 0.64,
               },
               0.1,
             )
             .fromTo(
               note,
-              { y: 64, autoAlpha: 0 },
-              { y: 0, autoAlpha: 1, duration: 0.3 },
-              0.46,
-            )
-            .fromTo(
-              ".sama-field-note li",
-              { x: 20, autoAlpha: 0 },
-              { x: 0, autoAlpha: 1, duration: 0.18, stagger: 0.09 },
-              0.62,
+              { yPercent: -50, y: 24, autoAlpha: 0 },
+              { yPercent: -50, y: 0, autoAlpha: 1, duration: 0.23 },
+              0.72,
             )
             .to({}, { duration: 0.2 });
           return () => element.classList.remove("has-scroll-story");
