@@ -50,7 +50,7 @@ Exit gate: no unresolved critical/high finding and settlement fits safely within
 - Build landing, Explore, Kirana detail, Privy onboarding, network/faucet guidance, approve/commit/reveal, settlement/claim, portfolio, and explorer flows.
 - Persist and export reveal material without sending the nonce to a server.
 
-Current implementation: original landing and shadcn primitives; wallet-bound receipt handling; block-coherent contract reads; exact-unit forms; persisted/exported reveal backups; offering, portfolio, and marketplace screens; five educational routes. Local frontend tests pass 51 cases. The scripted Anvil fixture and safe manifest importer are available, but they do not satisfy the interactive browser exit gate. Public deployment remains gated on that acceptance.
+Current implementation: original landing and shadcn primitives; wallet-bound receipt handling; block-coherent contract reads; exact-unit forms; persisted/exported reveal backups with validated recovery from corrupt local storage; offering, portfolio, and marketplace screens; five educational routes. Frontend tests pass 52 cases. The scripted Anvil fixture and safe manifest importer are available, but they do not satisfy the interactive browser exit gate. Public deployment remains gated on that acceptance.
 
 Exit gate: a user completes the local lifecycle without developer tools and every transaction has honest intermediate states.
 
