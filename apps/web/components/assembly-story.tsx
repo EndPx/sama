@@ -22,6 +22,30 @@ export function AssemblyStory() {
     () => {
       gsap.registerPlugin(ScrollTrigger);
       const media = gsap.matchMedia();
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        const section = root.current;
+        const approach = section?.previousElementSibling;
+        const inner = section?.querySelector<HTMLElement>(
+          ".sama-assembly-inner",
+        );
+        if (!approach?.classList.contains("sama-assembly-approach") || !inner)
+          return;
+        gsap.fromTo(
+          inner,
+          { y: 32, opacity: 0.7 },
+          {
+            y: 0,
+            opacity: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: approach,
+              start: "top 85%",
+              end: "bottom 15%",
+              scrub: 1,
+            },
+          },
+        );
+      });
       media.add(
         "(min-width: 1024px) and (min-height: 800px) and (prefers-reduced-motion: no-preference)",
         () => {
@@ -52,10 +76,10 @@ export function AssemblyStory() {
             defaults: { ease: "none" },
             scrollTrigger: {
               trigger: section,
-              start: "top top",
+              start: "top 88px",
               end: () => `+=${window.innerHeight * 1.6}`,
               pin: true,
-              scrub: 0.55,
+              scrub: 1,
               invalidateOnRefresh: true,
             },
           });

@@ -2,6 +2,9 @@
   font-style: normal;
   color: var(--ring);
 }
+.sama-landing section[id] {
+  scroll-margin-top: 104px;
+}
 .marketing-button {
   padding-inline: 24px;
   min-height: 48px !important;
@@ -345,31 +348,9 @@
   text-underline-offset: 4px;
   font-size: 14px;
 }
-.sama-closing-section {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.65fr);
-  gap: 64px;
-  align-items: center;
-  padding-block: 96px;
-}
-.sama-closing-section h2 {
-  font-size: clamp(40px, 4.8vw, 64px);
-}
-.sama-closing-action {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 16px;
-  border-left: 1px solid var(--border);
-  padding-left: 48px;
-}
-.sama-closing-action p {
-  font-size: 12px;
-  color: var(--muted-foreground);
-}
-@media (min-width: 1024px) and (min-height: 650px) {
+@media (min-width: 1024px) and (min-height: 800px) {
   .has-scroll-story .sama-campus-stage {
-    height: 100svh;
+    height: calc(100svh - 88px);
     min-height: 650px;
     max-height: 1000px;
     padding-block: 32px 80px;
@@ -458,8 +439,7 @@
   }
   .sama-principle-grid,
   .sama-mechanism-grid,
-  .sama-proof-grid,
-  .sama-closing-section {
+  .sama-proof-grid {
     grid-template-columns: minmax(0, 1fr);
   }
   .sama-principle {
@@ -485,20 +465,16 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 32px 24px;
   }
-  .sama-closing-section {
-    padding-block: 64px;
-    gap: 32px;
-  }
-  .sama-closing-action {
-    border-left: none;
-    padding-left: 0;
-  }
 }
 
 /* The physical ledger is SAMA's own construction metaphor: deposits slot into
    one public rule, then resolve into accepted capital and claimable refunds. */
+.sama-assembly-approach {
+  height: clamp(96px, 18vh, 220px);
+  background: linear-gradient(180deg, var(--muted), #b3c5b3 52%, #173f35);
+}
 .sama-assembly {
-  min-height: 100vh;
+  min-height: calc(100svh - 88px);
   display: flex;
   align-items: center;
   background: #173f35;
@@ -726,6 +702,9 @@
   }
 }
 @media (max-width: 767px) {
+  .sama-assembly-approach {
+    height: 80px;
+  }
   .sama-assembly-inner {
     gap: 32px;
     padding-block: 64px;

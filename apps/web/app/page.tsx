@@ -241,6 +241,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <div className="sama-assembly-approach" aria-hidden="true" />
       <AssemblyStory />
       <section id="how-it-works" className="page-shell sama-editorial-section">
         <div className="sama-section-lead" data-reveal>
@@ -333,29 +334,6 @@ export default function Home() {
             </a>
             <p>Evidence over adjectives.</p>
           </div>
-        </div>
-      </section>
-      <section className="page-shell sama-closing-section">
-        <div className="stack" data-reveal>
-          <p className="eyebrow">A place for early conviction</p>
-          <h2>
-            Your next step
-            <br />
-            <em>starts with clarity.</em>
-          </h2>
-          <p className="lede">
-            Explore the prototype. Follow the rules.
-            <br />
-            Make up your own mind.
-          </p>
-        </div>
-        <div className="sama-closing-action" data-reveal>
-          <Button size="lg" className="marketing-button" asChild>
-            <Link href="/explore">
-              Enter SAMA <ArrowUpRight data-icon="inline-end" />
-            </Link>
-          </Button>
-          <p>Testnet only. No real equity or money.</p>
         </div>
       </section>
     </LandingMotion>

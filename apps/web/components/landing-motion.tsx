@@ -15,7 +15,7 @@ export function LandingMotion({ children }: { children: ReactNode }) {
       if (!element) return;
       const media = gsap.matchMedia();
       media.add(
-        "(min-width: 1024px) and (min-height: 650px) and (prefers-reduced-motion: no-preference)",
+        "(min-width: 1024px) and (min-height: 800px) and (prefers-reduced-motion: no-preference)",
         () => {
           element.classList.add("has-scroll-story");
           const scene =
@@ -28,7 +28,7 @@ export function LandingMotion({ children }: { children: ReactNode }) {
             defaults: { ease: "none" },
             scrollTrigger: {
               trigger: scene,
-              start: "top top",
+              start: "top 88px",
               end: () => `+=${window.innerHeight * 1.25}`,
               pin: true,
               scrub: 0.5,
