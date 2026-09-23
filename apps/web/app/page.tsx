@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LandingMotion } from "@/components/landing-motion";
+import { AssemblyStory } from "@/components/assembly-story";
 import { currentNetwork } from "@/lib/network-label";
 import "./home.css";
 
@@ -240,6 +241,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <AssemblyStory />
       <section id="how-it-works" className="page-shell sama-editorial-section">
         <div className="sama-section-lead" data-reveal>
           <p className="eyebrow">From intent to evidence</p>

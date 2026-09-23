@@ -494,3 +494,291 @@
     padding-left: 0;
   }
 }
+
+/* The physical ledger is SAMA's own construction metaphor: deposits slot into
+   one public rule, then resolve into accepted capital and claimable refunds. */
+.sama-assembly {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: #173f35;
+  color: #f7f5e9;
+  overflow: hidden;
+}
+.sama-assembly-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  align-items: center;
+  gap: clamp(40px, 6vw, 100px);
+  width: 100%;
+  padding-block: 80px;
+}
+.sama-assembly-copy {
+  min-width: 0;
+}
+.sama-assembly-copy .eyebrow {
+  color: #b6cfb5;
+}
+.sama-assembly-copy h2 {
+  max-width: 11ch;
+  margin-top: 20px;
+  font-size: clamp(40px, 4.8vw, 68px);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 1.07;
+}
+.sama-assembly-copy h2 em {
+  color: #e6bc92;
+  font-style: normal;
+}
+.sama-assembly-copy > p:not(.eyebrow) {
+  max-width: 43ch;
+  margin-top: 24px;
+  color: #d4dfd1;
+}
+.assembly-steps {
+  list-style: none;
+  margin: 48px 0 26px;
+  padding: 0;
+  border-top: 1px solid #718d7e;
+}
+.assembly-steps li {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 16px;
+  padding-block: 15px;
+  border-bottom: 1px solid #718d7e;
+  font-size: 13px;
+  line-height: 1.35;
+}
+.assembly-steps span {
+  color: #b6cfb5;
+  font-family: ui-monospace, monospace;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+.assembly-steps strong {
+  font-weight: 500;
+}
+.sama-assembly-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: #f7f5e9;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+.assembly-board {
+  position: relative;
+  min-width: 0;
+  min-height: 580px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 26px;
+  border: 1px solid #8aa894;
+  background-color: #ebeee2;
+  background-image:
+    linear-gradient(#cbd9c9 1px, transparent 1px),
+    linear-gradient(90deg, #cbd9c9 1px, transparent 1px);
+  background-size: 26px 26px;
+  box-shadow: 22px 22px 0 #0f3028;
+  color: #173f35;
+}
+.assembly-board-heading,
+.assembly-board-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.assembly-board-foot {
+  border-top: 1px solid #719480;
+  padding-top: 16px;
+}
+.assembly-deposits {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: end;
+  gap: 8px;
+  margin-top: 30px;
+  padding-right: 10px;
+}
+.assembly-brick {
+  position: relative;
+  height: 118px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 10px 8px;
+  border: 1px solid #315c4c;
+  background: #c9dac3;
+  box-shadow: 8px -8px 0 #82a38e;
+  font-family: ui-monospace, monospace;
+  line-height: 1.15;
+}
+.assembly-brick:nth-child(2),
+.assembly-brick:nth-child(3) {
+  background: #adcaaf;
+}
+.assembly-brick:nth-child(4) {
+  background: #e6bc92;
+  box-shadow: 8px -8px 0 #ba805d;
+}
+.assembly-brick:nth-child(5) {
+  background: #d3d1c5;
+  box-shadow: 8px -8px 0 #a9a89c;
+}
+.assembly-brick-stud {
+  position: absolute;
+  top: -13px;
+  left: 14px;
+  width: 18px;
+  height: 13px;
+  border: 1px solid #315c4c;
+  border-bottom: 0;
+  background: inherit;
+}
+.assembly-brick-id {
+  position: absolute;
+  top: 10px;
+  right: 8px;
+  font-size: 12px;
+}
+.assembly-brick strong {
+  font-size: clamp(14px, 1.6vw, 20px);
+}
+.assembly-brick small {
+  margin-top: 5px;
+  font-size: 9px;
+}
+.assembly-track {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 75px;
+}
+.assembly-line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: #315c4c;
+  transform-origin: left;
+}
+.assembly-clearing {
+  z-index: 1;
+  padding: 10px 14px;
+  background: #173f35;
+  color: #f7f5e9;
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.assembly-results {
+  display: grid;
+  grid-template-columns: 1fr 0.62fr;
+  gap: 12px;
+}
+.assembly-result {
+  min-height: 108px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 12px;
+  background: #173f35;
+  color: #f7f5e9;
+  font-family: ui-monospace, monospace;
+}
+.assembly-result span,
+.assembly-result small {
+  font-size: 10px;
+  letter-spacing: 0.05em;
+}
+.assembly-result strong {
+  font-size: clamp(26px, 3vw, 40px);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.assembly-refunded {
+  background: #bc7955;
+  color: #152d24;
+}
+@media (max-width: 1023px) {
+  .sama-assembly {
+    min-height: 0;
+  }
+  .sama-assembly-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 48px;
+    padding-block: 80px;
+  }
+  .sama-assembly-copy h2 {
+    max-width: 15ch;
+  }
+  .assembly-board {
+    min-height: 520px;
+  }
+}
+@media (max-width: 767px) {
+  .sama-assembly-inner {
+    gap: 32px;
+    padding-block: 64px;
+  }
+  .sama-assembly-copy h2 {
+    font-size: 42px;
+  }
+  .assembly-steps {
+    margin-top: 28px;
+  }
+  .assembly-steps li {
+    grid-template-columns: 80px minmax(0, 1fr);
+    gap: 10px;
+  }
+  .assembly-board {
+    min-height: 430px;
+    padding: 16px;
+    box-shadow: 10px 10px 0 #0f3028;
+  }
+  .assembly-board-heading,
+  .assembly-board-foot {
+    font-size: 8px;
+  }
+  .assembly-deposits {
+    gap: 4px;
+  }
+  .assembly-brick {
+    height: 85px;
+    padding: 7px 4px;
+    box-shadow: 5px -5px 0 #82a38e;
+  }
+  .assembly-brick:nth-child(4) {
+    box-shadow: 5px -5px 0 #ba805d;
+  }
+  .assembly-brick:nth-child(5) {
+    box-shadow: 5px -5px 0 #a9a89c;
+  }
+  .assembly-brick-stud {
+    left: 8px;
+    top: -9px;
+    width: 12px;
+    height: 9px;
+  }
+  .assembly-brick strong {
+    font-size: 11px;
+  }
+  .assembly-brick small {
+    font-size: 7px;
+  }
+  .assembly-result {
+    min-height: 83px;
+  }
+  .assembly-result strong {
+    font-size: 27px;
+  }
+}
