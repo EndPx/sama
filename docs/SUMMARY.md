@@ -1,22 +1,38 @@
-# Table of contents
+# SAMA docs
 
-- [Welcome to SAMA](README.md)
-- [Judge's guide](JUDGES_GUIDE.md)
-- [The product](PRODUCT.md)
-  - [Problem statement](PROBLEM.md)
-  - [Why Arbitrum](WHY_ARBITRUM.md)
-  - [Brand and artwork](BRAND.md)
-- [Participate in the demo](USER_GUIDE.md)
-  - [Frequently asked questions](FAQ.md)
-- [Architecture](ARCHITECTURE.md)
-  - [Auction specification](AUCTION_SPEC.md)
-  - [Marketplace specification](MARKETPLACE_SPEC.md)
-  - [Threat model](THREAT_MODEL.md)
-  - [Decision: dedicated demo currency](decisions/0001-testnet-demo-currency.md)
-- [Release status and evidence](RELEASE_STATUS.md)
-  - [Security evidence](SECURITY_EVIDENCE.md)
-  - [Settlement gas evidence](GAS_EVIDENCE.md)
+## Introduction
+
+- [Overview](README.md)
+- [The problem](PROBLEM.md)
+- [How SAMA works](PRODUCT.md)
+- [Why Arbitrum](WHY_ARBITRUM.md)
+
+## Explore the demo
+
+- [Getting started](USER_GUIDE.md)
+- [The five-bid auction](AUCTION_WALKTHROUGH.md)
+- [The KIRA token](TOKEN_MODEL.md)
+- [Frequently asked questions](FAQ.md)
+
+## How it works
+
+- [System architecture](ARCHITECTURE.md)
+- [Auction rules](AUCTION_SPEC.md)
+- [Marketplace rules](MARKETPLACE_SPEC.md)
+- [Trust and security](THREAT_MODEL.md)
+- [Why demoUSDC](decisions/0001-testnet-demo-currency.md)
+
+## Build and verify
+
+- [Release status](RELEASE_STATUS.md)
 - [Reproduce the protocol](DEVELOPER_GUIDE.md)
-  - [Implementation plan](IMPLEMENTATION_PLAN.md)
+- [Security evidence](SECURITY_EVIDENCE.md)
+- [Settlement gas](GAS_EVIDENCE.md)
+- [Implementation plan](IMPLEMENTATION_PLAN.md)
+
+## Hackathon review
+
+- [Reviewer's guide](JUDGES_GUIDE.md)
 - [Demo runbook](DEMO_RUNBOOK.md)
-  - [Submission checklist](SUBMISSION_CHECKLIST.md)
+- [Submission checklist](SUBMISSION_CHECKLIST.md)
+- [Brand and artwork](BRAND.md)

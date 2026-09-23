@@ -1,34 +1,29 @@
-# SAMA — from conviction to verifiable allocation
+# SAMA: a clearer way to explore startup offerings
 
-**A startup-marketplace prototype built around transparent price formation and settlement on Arbitrum.**
+What happens between finding a startup you like and receiving an allocation? SAMA lets you follow that journey, step by step, on Arbitrum Sepolia.
 
-![An original architectural illustration of SAMA's imagined innovation campus](https://raw.githubusercontent.com/EndPx/sama/dca39c9453d887f92a771ee63449ab1b187b75f5/apps/web/public/brand/sama-campus.png)
+In our demo, five people make valuation-limited bids for a fictional startup called Kirana AI. The auction finds one price for everyone who gets an allocation. Each person can then check the result, claim their KIRA, and take back any unused deposit. A simple marketplace shows what happens when a holder lists some of those tokens and another person buys them.
 
-You discover a startup you believe in. What valuation would you accept? How should your allocation be decided? What can you verify afterwards?
+> SAMA is a testnet prototype. Kirana AI is fictional. demoUSDC has no monetary value and is not Circle USDC. KIRA is a simulated equity-linked demo token; it is not a legal share and gives no economic rights. The contracts have not been independently audited.
 
-SAMA explores those questions through one fictional Indonesian startup, Kirana AI. A commit–reveal auction turns explicit maximum-FDV bids into a uniform clearing price, followed by independently claimable KIRA allocations, refunds and secondary transfers.
+## Start with the story
 
-> **Testnet only.** Kirana AI is fictional. demoUSDC has no monetary value and is not Circle USDC. KIRA is a simulated equity-linked demo token with no legal or economic rights. SAMA is not independently audited, a regulated offering, or a promise of returns or liquidity.
+- [Why we built SAMA](PROBLEM.md) explains the gap we are exploring.
+- [How SAMA works](PRODUCT.md) follows a bid from deposit to allocation and refund.
+- [The five-bid walkthrough](AUCTION_WALKTHROUGH.md) shows the actual numbers behind the demo.
 
-## Choose your route
+## Choose your path
 
-| You want to… | Start here |
-|---|---|
-| Evaluate the hackathon project | [Judge's guide](JUDGES_GUIDE.md) |
-| Understand the problem and approach | [Problem statement](PROBLEM.md) → [Product](PRODUCT.md) |
-| Understand the participant journey | [Demo participation guide](USER_GUIDE.md) |
-| Review the protocol | [Architecture](ARCHITECTURE.md) → [Auction](AUCTION_SPEC.md) → [Marketplace](MARKETPLACE_SPEC.md) |
-| Check what is actually proven | [Release status](RELEASE_STATUS.md) → [Security evidence](SECURITY_EVIDENCE.md) |
-| Reproduce the implementation | [Developer guide](DEVELOPER_GUIDE.md) |
+**Trying the app?** Read [Getting started](USER_GUIDE.md). [Release status](RELEASE_STATUS.md) will link the public application when it is ready; developers can [run the local prototype](DEVELOPER_GUIDE.md) now.
 
-## The reviewable core
+**Reviewing the hackathon project?** Start with the [reviewer's guide](JUDGES_GUIDE.md). It points to the working code, the tests, and the remaining release gates.
 
-The reference round deposits 700,000 demoUSDC, clears at 4.8M FDV, accepts 480,000 and makes 220,000 refundable. All winners share one clearing price. The contract verifies the submitted bidder set and accounting; a settlement caller cannot simply declare a result.
+**Checking the implementation?** See the [architecture](ARCHITECTURE.md), the [auction rules](AUCTION_SPEC.md), the [marketplace rules](MARKETPLACE_SPEC.md), and [how to reproduce the tests](DEVELOPER_GUIDE.md).
 
-The marketplace then demonstrates explicit, partially fillable listings with ceiling-rounded prices and conservation of both assets. This is an executable mechanism, not evidence of actual investment demand or continuous liquidity.
+## One result you can check
 
-## Where the project stands
+The reference round starts with **700,000 demoUSDC in deposits**. It clears at a **4.8M FDV**, accepts **480,000**, and leaves **220,000 refundable**. The contract checks the complete bidder list and the calculation onchain. The [walkthrough](AUCTION_WALKTHROUGH.md) shows who receives what.
 
-The contract test suite, fuzz/invariant coverage, bounded settlement and security tooling have executable evidence. The investor application and public deployment are still in progress. See [release status](RELEASE_STATUS.md) for the precise boundary; these docs do not substitute for missing deployment or production-UI proof.
+The code and test results are available now. A public Arbitrum Sepolia deployment and a full wallet-driven browser run are still release gates. [Release status](RELEASE_STATUS.md) separates completed proof from planned work.
 
-[Source repository](https://github.com/EndPx/sama) · [Active implementation PR](https://github.com/EndPx/sama/pull/3) · [Official buildathon](https://www.hackquest.io/hackathons/Arbitrum-Open-House-Singapore-Online-Buildathon)
+[Source code](https://github.com/EndPx/sama) · [Implementation PR](https://github.com/EndPx/sama/pull/3) · [Buildathon](https://www.hackquest.io/hackathons/Arbitrum-Open-House-Singapore-Online-Buildathon)
