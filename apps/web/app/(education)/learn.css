@@ -1,0 +1,287 @@
+.education-page {
+  overflow: clip;
+}
+.education-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+  align-items: center;
+  gap: 64px;
+  padding-block: 80px 96px;
+}
+.education-hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  min-width: 0;
+}
+.education-hero-copy h1 {
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.05em;
+  max-width: 13ch;
+}
+.education-hero-copy h1 em {
+  color: var(--ring);
+  font-style: normal;
+}
+.education-hero-copy .lede {
+  max-width: 52ch;
+}
+.education-hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+}
+.education-hero-art {
+  position: relative;
+  min-width: 0;
+  min-height: 420px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: radial-gradient(
+    circle at 78% 18%,
+    var(--sage-light),
+    var(--card) 56%,
+    var(--muted)
+  );
+  box-shadow: var(--shadow-sm);
+}
+.education-art-dark {
+  background: radial-gradient(
+    circle at 78% 14%,
+    var(--ring),
+    var(--forest-deep) 54%
+  );
+  color: var(--card);
+  border-color: var(--primary);
+}
+.education-art-kicker,
+.education-art-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.education-art-footer {
+  padding-top: 16px;
+  border-top: 1px solid currentColor;
+  letter-spacing: normal;
+  text-transform: none;
+}
+.education-art-number {
+  font-size: clamp(64px, 8vw, 112px);
+  font-weight: 500;
+  line-height: 0.94;
+  letter-spacing: -0.07em;
+  font-variant-numeric: tabular-nums;
+}
+.education-art-caption {
+  max-width: 36ch;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.education-section {
+  padding-block: 80px;
+  border-top: 1px solid var(--border);
+}
+.education-section-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 0.45fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+.education-section-heading h2 {
+  max-width: 24ch;
+}
+.education-section-heading p:not(.eyebrow) {
+  color: var(--muted-foreground);
+  max-width: 65ch;
+}
+.education-rows {
+  border-top: 1px solid var(--border);
+}
+.education-row {
+  display: grid;
+  grid-template-columns: 80px minmax(0, 0.7fr) minmax(0, 1fr);
+  gap: 32px;
+  padding-block: 28px;
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+.education-row > span {
+  font-size: 14px;
+  color: var(--ring);
+  font-variant-numeric: tabular-nums;
+}
+.education-row h3 {
+  font-size: 20px;
+}
+.education-row p {
+  color: var(--muted-foreground);
+  max-width: 65ch;
+}
+.education-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.education-paper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+  padding: 32px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.education-paper h3 {
+  font-size: 24px;
+}
+.education-paper p {
+  color: var(--muted-foreground);
+}
+.education-paper .text-link {
+  margin-top: auto;
+}
+.education-columns + .education-note {
+  margin-top: 32px;
+}
+.education-note {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 32px;
+  border-left: 2px solid var(--ring);
+  background: var(--secondary);
+  max-width: 75ch;
+}
+.education-note p {
+  color: var(--muted-foreground);
+}
+.education-end {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 32px;
+  padding-block: 80px;
+  border-top: 1px solid var(--border);
+}
+.education-end h2 {
+  max-width: 22ch;
+}
+.education-end p {
+  color: var(--muted-foreground);
+  max-width: 55ch;
+  margin-top: 16px;
+}
+.education-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.education-table th,
+.education-table td {
+  padding: 16px 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: right;
+}
+.education-table th:first-child,
+.education-table td:first-child {
+  text-align: left;
+  padding-left: 0;
+}
+.education-table thead {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.education-table tbody tr:last-child {
+  font-weight: 600;
+  background: var(--secondary);
+}
+.education-route-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+.education-route-stack span {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+}
+@media (max-width: 767px) {
+  .education-hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+    padding-block: 48px 64px;
+  }
+  .education-hero-art {
+    min-height: 320px;
+    padding: 24px;
+  }
+  .education-section {
+    padding-block: 64px;
+  }
+  .education-section-heading,
+  .education-row,
+  .education-columns,
+  .education-end {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .education-section-heading {
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .education-row {
+    gap: 8px;
+  }
+  .education-end {
+    padding-block: 64px;
+  }
+  .education-table thead {
+    display: none;
+  }
+  .education-table tr {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 16px;
+    padding-block: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .education-table th,
+  .education-table td {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+    text-align: left;
+    padding: 4px 0;
+    border: 0;
+  }
+  .education-table tbody th::before,
+  .education-table td::before {
+    content: attr(data-label);
+    color: var(--muted-foreground);
+    font-size: 12px;
+    font-weight: 400;
+  }
+  .education-table tbody tr:last-child {
+    padding-inline: 12px;
+  }
+}
