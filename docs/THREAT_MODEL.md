@@ -49,6 +49,7 @@ Status: required release gate for the testnet prototype.
 | Secret committed to Git | Ignore rules, Gitleaks CI, GitHub push protection | Clean scan on every push/PR |
 | RPC outage or stale response | Primary/fallback providers and receipt verification | Failure rehearsal |
 | Misleading transaction success | Wait for canonical receipt and surface reverts | UI integration test |
+| Local fixture mistaken for a public testnet deployment | Transaction screens label the configured network; chain checks still gate every write | Config tests and local browser inspection |
 | Demo helper used on a live-money chain | Constructor chain restriction to 421614 or 31337 | Wrong-chain deployment tests |
 | Enrollment helper redirects authority | Enroll only the caller; no role-management or arbitrary-call functions | Caller-scope and unauthorized-role tests |
 

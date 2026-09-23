@@ -22,6 +22,8 @@ describe("public deployment configuration", () => {
     const config = buildConfig({}, artifact);
     expect(config.configured).toBe(true);
     expect(config.chain.id).toBe(421_614);
+    expect(config.networkName).toBe("Arbitrum Sepolia");
+    expect(config.networkBadge).toBe("Arbitrum Sepolia · Testnet");
     expect(config.deploymentBlock).toBe(123n);
     expect(config.rpcUrls).toEqual([
       "https://sepolia-rollup.arbitrum.io/rpc",
@@ -71,5 +73,7 @@ describe("public deployment configuration", () => {
     expect(config.configured).toBe(true);
     expect(config.rpcUrls).toEqual(["http://127.0.0.1:8547"]);
     expect(config.chain.id).toBe(31_337);
+    expect(config.networkName).toBe("Local Anvil");
+    expect(config.networkBadge).toBe("Local Anvil · disposable fixture");
   });
 });

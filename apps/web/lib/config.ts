@@ -1,5 +1,6 @@
 import { isAddress, type Address, type Chain } from "viem";
 import { arbitrumSepolia, foundry } from "viem/chains";
+import { networkDisplay } from "./network-label";
 import deployment from "@sama/chain/deployment";
 
 const LOCAL_RPC_URL = "http://127.0.0.1:8547";
@@ -22,6 +23,8 @@ type Deployment = Record<AddressKey, string> & {
 
 export type AppConfig = {
   localMode: boolean;
+  networkName: string;
+  networkBadge: string;
   chain: Chain;
   rpcUrls: readonly string[];
   contracts: Record<AddressKey, Address | undefined>;
@@ -84,8 +87,11 @@ export function buildConfig(env: Environment, artifact: Deployment): AppConfig {
       : deploymentBlock === 0n
         ? "Deployment block must be a positive uint64 value."
         : undefined;
+  const network = networkDisplay(localMode);
   return {
     localMode,
+    networkName: network.name,
+    networkBadge: network.badge,
     chain,
     rpcUrls: localMode
       ? [LOCAL_RPC_URL]
@@ -118,6 +124,8 @@ const appConfig = buildConfig(
 );
 export const {
   localMode,
+  networkName,
+  networkBadge,
   chain,
   rpcUrls,
   contracts,

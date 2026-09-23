@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageIntro } from "@/components/page-intro";
+import { currentNetwork } from "@/lib/network-label";
 
 export const metadata: Metadata = { title: "Explore the demo" };
 
@@ -16,7 +17,7 @@ export default function Explore() {
         title="One lifecycle, clearly shown."
       >
         Explore the single fictional startup used to demonstrate SAMA&apos;s
-        sealed-bid auction on Arbitrum Sepolia.
+        sealed-bid auction on {currentNetwork.name}.
       </PageIntro>
       <Card className="max-w-3xl">
         <CardHeader className="gap-4">

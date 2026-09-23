@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { OfferingPanel } from "@/components/offering-panel";
 import { PageIntro } from "@/components/page-intro";
 import { WalletWorkspace } from "@/components/wallet/workspace";
+import { currentNetwork } from "@/lib/network-label";
 
 export const metadata: Metadata = { title: "Kirana AI demo auction" };
 const terms = [
@@ -17,7 +18,7 @@ export default function Kirana() {
   return (
     <section className="page-shell page-section space-y-10">
       <PageIntro
-        eyebrow="Fictional startup · Arbitrum Sepolia"
+        eyebrow={`Fictional startup · ${currentNetwork.name}`}
         title="Kirana AI auction demo."
       >
         A sealed maximum-FDV auction that settles eligible revealed bids at one

@@ -6,14 +6,14 @@ import { Badge } from "@/components/ui/badge";
 import type { Metadata } from "next";
 import "./styles.css";
 import { DevTools } from "@/components/dev-tools";
+import { currentNetwork } from "@/lib/network-label";
 
 export const metadata: Metadata = {
   title: {
     default: "SAMA — A place for early conviction",
     template: "%s | SAMA",
   },
-  description:
-    "Discover a simulated startup offering, set your valuation limit, and follow every allocation on Arbitrum Sepolia. Testnet only; no real equity or monetary value.",
+  description: `Discover a simulated startup offering, set your valuation limit, and follow every allocation on ${currentNetwork.name}. Demo only; no real equity or monetary value.`,
   icons: { icon: "/brand/sama-mark.png" },
 };
 export default function RootLayout({
@@ -50,7 +50,7 @@ export default function RootLayout({
             <Link href="/" className="wordmark">
               sama.
             </Link>
-            <Badge variant="outline">Arbitrum Sepolia · Testnet</Badge>
+            <Badge variant="outline">{currentNetwork.badge}</Badge>
             <a className="text-link" href="https://github.com/EndPx/sama">
               Built in the open
             </a>

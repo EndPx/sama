@@ -39,7 +39,13 @@ import {
   shortAddress,
 } from "@/lib/amounts";
 import { publicClient, readMarket } from "@/lib/chain-client";
-import { chain, configured, configurationError, contracts } from "@/lib/config";
+import {
+  chain,
+  configured,
+  configurationError,
+  contracts,
+  networkBadge,
+} from "@/lib/config";
 import { useTransaction } from "@/hooks/use-transaction";
 import { useOffering } from "@/hooks/use-offering";
 
@@ -200,7 +206,7 @@ export function MarketplacePanel() {
             monetary value. This interface is not investment advice.
           </p>
         </div>
-        <Badge variant="secondary">Arbitrum Sepolia testnet</Badge>
+        <Badge variant="secondary">{networkBadge}</Badge>
       </div>
       <Alert>
         <AlertCircle />

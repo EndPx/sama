@@ -43,6 +43,7 @@ import {
   configured,
   contracts,
   localMode,
+  networkName,
 } from "@/lib/config";
 import type { ContractWrite } from "@/lib/transaction";
 import type { TransactionState } from "@/lib/transaction";
@@ -322,12 +323,12 @@ function Participant({
             </div>
           </dl>
           <p className="text-sm text-muted-foreground">
-            Testnet ETH for gas: {formatAmount(data.ethBalance, 18, 8)}. These
-            assets carry no real monetary or equity rights.
+            {networkName} ETH for gas: {formatAmount(data.ethBalance, 18, 8)}.
+            These assets carry no real monetary or equity rights.
           </p>
           {data.ethBalance === 0n && (
             <Alert>
-              <AlertTitle>You need testnet ETH for gas</AlertTitle>
+              <AlertTitle>You need {networkName} ETH for gas</AlertTitle>
               <AlertDescription>
                 {localMode ? (
                   "Fund this wallet from the local Anvil fixture."
