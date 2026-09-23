@@ -142,6 +142,24 @@ export function validateBackupContext(
     throw new Error("This backup does not match your onchain commitment.");
   return b;
 }
+/** Restore a downloaded backup only after its schema and deployment identity pass. */
+export function restoreBackup(
+  raw: string,
+  chainId: number,
+  offering: Address,
+  bidder: Address,
+  commitment?: Hex,
+) {
+  const backup = validateBackupContext(
+    parseBackup(raw),
+    chainId,
+    offering,
+    bidder,
+    commitment,
+  );
+  persistBackup(backup);
+  return backup;
+}
 export const backupCommitment = (b: BidBackup) =>
   bidCommitment(
     b.chainId,

@@ -31,8 +31,8 @@ import {
   isSubmittedCommitment,
   isSubmissionProvenFailed,
   loadBackupState,
-  parseBackup,
   persistBackup,
+  restoreBackup,
   validateBackupContext,
   type BidBackup,
 } from "@/lib/bid-backup";
@@ -406,6 +406,7 @@ function Participant({
           data={data}
           backup={backup}
           backupCorrupted={backupCorrupted}
+          setBackupCorrupted={setBackupCorrupted}
           setBackup={storeBackup}
           transactionState={transaction.state}
           send={send}
@@ -554,6 +555,7 @@ function CommitForm({
   data,
   backup,
   backupCorrupted,
+  setBackupCorrupted,
   setBackup,
   transactionState,
   send,
@@ -563,6 +565,7 @@ function CommitForm({
   data: OfferingState;
   backup: BidBackup | null;
   backupCorrupted: boolean;
+  setBackupCorrupted: (corrupted: boolean) => void;
   setBackup: (b: BidBackup) => void;
   transactionState: TransactionState;
   send: Send;
@@ -579,17 +582,15 @@ function CommitForm({
   const prepare = () => {
     setError("");
     try {
-      if (backupCorrupted)
+      const stored = loadBackupState(chain.id, contracts.offering!, address);
+      if (backupCorrupted || stored.corrupted) {
+        setBackupCorrupted(true);
         throw new Error(
           "A stored reveal backup is unreadable. Do not prepare a replacement; restore your exported backup before committing.",
         );
-      const existing = loadBackupState(
-        chain.id,
-        contracts.offering!,
-        address,
-      ).backup;
+      }
       const prepared =
-        existing ??
+        stored.backup ??
         createBackup(
           chain.id,
           contracts.offering!,
@@ -605,6 +606,26 @@ function CommitForm({
         e instanceof Error
           ? e.message
           : "Could not prepare your backup. No bid was sent.",
+      );
+    }
+  };
+  const restoreFile = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) return;
+    try {
+      if (file.size > 16_384) throw new Error();
+      const restored = restoreBackup(
+        await file.text(),
+        chain.id,
+        contracts.offering!,
+        address,
+      );
+      setBackup(restored);
+      setError("");
+    } catch {
+      setError(
+        "Backup could not be restored. Use the JSON file for this wallet, chain, and offering. Your stored draft was not replaced.",
       );
     }
   };
@@ -711,10 +732,21 @@ function CommitForm({
               </Field>
             </FieldGroup>
             {backupCorrupted && (
-              <p role="alert" className="text-sm text-destructive">
-                A stored reveal backup is unreadable. Do not prepare a
-                replacement over it; restore your exported backup first.
-              </p>
+              <Field>
+                <FieldLabel htmlFor="commit-restore">
+                  Restore your saved reveal backup
+                </FieldLabel>
+                <Input
+                  id="commit-restore"
+                  type="file"
+                  accept=".json,application/json"
+                  onChange={(event) => void restoreFile(event)}
+                />
+                <FieldDescription>
+                  A stored draft is unreadable. Import its private JSON backup
+                  here before continuing; a new nonce will not replace it.
+                </FieldDescription>
+              </Field>
             )}
             <Button
               variant="outline"
@@ -895,15 +927,13 @@ function RevealForm({
     if (!file) return;
     try {
       if (file.size > 16_384) throw new Error("Backup file is too large.");
-      const imported = parseBackup(await file.text());
-      validateBackupContext(
-        imported,
+      const imported = restoreBackup(
+        await file.text(),
         chain.id,
         contracts.offering!,
         address,
         data.bid.commitment,
       );
-      persistBackup(imported);
       setBackup(imported);
       setError("");
     } catch {

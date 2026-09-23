@@ -8,6 +8,7 @@ import {
   persistBackup,
   isSubmittedCommitment,
   isSubmissionProvenFailed,
+  restoreBackup,
   validateBackupContext,
 } from "./bid-backup";
 import { FDV_FLOOR } from "./amounts";
@@ -133,6 +134,33 @@ describe("bid backup", () => {
       throw new Error("quota");
     });
     expect(() => persistBackup(parsed)).toThrow("could not save");
+  });
+
+  it("restores a corrupt local draft only from a matching exported backup", () => {
+    const storageKey =
+      "sama:bid:421614:0x00000000000000000000000000000000000000a1:0x00000000000000000000000000000000000000b1";
+    entries.set(storageKey, "corrupt draft");
+    const valid = JSON.stringify(raw);
+
+    expect(() => restoreBackup(valid, 1, offering, bidder)).toThrow(
+      "different wallet",
+    );
+    expect(() =>
+      restoreBackup(valid, 421_614, offering, bidder, `0x${"cd".repeat(32)}`),
+    ).toThrow("onchain commitment");
+    expect(entries.get(storageKey)).toBe("corrupt draft");
+
+    const restored = restoreBackup(
+      valid,
+      421_614,
+      offering,
+      bidder,
+      backupCommitment(parseBackup(valid)),
+    );
+    expect(loadBackupState(421_614, offering, bidder)).toEqual({
+      backup: restored,
+      corrupted: false,
+    });
   });
 
   it("creates a schema-valid draft with a fresh nonce", () => {
