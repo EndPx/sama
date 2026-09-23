@@ -1,47 +1,33 @@
-# The solution: one startup, one verifiable lifecycle
+# How SAMA works
 
-SAMA is an Indonesia-first startup-marketplace prototype. It combines a startup-focused interface with a commit–reveal, uniform-price auction and a restricted-token secondary marketplace on Arbitrum Sepolia.
+SAMA follows one fictional startup offering from discovery to a secondary transfer. Kirana AI is the example company. demoUSDC is the valueless test currency; KIRA is a simulated token with no legal or economic rights.
 
-The product promise being tested is simple: **understand the opportunity, express a valuation limit, and verify what happens next.** The hackathon implementation uses fictional Kirana AI, valueless demoUSDC, and simulated equity-linked KIRA. KIRA confers no legal shares, dividends, voting rights, or enforceable economic interest.
-
-## Follow the transaction, not just the screen
+## Follow one bid
 
 ```mermaid
 flowchart LR
-    A[Discover Kirana AI] --> B[Evaluate fixed terms]
-    B --> C[Commit a sealed maximum FDV]
-    C --> D[Reveal during the window]
-    D --> E[Verify uniform-price settlement]
+    A[Explore Kirana AI] --> B[Choose a deposit and FDV limit]
+    B --> C[Commit and save a backup]
+    C --> D[Reveal before the deadline]
+    D --> E[Check the clearing result]
     E --> F[Claim KIRA and refunds]
-    F --> G[List KIRA]
-    G --> H[Another eligible wallet buys]
+    F --> G[Create or fill a listing]
 ```
 
-| Step | What the participant controls | What the protocol verifies |
-|---|---|---|
-| Commit | Deposit amount, maximum FDV, secret nonce | One commitment per address, escrow and eligibility |
-| Reveal | Submission of the saved bid material | Exact commitment match and exclusive reveal deadline |
-| Settle | Anyone may submit the sorted revealed set | Completeness, order, uniqueness, clearing and accounting |
-| Claim | Each participant initiates their own claims | Entitlement and one-time withdrawal |
-| Trade | Seller sets total price; buyer chooses quantity and maximum cost | Escrow, eligibility, ceiling-rounded cost and atomic delivery |
+**You choose your limit.** During commitment, you escrow demoUSDC and submit a hash of your maximum FDV and a private nonce. Your deposit and transaction are public. Your FDV stays hidden until you reveal it.
 
-## Price formation with a concrete answer
+**The contract checks the result.** Once reveal ends, anyone can propose a complete sorted bidder list. The contract verifies the list, finds the highest clearing FDV under the published rules, and records exact accepted amounts and refunds. The submitter cannot simply choose a favorite winner.
 
-The fixed offering sells a simulated 10% allocation represented by one million KIRA. Maximum FDV bids lie between 4M and 6M demoUSDC. The required capital at a candidate FDV is 10% of that FDV; the 400,000 minimum is not an arbitrary fixed clearing target.
+**You take the next step.** Winners claim KIRA. Bidders claim positive refunds separately. A holder can list KIRA for a stated total price, and an eligible buyer can fill all or part of the listing. A listing is an offer to sell, not guaranteed liquidity.
 
-In the mandatory five-bid fixture, 700,000 demoUSDC is deposited. The auction clears at 4.8M FDV, accepts 480,000 and makes 220,000 refundable. Bidder B is partially accepted; bidder A is not accepted. All winners use the same 0.48 demoUSDC-per-KIRA clearing price, subject to base-unit allocation rounding. The [auction specification](AUCTION_SPEC.md) contains the authoritative table and algorithm.
+## The result in numbers
 
-## What is distinctive?
+The reference round offers 1,000,000 KIRA as a simulated 10% allocation. Five bidders deposit 700,000 demoUSDC. The auction clears at a 4.8M FDV, accepts 480,000 and leaves 220,000 refundable. Bidder B is accepted for 30,000 of a 150,000 deposit; bidder A receives a full 100,000 refund. The [worked example](AUCTION_WALKTHROUGH.md) shows each bid and the clearing calculation. The [auction specification](AUCTION_SPEC.md) remains the source for exact base-unit and rounding behavior.
 
-The contribution is the connected implementation, not a claim to invent sealed bids or uniform-price auctions. Startup evaluation leads into a valuation-limited allocation, then into independently checkable claims and partial secondary settlement. The same accounting rules run in the contracts and their reference-model tests.
+## What the prototype proves
 
-SAMA is not a general-purpose token launchpad, automated market maker, or multi-chain exchange. The marketplace matches an explicit listing with a willing buyer; it provides neither continuous liquidity nor a quoted portfolio value.
+The working contract tests exercise settlement, failed rounds, claim order, unrevealed bids, cancellation, marketplace partial fills, and conservation of assets. The [release page](RELEASE_STATUS.md) links the current evidence and names the public deployment and browser checks still to do.
 
-## Deliberate trade-offs
+The experiment uses existing commit–reveal and uniform-price ideas. Its contribution is one connected, reviewable flow: understand an offering, state a valuation limit, see the allocation rule applied, and inspect what happens to the assets afterwards.
 
-- Commit–reveal requires a second transaction and safe backup handling. Deposit amounts remain public, and revealed maximum FDVs become public.
-- Settlement is bounded to 64 revealed bids. This makes worst-case work testable but limits capacity and permits denial-of-participation pressure.
-- Simulated eligibility is centrally administered, with open self-enrollment for the testnet demo. It is not KYC or Sybil resistance.
-- Pull-based claims keep settlement transfers bounded, but participants must return to claim their assets.
-
-The [threat model](THREAT_MODEL.md) records these limitations. The [implementation plan](IMPLEMENTATION_PLAN.md) distinguishes the tested protocol from the unfinished application and deployment gates.
+Continue with [Getting started](USER_GUIDE.md) for the participant path or [architecture](ARCHITECTURE.md) for contract boundaries.

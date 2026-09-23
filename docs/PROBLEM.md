@@ -1,32 +1,23 @@
-# The problem: belief is not a complete investment journey
+# The problem
 
-Someone discovers an early startup, understands its product, and wants to back it. Three questions follow: **What valuation would I accept? How is my allocation decided? What can I verify afterwards?** SAMA explores a single, inspectable path through those questions.
+Finding an early startup is only the beginning. If you decide to participate, you still need answers to three practical questions: **What valuation am I willing to accept? How will my allocation be decided? What can I verify afterwards?**
 
-## Access already exists. The workflow can improve.
+SAMA explores a workflow that connects those answers. It does not claim that access to private companies is impossible today. Indonesia already has a securities crowdfunding framework, including [OJK's POJK 17/2025](https://ojk.go.id/id/regulasi/Pages/POJK-17-Tahun-2025-Penawaran-Efek-Melalui-Layanan-Urun-Dana-Berbasis-Teknologi-Informasi.aspx). SAMA is not an authorized operator under that framework.
 
-SAMA does not claim that Indonesian individuals have no access to private-business investing. Indonesia has a securities-crowdfunding framework, including [OJK's POJK 17/2025](https://ojk.go.id/id/regulasi/Pages/POJK-17-Tahun-2025-Penawaran-Efek-Melalui-Layanan-Urun-Dana-Berbasis-Teknologi-Informasi.aspx). That context makes regulatory and investor-protection requirements essential, not optional. This prototype is not an authorized operator under that framework.
+## Where the experience breaks down
 
-The narrower product hypothesis is that startup discovery, explicit valuation preferences, allocation, refund accounting, and subsequent transfers can be made easier to understand as one connected experience.
+A startup profile can explain a company, but it cannot show how a price was reached. A token balance can show units, but it cannot prove a legal ownership claim. A listing can offer tokens for sale, but it cannot promise a buyer.
 
-| Participant | Question to answer | SAMA's prototype response |
-|---|---|---|
-| Prospective backer | What am I evaluating? | One readable, explicitly fictional startup profile with fixed offering terms |
-| Bidder | What is the highest valuation I will accept? | A sealed maximum-FDV commitment, later revealed by the bidder |
-| Founder | How does demand translate into a round price? | One reproducible clearing rule instead of administrator-selected allocations |
-| Token holder | What happened to my allocation or transfer? | Onchain claims, escrowed listings, and atomic purchase records |
+We built one small testnet journey around the parts software can make inspectable: fixed offering terms, valuation-limited bids, deterministic allocation, exact refunds, and transfers with visible receipts.
 
-These are design hypotheses, not findings from completed customer interviews. The repository does not claim revenue, real investors, signed startup partners, or organic demand.
+## The question behind the prototype
 
-## Why connect the steps?
+Can someone follow a simulated bid from their first deposit through the clearing result, a refund, a KIRA claim, and a secondary purchase—then check the accounting without relying on a screenshot?
 
-A profile alone cannot establish settlement. A token balance alone cannot establish legal ownership. A marketplace listing alone cannot establish liquidity. SAMA connects the mechanical steps while keeping those distinctions visible.
+The five-bid [auction walkthrough](AUCTION_WALKTHROUGH.md) makes that question concrete. The [product guide](PRODUCT.md) shows the whole journey.
 
-The hackathon question is deliberately testable: can a reviewer trace a simulated commitment all the way through clearing, a refund, a KIRA claim, and a secondary purchase, without trusting a screenshot of a balance?
+## What we still need to learn
 
-## What would validate the product thesis?
+We have not claimed user traction, signed startup partners, or completed customer research. After the wallet journey works end to end, we can run task-based sessions with prospective backers and founders. A useful first measure is whether people can explain their FDV limit, recover a reveal backup, and tell a deposit apart from an accepted allocation.
 
-After the complete testnet path is available, recruit prospective backers and founders for task-based sessions. Measure whether a participant can explain the maximum FDV, distinguish a commitment from accepted capital, recover a reveal backup, and identify a confirmed transaction. Record completion rates and failure causes before making adoption claims.
-
-A real-money pilot would be a separate project requiring qualified legal review, appropriate authorization, genuine issuer diligence, investor protection, and an independently assessed security model. The testnet prototype establishes none of those prerequisites.
-
-Continue to [the product](PRODUCT.md) to see what SAMA builds within this boundary.
+A real-money product would require its own legal, issuer-diligence, investor-protection, and security work. This demo does not establish those prerequisites.

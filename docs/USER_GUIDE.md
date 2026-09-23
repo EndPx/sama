@@ -1,43 +1,43 @@
-# Participate in the testnet demo
+# Getting started with SAMA
 
-Status: the complete public application lifecycle is still being built. This guide describes the intended contract-backed path, not a claim that every screen is already available. Check [release status](RELEASE_STATUS.md) before connecting a wallet.
+SAMA is a testnet walkthrough of one fictional Kirana AI offering. The public application is still a release gate; [release status](RELEASE_STATUS.md) will carry its URL and contract addresses when they have been verified. Developers can [run the local version](DEVELOPER_GUIDE.md) now.
 
-Use an isolated test wallet. demoUSDC has no monetary value, and KIRA is a simulated equity-linked token with no legal or economic rights. Do not send real assets to the demo.
+Use a separate test wallet. Everything in this flow is simulated: demoUSDC has no monetary value, and KIRA gives no legal or economic rights.
 
-## Prepare
+## 1. Prepare your wallet
 
-1. Open the official application link listed in release status and connect a wallet. Confirm **Arbitrum Sepolia (421614)**, not Arbitrum One or Ethereum mainnet.
-2. Obtain test ETH for gas from a provider listed in the [official Arbitrum faucet guide](https://docs.arbitrum.io/for-devs/dev-tools-and-resources/chain-info#faucet-list). Faucet availability and requirements belong to those providers.
-3. Enroll the connected address through the demo-access helper and claim demoUSDC from the deployed SAMA faucet. Each address can claim 250,000 units once per 24 hours. Wait for successful receipts before relying on balances or eligibility.
+Connect on **Arbitrum Sepolia (chain ID 421614)**. You need test ETH for transaction fees; the [Arbitrum faucet guide](https://docs.arbitrum.io/for-devs/dev-tools-and-resources/chain-info#faucet-list) lists available providers. Once the deployed app is available, enroll the wallet with SAMA's demo-access helper and use the SAMA faucet for demoUSDC. The faucet permits 250,000 units per address per 24 hours.
 
-## Commit, back up, then reveal
+Wait for confirmed transactions before trusting the displayed eligibility or balance. Public enrollment is a simulation convenience, not identity verification.
 
-1. Read Kirana's terms and both deadlines. Choose a deposit and maximum FDV between 4M and 6M demoUSDC. A deposit is not yet accepted capital.
-2. Save the reveal material locally and export its backup before submitting the commitment. Approve only the intended spending amount and sign the commitment transaction. One address can commit only once to an offering; the committed bid cannot be edited.
-3. Return during the reveal window with the same wallet, chain, offering and backup. Reveal before `revealEnd`: a transaction included at that timestamp is already too late. The backup nonce and maximum FDV become public in the reveal transaction.
+## 2. Make a bid you can reveal
 
-The deposit amount and commitment transaction are always public. Keep an unrevealed backup out of chat, Git, issue trackers and shared drives. Clearing browser storage or moving devices without a backup can prevent a reveal. Backups are not wallet recovery phrases; never enter a seed phrase into SAMA.
+Read Kirana's fixed terms and the commit and reveal deadlines. Choose a demoUSDC deposit and a maximum FDV between 4M and 6M. The deposit goes into escrow; it is not yet an accepted allocation.
 
-## After the auction
+SAMA creates a reveal record for your wallet, chain, offering, amount, FDV and nonce. **Export the backup before signing the commitment.** Keep it private and somewhere you can retrieve it. You cannot edit a bid once committed, and one address can commit only once.
 
-1. After the reveal deadline, anyone can submit the complete sorted revealed set for settlement. The contract checks it; the submitter cannot choose winners.
-2. On success, claim any allocated KIRA and any positive refund separately. On failure or cancellation, claim the refundable deposit. An unrevealed bid receives no KIRA and is fully refundable only after finalization or cancellation.
-3. Check confirmed receipts and the updated balances. Signing or receiving a transaction hash is not success; a reverted transaction does not deliver an allocation.
+During the reveal window, return with the same wallet and backup. Reveal **before** the deadline; a transaction included exactly at `revealEnd` is too late. The reveal transaction publishes your FDV and nonce. Your deposit amount was already public at commitment time.
 
-## Secondary listings
+## 3. Check the outcome
 
-Approve KIRA to the marketplace and create a listing with a total KIRA amount and total demoUSDC price. KIRA moves into escrow. An eligible buyer can purchase all or part of the remainder, using a maximum cost to reject an unfavorable stale quote. Rounding uses the [marketplace specification](MARKETPLACE_SPEC.md).
+After reveal closes, anyone can submit settlement with the complete sorted list of revealed bidders. The contract checks the list and math. On a successful round, claim any KIRA and any positive refund separately. On a failed or cancelled round, claim the refundable deposit. An unrevealed bid cannot receive KIRA; its deposit becomes refundable only after finalization or cancellation.
 
-The seller can cancel an active remainder to an eligible recipient. Marketplace pause does not remove this exit, but a KIRA-token pause blocks all token transfers until unpaused. A listing does not guarantee a buyer, liquidity, or future value.
+A signed request or transaction hash is not a completed action. Check the confirmed receipt and your updated balance. The [five-bid walkthrough](AUCTION_WALKTHROUGH.md) explains the reference result.
 
-## Recover without guessing
+## 4. Try a secondary transfer
 
-| Situation | Safe next step |
-|---|---|
-| Wrong network or address | Switch back before importing or submitting bid material |
-| Missing local backup | Import the previously exported backup and verify it against the commitment |
-| Lost backup or missed reveal | Do not invent a nonce; wait for finalization/cancellation and claim the refund |
-| Transaction waiting or RPC failure | Check its hash on the explorer; avoid resubmitting blindly |
-| Claim unavailable | Inspect phase, entitlement and existing claim flags; zero entitlement is not an application balance |
+If you hold KIRA, approve and create a listing with a KIRA amount and a total demoUSDC price. The listed KIRA moves into marketplace escrow. An eligible buyer can fill part or all of it with a maximum-cost limit. The seller can cancel the unsold remainder to an eligible recipient. A token pause temporarily blocks transfers, including cancellation, until KIRA is unpaused.
 
-Read the [FAQ](FAQ.md) before treating a demo balance as an investment outcome.
+The [marketplace rules](MARKETPLACE_SPEC.md) show how a partial purchase is priced and rounded. A listing does not guarantee a buyer.
+
+## If something goes wrong
+
+| What you see                     | What to do                                                                          |
+| -------------------------------- | ----------------------------------------------------------------------------------- |
+| Wrong network or wallet          | Switch back before importing or submitting reveal material.                         |
+| Missing browser record           | Import your exported backup and check it against the onchain commitment.            |
+| Lost backup or missed reveal     | Do not guess a nonce. Wait for finalization or cancellation, then claim the refund. |
+| Pending transaction or RPC error | Check the transaction hash before signing another request.                          |
+| No claim available               | Check the auction phase, your entitlement and whether that claim already happened.  |
+
+Do not paste reveal backups or wallet recovery phrases into chats or support forms. The [FAQ](FAQ.md) answers the most common questions about the demo.
