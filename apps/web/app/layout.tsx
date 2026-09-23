@@ -26,51 +26,55 @@ export default function RootLayout({
         <a className="skip-link" href="#main">
           Skip to content
         </a>
-        <header className="site-header page-shell">
-          <Link href="/" className="wordmark" aria-label="SAMA home">
-            <Image src="/brand/sama-mark.png" alt="" width={44} height={44} />
-            sama<span className="wordmark-dot">.</span>
-          </Link>
-          <nav aria-label="Main navigation">
-            <Link href="/investors">Investors</Link>
-            <Link href="/founders">Founders</Link>
-            <Link href="/token-model">Token model</Link>
-            <Link href="/auction">Auction</Link>
-            <Link href="/docs/getting-started">Start here</Link>
-          </nav>
-          <Button variant="outline" asChild>
-            <Link href="/startups/kirana-ai#participate">
-              Open demo <ArrowUpRight data-icon="inline-end" />
+        <header className="site-header">
+          <div className="site-header-inner page-shell">
+            <Link href="/" className="wordmark" aria-label="SAMA home">
+              <Image src="/brand/sama-mark.png" alt="" width={44} height={44} />
+              sama<span className="wordmark-dot">.</span>
             </Link>
-          </Button>
+            <nav aria-label="Main navigation">
+              <Link href="/investors">Investors</Link>
+              <Link href="/founders">Founders</Link>
+              <Link href="/token-model">Token model</Link>
+              <Link href="/auction">Auction</Link>
+              <Link href="/docs/getting-started">Start here</Link>
+            </nav>
+            <Button variant="outline" asChild>
+              <Link href="/startups/kirana-ai#participate">
+                Open demo <ArrowUpRight data-icon="inline-end" />
+              </Link>
+            </Button>
+          </div>
         </header>
         <main id="main">{children}</main>
-        <footer className="site-footer page-shell">
-          <div className="footer-top">
-            <Link href="/" className="wordmark">
-              sama.
-            </Link>
-            <Badge variant="outline">{currentNetwork.badge}</Badge>
-            <a className="text-link" href="https://github.com/EndPx/sama">
-              Built in the open
-            </a>
+        <footer className="site-footer">
+          <div className="site-footer-inner page-shell">
+            <div className="footer-top">
+              <Link href="/" className="wordmark">
+                sama.
+              </Link>
+              <Badge variant="outline">{currentNetwork.badge}</Badge>
+              <a className="text-link" href="https://github.com/EndPx/sama">
+                Built in the open
+              </a>
+            </div>
+            <nav
+              className="footer-links"
+              aria-label="Prototype and documentation"
+            >
+              <Link href="/explore">Explore Kirana AI</Link>
+              <Link href="/portfolio">Portfolio</Link>
+              <Link href="/market/kira">Marketplace</Link>
+              <a href="https://sama-3.gitbook.io/sama-product-and-protocol/">
+                GitBook docs
+              </a>
+            </nav>
+            <p>
+              Kirana AI is fictional. KIRA is a simulated equity-linked demo
+              token with no legal or economic rights. demoUSDC has no monetary
+              value. No guaranteed returns or liquidity.
+            </p>
           </div>
-          <nav
-            className="footer-links"
-            aria-label="Prototype and documentation"
-          >
-            <Link href="/explore">Explore Kirana AI</Link>
-            <Link href="/portfolio">Portfolio</Link>
-            <Link href="/market/kira">Marketplace</Link>
-            <a href="https://sama-3.gitbook.io/sama-product-and-protocol/">
-              GitBook docs
-            </a>
-          </nav>
-          <p>
-            Kirana AI is fictional. KIRA is a simulated equity-linked demo token
-            with no legal or economic rights. demoUSDC has no monetary value. No
-            guaranteed returns or liquidity.
-          </p>
         </footer>
       </body>
     </html>

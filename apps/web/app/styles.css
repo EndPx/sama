@@ -171,11 +171,22 @@
   color: var(--primary);
 }
 .site-header {
+  position: relative;
+  z-index: 30;
+}
+.site-header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  min-height: 96px;
+  min-height: 88px;
+}
+body:has(.sama-landing) .site-header {
+  position: sticky;
+  top: 0;
+  background: rgb(246 244 237 / 94%);
+  border-bottom: 1px solid rgb(203 212 199 / 60%);
+  backdrop-filter: blur(14px);
 }
 .wordmark {
   display: inline-flex;
@@ -205,14 +216,22 @@
   color: var(--ring);
 }
 .site-footer {
-  border-top: 1px solid var(--border);
-  padding-block: 40px;
+  background: #d2c4ac;
+  color: #192d25;
+  border-top: 1px solid #ad9f87;
+}
+.site-footer-inner {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
+  padding-block: 56px 44px;
+}
+.site-footer .wordmark,
+.site-footer .text-link {
+  color: #192d25;
 }
 .site-footer p {
-  color: var(--muted-foreground);
+  color: #34483d;
   font-size: 12px;
   max-width: 96ch;
 }
@@ -241,7 +260,7 @@
   text-underline-offset: 4px;
 }
 .footer-links a:hover {
-  color: var(--ring);
+  color: #315c4c;
   text-decoration-color: currentColor;
 }
 .terms {
@@ -264,23 +283,42 @@
   font-variant-numeric: tabular-nums;
 }
 @media (max-width: 1023px) {
-  .site-header {
+  .site-header-inner {
     flex-wrap: wrap;
-    padding-block: 20px;
+    padding-block: 12px;
   }
   .site-header nav {
     order: 3;
     width: 100%;
     justify-content: flex-start;
-    gap: 16px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 24px;
+    scrollbar-width: none;
+  }
+  .site-header nav::-webkit-scrollbar {
+    display: none;
+  }
+  .site-header nav a {
+    white-space: nowrap;
+    padding-block: 6px;
   }
 }
 @media (max-width: 767px) {
+  .site-header-inner {
+    gap: 4px 16px;
+  }
+  .site-header .wordmark {
+    font-size: 27px;
+  }
+  .site-header .wordmark img {
+    width: 36px;
+    height: 36px;
+  }
   .site-header nav {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    display: flex;
+    gap: 14px;
     font-size: 12px;
-    gap: 8px 12px;
   }
 }
 .skip-link {
