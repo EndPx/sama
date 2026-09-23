@@ -45,6 +45,7 @@ import {
   configurationError,
   contracts,
   networkBadge,
+  networkName,
 } from "@/lib/config";
 import { useTransaction } from "@/hooks/use-transaction";
 import { useOffering } from "@/hooks/use-offering";
@@ -202,7 +203,7 @@ export function MarketplacePanel() {
             KIRA marketplace
           </h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-            KIRA and SAMA demoUSDC are testnet-only simulated assets with no
+            KIRA and SAMA demoUSDC are demo-only simulated assets with no
             monetary value. This interface is not investment advice.
           </p>
         </div>
@@ -225,7 +226,7 @@ export function MarketplacePanel() {
             </CardTitle>
             <CardDescription>
               Browsing remains read-only until a connected wallet is on the
-              configured testnet.
+              configured {networkName} network.
             </CardDescription>
           </CardHeader>
           <CardContent>

@@ -29,7 +29,7 @@ export default function Kirana() {
         <div className="space-y-6">
           <Card>
             <CardHeader className="gap-3">
-              <Badge variant="secondary">Fixed testnet terms</Badge>
+              <Badge variant="secondary">Fixed demo terms</Badge>
               <CardTitle>A small, reproducible auction</CardTitle>
             </CardHeader>
             <CardContent>

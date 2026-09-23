@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { MarketplacePanel } from "@/components/marketplace-panel";
 import { PageIntro } from "@/components/page-intro";
 import { WalletWorkspace } from "@/components/wallet/workspace";
-export const metadata: Metadata = { title: "KIRA testnet marketplace" };
+export const metadata: Metadata = { title: "KIRA demo marketplace" };
 export default function Market() {
   return (
     <section className="page-shell page-section space-y-10">
@@ -15,7 +15,7 @@ export default function Market() {
         demoUSDC. The displayed quote uses the current onchain remainder and is
         protected by a maximum cost.
         <Badge variant="outline" className="mt-4">
-          Testnet only · demo assets
+          Demo assets only
         </Badge>
       </PageIntro>
       <WalletWorkspace>

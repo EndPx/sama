@@ -4,7 +4,7 @@ import { OfferingPanel } from "@/components/offering-panel";
 import { PageIntro } from "@/components/page-intro";
 import { WalletWorkspace } from "@/components/wallet/workspace";
 import { currentNetwork } from "@/lib/network-label";
-export const metadata: Metadata = { title: "Your testnet portfolio" };
+export const metadata: Metadata = { title: "Your demo portfolio" };
 export default function Portfolio() {
   return (
     <section className="page-shell page-section space-y-10">
