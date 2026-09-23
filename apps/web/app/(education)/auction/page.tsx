@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { EducationHero } from "@/components/education-hero";
+import { EducationVisual } from "@/components/education-visual";
 import {
   formatWholeUnits,
   referenceAuction,
@@ -26,25 +27,7 @@ export default function AuctionPage() {
         }
         description="Each bidder names the highest valuation they would accept. After reveal, the contract finds the highest FDV at which the offered allocation can be filled. Every accepted bid uses that same FDV."
         tone="forest"
-        art={
-          <>
-            <div className="education-art-kicker">
-              <span>Reference round</span>
-              <span>S / 04</span>
-            </div>
-            <div>
-              <p className="education-art-caption">Uniform clearing FDV</p>
-              <p className="education-art-number">4.8M</p>
-              <p className="education-art-caption">
-                480,000 demoUSDC accepted · 220,000 demoUSDC refundable
-              </p>
-            </div>
-            <div className="education-art-footer">
-              <span>Five seeded bidders</span>
-              <span>Testnet only</span>
-            </div>
-          </>
-        }
+        art={<EducationVisual kind="auction" />}
         primary={{ href: "#auction-result", label: "See the result" }}
         secondary={{ href: "/docs/getting-started", label: "Learn the steps" }}
       />

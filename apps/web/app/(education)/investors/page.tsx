@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { EducationHero } from "@/components/education-hero";
+import { EducationVisual } from "@/components/education-visual";
 
 export const metadata: Metadata = {
   title: "For participants",
@@ -20,26 +21,7 @@ export default function InvestorsPage() {
           </>
         }
         description="SAMA turns a valuation preference into a bid you can trace. Read the fixed terms, decide your maximum FDV, and see how the contract treats your deposit after settlement."
-        art={
-          <>
-            <div className="education-art-kicker">
-              <span>The bidder&apos;s view</span>
-              <span>S / 01</span>
-            </div>
-            <div>
-              <p className="education-art-caption">Reference clearing FDV</p>
-              <p className="education-art-number">4.8M</p>
-              <p className="education-art-caption">
-                All accepted bids in the five-bid example settle at this FDV,
-                even when their maximum was higher.
-              </p>
-            </div>
-            <div className="education-art-footer">
-              <span>One clearing rule</span>
-              <span>Five seeded bids</span>
-            </div>
-          </>
-        }
+        art={<EducationVisual kind="investor" />}
         primary={{ href: "/auction", label: "See the auction" }}
         secondary={{ href: "/docs/getting-started", label: "How to take part" }}
       />

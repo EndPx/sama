@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { EducationHero } from "@/components/education-hero";
+import { EducationVisual } from "@/components/education-visual";
 
 export const metadata: Metadata = {
   title: "For founders",
@@ -20,25 +21,7 @@ export default function FoundersPage() {
           </>
         }
         description="Founders should be able to explain the terms before the first bid and the result after the last reveal. Kirana AI is the fixed fictional case SAMA uses to test that idea."
-        art={
-          <>
-            <div className="education-art-kicker">
-              <span>The issuer&apos;s view</span>
-              <span>S / 02</span>
-            </div>
-            <div>
-              <p className="education-art-number">10%</p>
-              <p className="education-art-caption">
-                A simulated allocation represented by up to 1,000,000 KIRA.
-                Neither number establishes real company equity.
-              </p>
-            </div>
-            <div className="education-art-footer">
-              <span>Fixed terms</span>
-              <span>Verifiable settlement</span>
-            </div>
-          </>
-        }
+        art={<EducationVisual kind="founder" />}
         primary={{ href: "/auction", label: "View the auction" }}
         secondary={{ href: "/explore", label: "Explore Kirana AI" }}
       />

@@ -38,30 +38,62 @@
 .education-hero-art {
   position: relative;
   min-width: 0;
-  min-height: 420px;
-  padding: 40px;
+  min-height: 460px;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: #eceee4;
+}
+.education-art-dark {
+  background: #dfe9dc;
+  color: var(--foreground);
+  border-color: var(--primary);
+}
+.education-blueprint {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 40px;
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  background: radial-gradient(
-    circle at 78% 18%,
-    var(--sage-light),
-    var(--card) 56%,
-    var(--muted)
-  );
-  box-shadow: var(--shadow-sm);
+  min-height: 460px;
+  height: 100%;
+  padding: 26px 28px 20px;
+  color: #315c4c;
 }
-.education-art-dark {
-  background: radial-gradient(
-    circle at 78% 14%,
-    var(--ring),
-    var(--forest-deep) 54%
-  );
-  color: var(--card);
-  border-color: var(--primary);
+.education-blueprint-svg {
+  display: block;
+  width: 100%;
+  margin-block: auto 8px;
+  overflow: visible;
+  flex: 0 0 auto;
+}
+.education-blueprint-copy {
+  margin: 0 0 24px;
+  border-left: 2px solid #bf744f;
+  padding-left: 12px;
+  color: #264a3d;
+  font-size: 14px;
+  line-height: 1.5;
+  max-width: 32ch;
+}
+.education-blueprint .education-art-kicker,
+.education-blueprint .education-art-footer {
+  color: #315c4c;
+}
+.education-diagram-small {
+  fill: #315c4c;
+  font-size: 10px;
+  font-family: ui-monospace, monospace;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.education-diagram-value {
+  fill: #173f35;
+  font-size: 16px;
+  font-family: ui-monospace, monospace;
+  font-weight: 700;
+}
+.education-blueprint-auction .education-diagram-value {
+  font-size: 14px;
 }
 .education-art-kicker,
 .education-art-footer {
@@ -233,7 +265,14 @@
   }
   .education-hero-art {
     min-height: 320px;
-    padding: 24px;
+  }
+  .education-blueprint {
+    min-height: 320px;
+    padding: 20px;
+  }
+  .education-blueprint-copy {
+    margin-bottom: 14px;
+    font-size: 12px;
   }
   .education-section {
     padding-block: 64px;

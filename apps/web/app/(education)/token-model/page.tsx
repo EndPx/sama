@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { EducationHero } from "@/components/education-hero";
+import { EducationVisual } from "@/components/education-visual";
 
 export const metadata: Metadata = {
   title: "The KIRA token model",
@@ -21,26 +22,7 @@ export default function TokenModelPage() {
         }
         description="KIRA records a claim from Kirana AI's fictional round and lets the demo test transfers after the auction. It is a capped, eligibility-restricted test token, not a legal claim on a company."
         tone="forest"
-        art={
-          <>
-            <div className="education-art-kicker">
-              <span>Kirana AI demo token</span>
-              <span>S / 03</span>
-            </div>
-            <div>
-              <p className="education-art-number">1M</p>
-              <p className="education-art-caption">
-                KIRA maximum supply, entirely reserved as the offering&apos;s
-                possible simulated allocation. Claims follow the actual auction
-                result and base-unit rounding.
-              </p>
-            </div>
-            <div className="education-art-footer">
-              <span>Capped supply</span>
-              <span>Eligible transfers</span>
-            </div>
-          </>
-        }
+        art={<EducationVisual kind="token" />}
         primary={{ href: "/auction", label: "See the allocation" }}
         secondary={{ href: "/market/kira", label: "View marketplace" }}
       />
