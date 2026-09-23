@@ -3,109 +3,17 @@
   "organizationId": "LK8smR7zW0i2kkjHonHg",
   "siteId": "site_KxqG4",
   "spaceId": "ZMNGTlCkEDGD8b1RV3Vc",
-  "revision": "tif2Kyj0dzfca0GyCBSJ",
-  "sourceCommit": "dd8a186072866db18137d97d0009fa7c4953124b",
-  "publication": "GitBook plugin change requests; automatic Git Sync is not configured.",
-  "pages": [
-    {
-      "file": "README.md",
-      "pageId": "eNDagUfZw4CHcyIXJNzY",
-      "sha256": "d305eae44cf1663373a515055cb04a6397658940a1d07671390dfcb2c959bab2"
-    },
-    {
-      "file": "JUDGES_GUIDE.md",
-      "pageId": "koV3tWcZUjySVqcV7jDh",
-      "sha256": "790cbf052e2eac95a3ec8af5d7e7c6f11cbab848274cf989e41f1a57ea191512"
-    },
-    {
-      "file": "PRODUCT.md",
-      "pageId": "JNorvwAJXKgV3ro0fulD",
-      "sha256": "ccb7ebf2c59fd1cd45ab843b9389ba6bc6f84c0c307f550fef271fca41608b80"
-    },
-    {
-      "file": "PROBLEM.md",
-      "pageId": "dtbqOOHgGUPnOv7XVJyD",
-      "sha256": "8d27f2c117dcc9cbaced7d53105e755076cd28291d2d87d3853288acbb364b59"
-    },
-    {
-      "file": "WHY_ARBITRUM.md",
-      "pageId": "e54nlUxePRYcuzGJuxBk",
-      "sha256": "ace8ea1a0a7faad3061bf7ff49c06425e72ea02f155738168f6c41eb951eddae"
-    },
-    {
-      "file": "BRAND.md",
-      "pageId": "kvbxv7QUdDzyEfTSfVXM",
-      "sha256": "4b7e39f7247ea318a490f8cc72dc6ddf3af5caf183b8f5e49024cae301a63730"
-    },
-    {
-      "file": "USER_GUIDE.md",
-      "pageId": "KgwAAodQFP6MNeXC0bYw",
-      "sha256": "0d559ef2c8919082b77b7bbe92081cb444f75d87052422585af13e9c4fe08dbd"
-    },
-    {
-      "file": "FAQ.md",
-      "pageId": "YjKG4K4yCA8wbWJtLidt",
-      "sha256": "b1f2bf38fc35b9a68cb6881fb68832e121112d98ab63c37df4580be82c63738f"
-    },
-    {
-      "file": "ARCHITECTURE.md",
-      "pageId": "JLBQTY1VVrULbwLBgfrE",
-      "sha256": "8c995597398ae339ef06b5eade9c81bf76b28d1ce8b20b79b183612575e841ee"
-    },
-    {
-      "file": "AUCTION_SPEC.md",
-      "pageId": "10WFQcBLk6X5qmkxcgas",
-      "sha256": "6e97615bbdf941d4e68a3075d3e93ae13e8ab94ce6d45f7a078de45eeeb82a2e"
-    },
-    {
-      "file": "MARKETPLACE_SPEC.md",
-      "pageId": "8fvwUFIW5ioP0JaDGdjA",
-      "sha256": "ffc4065dd6b4078ea30463fa473d2503f6428976d839428256fcc132b49fc148"
-    },
-    {
-      "file": "THREAT_MODEL.md",
-      "pageId": "f0oB5WteWX0RkORfcaIt",
-      "sha256": "b31846ee38521d69668eff709c02129e9117ce6fcb5b3656477573742d098a11"
-    },
-    {
-      "file": "decisions/0001-testnet-demo-currency.md",
-      "pageId": "z460E9kx9uKTg7i9fC5s",
-      "sha256": "3f043f5d55fac6d0382c408ddeb6a19ff6827284ac539a7282ad3626fe39f1ea"
-    },
-    {
-      "file": "RELEASE_STATUS.md",
-      "pageId": "u0WaWeVtoFH3jQI0ve07",
-      "sha256": "07c0d17632f67ba6a23bfceb56c47ae1e40b70bc6407852b6570aad2e0622b71"
-    },
-    {
-      "file": "SECURITY_EVIDENCE.md",
-      "pageId": "Y3m1QVu5D5TcQYzqFVkW",
-      "sha256": "04b031524f0cd96a2b4d9c802cd3fb36f456088380bb672ca4f547f02c88f80c"
-    },
-    {
-      "file": "GAS_EVIDENCE.md",
-      "pageId": "UqyvyWc2ZD6ETrTEgNv9",
-      "sha256": "f0be4740f7f5522482b99b5b91447947c9ca31448495249d20a81e113490bcf5"
-    },
-    {
-      "file": "DEVELOPER_GUIDE.md",
-      "pageId": "T1MWn3v5TwCNhz28UUUt",
-      "sha256": "836237257ab749abcc072ee1b57b7df7657ef356a7ccb2d94ac3509c7f8d39d6"
-    },
-    {
-      "file": "IMPLEMENTATION_PLAN.md",
-      "pageId": "m8NtZo2QdeIbq9QHDyym",
-      "sha256": "deb8edd37e3822879a40e81c65130074e7983841fedf737d9125ceadb58dbcae"
-    },
-    {
-      "file": "DEMO_RUNBOOK.md",
-      "pageId": "gfQjoH08mMTY9p5TeTg6",
-      "sha256": "925038cf8c86a95df6eef8fb2bf5850e79537bed97d5ddcbb684ffee39b2b63e"
-    },
-    {
-      "file": "SUBMISSION_CHECKLIST.md",
-      "pageId": "nx5V9DkMJbHrrEUJCwUs",
-      "sha256": "e9546df990821137a18dcda5ff1bf94671a0354e4ac54f9eb38246d24bae82b2"
-    }
+  "publication": "Space-level Git Sync",
+  "repository": "EndPx/sama",
+  "branch": "feat/p0-vertical-slice",
+  "directory": "docs",
+  "initialSyncSourceCommit": "0b28c864d7c77551c86d8dc52be14a97962cccf9",
+  "verifiedAt": "2026-09-23",
+  "verifiedPages": [
+    "https://sama-3.gitbook.io/sama-product-and-protocol/",
+    "https://sama-3.gitbook.io/sama-product-and-protocol/explore-the-demo/auction_walkthrough",
+    "https://sama-3.gitbook.io/sama-product-and-protocol/explore-the-demo/token_model",
+    "https://sama-3.gitbook.io/sama-product-and-protocol/build-and-verify/release_status",
+    "https://sama-3.gitbook.io/sama-product-and-protocol/hackathon-review/judges_guide"
   ]
 }
