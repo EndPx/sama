@@ -277,7 +277,13 @@ body:has(.sama-landing) .site-header[data-scrolled="false"] a:focus-visible {
 }
 .site-footer {
   overflow: hidden;
-  background: #1e211d;
+  background:
+    radial-gradient(
+      ellipse 40% 75% at 78% 51%,
+      rgb(116 132 91 / 19%),
+      transparent 78%
+    ),
+    linear-gradient(122deg, #1d211d 12%, #26251f 64%, #302820 100%);
   color: #f6f4ed;
   border-top: 1px solid #7b8b71;
 }
@@ -287,23 +293,6 @@ body:has(.sama-landing) .site-header[data-scrolled="false"] a:focus-visible {
 .footer-stage {
   position: relative;
   isolation: isolate;
-  background:
-    radial-gradient(
-      ellipse 40% 75% at 78% 51%,
-      rgb(116 132 91 / 19%),
-      transparent 78%
-    ),
-    linear-gradient(122deg, #1d211d 12%, #26251f 64%, #302820 100%);
-}
-.footer-stage::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  opacity: 0.22;
-  background-image: linear-gradient(90deg, transparent 99.8%, #a9aa91 100%);
-  background-size: 120px 100%;
-  mask-image: linear-gradient(90deg, transparent 32%, black 85%);
 }
 .footer-stage-inner {
   display: grid;
@@ -415,7 +404,6 @@ body:has(.sama-landing) .site-header[data-scrolled="false"] a:focus-visible {
 }
 .footer-bottom {
   border-top: 1px solid rgb(235 230 205 / 15%);
-  background: #191b18;
 }
 .footer-bottom-inner {
   padding-block: 28px 32px;
