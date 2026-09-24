@@ -4,7 +4,19 @@ import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { formatWholeUnits, referenceBids } from "@/lib/reference-auction";
+import {
+  formatWholeUnits,
+  referenceAuction,
+  referenceBids,
+} from "@/lib/reference-auction";
+
+const bidNotes: Record<string, string> = {
+  E: "Highest limit. Fully accepted at the shared result.",
+  D: "Strong conviction. Fully accepted.",
+  C: "Still above the clearing line. Fully accepted.",
+  B: "At the clearing line. Only the remaining 30,000 fits.",
+  A: "Below the clearing line. Full deposit refundable.",
+};
 
 export function SettlementTrace() {
   const root = useRef<HTMLElement>(null);
@@ -40,28 +52,43 @@ export function SettlementTrace() {
     >
       <div className="settlement-trace-intro">
         <div>
-          <p className="eyebrow">Five-bid settlement / visual ledger</p>
-          <h3 id="trace-title">Every bid, accounted for.</h3>
+          <p className="eyebrow">A simulated startup round</p>
+          <h3 id="trace-title">700,000 in. One shared result.</h3>
         </div>
-        <div className="settlement-trace-legend" aria-hidden="true">
+        <div className="trace-terms">
           <span>
-            <i className="trace-key-accepted" /> Accepted
+            Simulated allocation <strong>10%</strong>
           </span>
           <span>
-            <i className="trace-key-refund" /> Refundable
+            Company value range <strong>4M–6M</strong>
+          </span>
+          <span>
+            Test bidders <strong>5</strong>
           </span>
         </div>
+      </div>
+      <div className="settlement-trace-legend" aria-hidden="true">
+        <span>
+          <i className="trace-key-accepted" /> Accepted
+        </span>
+        <span>
+          <i className="trace-key-refund" /> Refundable
+        </span>
       </div>
       <ol className="settlement-trace-rows">
         {referenceBids.map((bid) => {
           const accepted = Number((bid.accepted * 100n) / bid.deposit);
           const width = Number((bid.deposit * 100n) / 200_000n);
           return (
-            <li key={bid.bidder}>
+            <li
+              key={bid.bidder}
+              className={bid.bidder === "A" ? "trace-loser" : undefined}
+            >
               <div className="trace-label">
-                <strong>{bid.bidder}</strong>
-                <span>≤ {bid.maxFdv} FDV</span>
+                <strong>Bidder {bid.bidder}</strong>
+                <span>Up to {bid.maxFdv}</span>
               </div>
+              <p className="trace-bid-note">{bidNotes[bid.bidder]}</p>
               <div
                 className="trace-bars"
                 aria-label={`${formatWholeUnits(bid.deposit)} demoUSDC deposited: ${formatWholeUnits(bid.accepted)} accepted and ${formatWholeUnits(bid.refund)} refundable`}
@@ -84,18 +111,36 @@ export function SettlementTrace() {
               <strong className="trace-deposit">
                 {formatWholeUnits(bid.deposit)}
               </strong>
+              <span className="trace-outcome">
+                {bid.refund === 0n
+                  ? "Fully accepted"
+                  : bid.accepted === 0n
+                    ? "Full refund"
+                    : "Partial fill"}
+              </span>
             </li>
           );
         })}
       </ol>
       <div className="settlement-trace-total">
-        <span>700,000 in escrow</span>
-        <span>480,000 accepted</span>
-        <span>220,000 refundable</span>
+        <div>
+          <span>Clearing value</span>
+          <strong>4.8M FDV</strong>
+        </div>
+        <div>
+          <span>Accepted into round</span>
+          <strong>{formatWholeUnits(referenceAuction.acceptedTotal)}</strong>
+        </div>
+        <div>
+          <span>Available to reclaim</span>
+          <strong>{formatWholeUnits(referenceAuction.refundTotal)}</strong>
+        </div>
       </div>
       <p className="settlement-trace-note">
-        B is the marginal bid: only 30,000 of its 150,000 deposit is accepted. A
-        is below the clearing FDV and receives no KIRA.
+        Why 4.8M? At 5.0M, the first three bidders offer 450,000 against 500,000
+        needed. At 4.8M, B joins them and demand reaches 600,000 against 480,000
+        needed. The first three bids fill completely; B fills the final 30,000.
+        A is below the line and gets its whole deposit back.
       </p>
     </section>
   );

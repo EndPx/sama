@@ -4,11 +4,8 @@ import { ArrowUpRight } from "lucide-react";
 import { EducationHero } from "@/components/education-hero";
 import { EducationVisual } from "@/components/education-visual";
 import { SettlementTrace } from "@/components/settlement-trace";
-import {
-  formatWholeUnits,
-  referenceAuction,
-  referenceBids,
-} from "@/lib/reference-auction";
+import { AuctionLab } from "@/components/auction-lab";
+import "./auction.css";
 
 export const metadata: Metadata = {
   title: "How the auction works",
@@ -98,84 +95,13 @@ export default function AuctionPage() {
           </div>
         </div>
         <SettlementTrace />
-        <table className="education-table">
-          <caption className="sr-only">
-            Five-bid reference auction: deposit, maximum FDV, accepted amount,
-            and refund for each bidder
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col">Bidder</th>
-              <th scope="col">Deposit</th>
-              <th scope="col">Max FDV</th>
-              <th scope="col">Accepted</th>
-              <th scope="col">Refund</th>
-            </tr>
-          </thead>
-          <tbody>
-            {referenceBids.map((bid) => (
-              <tr key={bid.bidder}>
-                <th scope="row" data-label="Bidder">
-                  {bid.bidder}
-                </th>
-                <td data-label="Deposit">{formatWholeUnits(bid.deposit)}</td>
-                <td data-label="Max FDV">{bid.maxFdv}</td>
-                <td data-label="Accepted">{formatWholeUnits(bid.accepted)}</td>
-                <td data-label="Refund">{formatWholeUnits(bid.refund)}</td>
-              </tr>
-            ))}
-            <tr>
-              <th scope="row" data-label="Bidder">
-                Total
-              </th>
-              <td data-label="Deposit">
-                {formatWholeUnits(referenceAuction.depositTotal)}
-              </td>
-              <td data-label="Max FDV">—</td>
-              <td data-label="Accepted">
-                {formatWholeUnits(referenceAuction.acceptedTotal)}
-              </td>
-              <td data-label="Refund">
-                {formatWholeUnits(referenceAuction.refundTotal)}
-              </td>
-            </tr>
-          </tbody>
-        </table>
       </section>
 
       <section
         className="education-section page-shell"
-        aria-labelledby="auction-why"
+        aria-label="Interactive auction illustration"
       >
-        <div className="education-section-heading">
-          <p className="eyebrow">Why 4.8M?</p>
-          <div>
-            <h2 id="auction-why">The first tier that can fill the offer.</h2>
-            <p>
-              The offering sells a simulated 10% allocation. The required
-              capital at a candidate FDV is 10% of that valuation.
-            </p>
-          </div>
-        </div>
-        <div className="education-columns">
-          <article className="education-paper">
-            <p className="eyebrow">At 5.0M / No clear</p>
-            <h3>450,000 offered. 500,000 required.</h3>
-            <p>
-              E, D, and C are willing to participate at 5.0M, but their deposits
-              do not fill the available allocation.
-            </p>
-          </article>
-          <article className="education-paper">
-            <p className="eyebrow">At 4.8M / Clears</p>
-            <h3>600,000 offered. 480,000 required.</h3>
-            <p>
-              E, D, and C use 450,000 of capacity. B receives the remaining
-              30,000 and can reclaim 120,000. A is below the clearing FDV and
-              can reclaim the full 100,000.
-            </p>
-          </article>
-        </div>
+        <AuctionLab />
       </section>
 
       <section

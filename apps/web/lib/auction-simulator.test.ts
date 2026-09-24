@@ -72,4 +72,38 @@ describe("browser-only auction simulator", () => {
     ).toBe(result.depositedTotal);
     expect(formatDemoUnits(1n)).toBe("0.000001");
   });
+
+  it("distinguishes a genuine floor-tier clear from floor fallback", () => {
+    const result = simulateAuction([
+      {
+        bidder: "A",
+        deposit: 400_000n * DEMO_USDC,
+        maxFdv: AUCTION_FLOOR,
+      },
+    ]);
+    expect(result.successful).toBe(true);
+    expect(result.floorFallback).toBe(false);
+    expect(result.acceptedTotal).toBe(400_000n * DEMO_USDC);
+  });
+
+  it("conserves every slider-sized bid across a varied demand sweep", () => {
+    for (let seed = 0; seed < 100; seed++) {
+      const bids = fixture.map((bid, index) => ({
+        ...bid,
+        deposit: BigInt(((seed * 37 + index * 53) % 31) * 10_000) * DEMO_USDC,
+      }));
+      const result = simulateAuction(bids);
+      expect(result.acceptedTotal + result.refundTotal).toBe(
+        result.depositedTotal,
+      );
+      expect(
+        result.bids.every((bid) => bid.accepted + bid.refund === bid.deposit),
+      ).toBe(true);
+      if (result.successful) {
+        expect(result.acceptedTotal).toBe(result.clearingFdv! / 10n);
+      } else {
+        expect(result.acceptedTotal).toBe(0n);
+      }
+    }
+  });
 });
