@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { EducationHero } from "@/components/education-hero";
 import { TokenJourney } from "@/components/token-journey";
 import {
   formatWholeUnits,
@@ -104,54 +105,42 @@ const rules = [
 export default function StakeholderTokensPage() {
   return (
     <article className="token-model">
-      <header className="page-shell token-intro">
-        <div className="token-intro-copy">
-          <span className="token-kicker">
-            Stakeholder Tokens / the demo model
-          </span>
-          <h1>From a public round to a token you can hold.</h1>
-          <p>
-            A startup opens a round to the public. People place test bids under
-            the same rules. When the round ends, winners can claim demo tokens
-            for the part of their bid that counts. Those tokens can be held or
-            offered to another eligible wallet. Here is the whole path.
-          </p>
-          <div className="token-intro-actions">
-            <a href="#example-round" className="token-primary-link">
-              Follow the example <ArrowDown size={16} aria-hidden="true" />
-            </a>
-            <Link href="/auction" className="token-text-link">
-              Explore the round <ArrowUpRight size={16} aria-hidden="true" />
-            </Link>
+      <EducationHero
+        eyebrow="Stakeholder tokens / 03"
+        title="From a public round to a token you can hold."
+        description="After a public test round, winners claim demo tokens for the part of their bid that counts. They can hold those tokens or offer them to another eligible wallet. Follow one bid from result to transfer."
+        primary={{ href: "#example-round", label: "Follow the example" }}
+        secondary={{ href: "/auction", label: "Explore the round" }}
+        art={
+          <div
+            className="token-hero-picture"
+            role="img"
+            aria-label="One million maximum demo tokens, minted only when winners claim, can move from a round result to eligible wallets"
+          >
+            <div className="token-hero-picture-top">
+              <span>SAMA / STAKEHOLDER TOKENS</span>
+              <span>ARBITRUM SEPOLIA</span>
+            </div>
+            <div className="token-hero-stage">
+              <div className="token-hero-ring token-hero-ring-outer" />
+              <div className="token-hero-ring token-hero-ring-inner" />
+              <div className="token-hero-coin">S</div>
+              <div className="token-hero-connector token-hero-connector-left" />
+              <div className="token-hero-connector token-hero-connector-right" />
+              <span className="token-hero-label token-hero-label-left">
+                Round result
+              </span>
+              <span className="token-hero-label token-hero-label-right">
+                Eligible wallets
+              </span>
+            </div>
+            <div className="token-hero-picture-bottom">
+              <strong>1,000,000</strong>
+              <span>Maximum demo tokens. Created only when winners claim.</span>
+            </div>
           </div>
-        </div>
-        <div
-          className="token-hero-picture"
-          aria-label="Demo token moves from a round to a wallet and then a buyer"
-        >
-          <div className="token-hero-picture-top">
-            <span>SAMA / STAKEHOLDER TOKENS</span>
-            <span>ARBITRUM SEPOLIA</span>
-          </div>
-          <div className="token-hero-stage">
-            <div className="token-hero-ring token-hero-ring-outer" />
-            <div className="token-hero-ring token-hero-ring-inner" />
-            <div className="token-hero-coin">S</div>
-            <div className="token-hero-connector token-hero-connector-left" />
-            <div className="token-hero-connector token-hero-connector-right" />
-            <span className="token-hero-label token-hero-label-left">
-              Round result
-            </span>
-            <span className="token-hero-label token-hero-label-right">
-              Eligible wallets
-            </span>
-          </div>
-          <div className="token-hero-picture-bottom">
-            <strong>1,000,000</strong>
-            <span>Maximum demo tokens. Created only when winners claim.</span>
-          </div>
-        </div>
-      </header>
+        }
+      />
 
       <div className="page-shell token-body">
         <section
