@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowDown,
@@ -13,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { LandingMotion } from "@/components/landing-motion";
 import { AssemblyStory } from "@/components/assembly-story";
+import { RoundPreview } from "@/components/round-preview";
 import { currentNetwork } from "@/lib/network-label";
 import "./home.css";
 
@@ -22,44 +22,45 @@ export default function Home() {
       <section className="sama-campus-hero" aria-labelledby="home-title">
         <div className="sama-campus-stage page-shell">
           <div className="sama-campus-intro">
-            <p className="sama-kicker">A testnet auction for startup ideas</p>
+            <p className="sama-kicker">
+              <span aria-hidden="true" /> A transparent startup auction, on
+              testnet
+            </p>
             <h1 id="home-title">
               A price you
               <br />
-              can trace.
+              <span>can trace.</span>
             </h1>
             <p className="sama-hero-description">
-              Set the highest valuation you would accept. Reveal it later. Check
-              the clearing price and your allocation against the rules.
+              Set your valuation ceiling in a sealed bid. Reveal it when the
+              window opens. Then see one clearing price and exactly what was
+              accepted or returned.
             </p>
-            <div className="cluster">
+            <div className="cluster sama-hero-actions">
               <Button size="lg" className="marketing-button" asChild>
                 <Link href="/explore">
-                  Explore the demo <ArrowUpRight data-icon="inline-end" />
+                  Explore Kirana AI <ArrowUpRight data-icon="inline-end" />
                 </Link>
               </Button>
-              <a className="sama-quiet-link" href="#how-it-works">
-                How it works <ArrowDown size={16} aria-hidden="true" />
+              <a className="sama-quiet-link" href="#price-discovery">
+                Understand the auction{" "}
+                <ArrowDown size={16} aria-hidden="true" />
               </a>
             </div>
             <p className="sama-demo-note">
-              {currentNetwork.name} prototype. No real equity or money.
+              {currentNetwork.name} prototype · simulated tokens · no real money
             </p>
           </div>
-          <figure className="sama-campus-art">
-            <Image
-              src="/brand/sama-campus.png"
-              alt="An original miniature shared campus: green pavilions meet around an open courtyard, connected by ivory walkways"
-              width={1536}
-              height={1024}
-              priority
-              sizes="(max-width: 767px) 100vw, 65vw"
-            />
-          </figure>
+          <div className="sama-campus-art">
+            <RoundPreview />
+          </div>
           <article
             className="sama-field-note"
             aria-labelledby="field-note-title"
           >
+            <p className="sama-field-note-label">
+              What stays private—and what does not
+            </p>
             <h2 id="field-note-title">
               A sealed limit.
               <br />A public result.
@@ -93,10 +94,18 @@ export default function Home() {
       </section>
       <div className="sama-principles-band">
         <div className="page-shell">
-          <span>10% offered allocation</span>
-          <span>4–6M demoUSDC FDV limits</span>
-          <span>64 revealed bids maximum</span>
-          <span>One clearing FDV</span>
+          <span>
+            <strong>10%</strong> offered allocation
+          </span>
+          <span>
+            <strong>4–6M</strong> demoUSDC FDV limits
+          </span>
+          <span>
+            <strong>64</strong> revealed bids maximum
+          </span>
+          <span>
+            <strong>1</strong> clearing FDV
+          </span>
         </div>
       </div>
       <section
@@ -104,72 +113,72 @@ export default function Home() {
         aria-labelledby="problem-title"
       >
         <div className="sama-section-lead" data-reveal>
-          <p className="eyebrow">A clearer beginning</p>
+          <p className="eyebrow">How SAMA changes the experience</p>
           <h2 id="problem-title">
-            Conviction should not
+            A round you can inspect,
             <br />
-            require a leap in the dark.
+            not just join.
           </h2>
           <p>
-            Early-stage participation raises simple questions. What sets the
-            price? How is an allocation decided? What happens to the amount that
-            is not accepted?
+            The contract, not an offchain allocation desk, decides the result.
+            You can follow your deposit from commitment through settlement and
+            claim.
           </p>
         </div>
         <div className="sama-principle-grid">
           <article className="sama-principle" data-reveal>
             <div className="sama-principle-top">
-              <span>01</span>
+              <span>Price discovery</span>
               <Scale aria-hidden="true" />
             </div>
             <h3>
-              A price discovered.
+              A limit you choose.
               <br />
-              Not a race won.
+              One price you share.
             </h3>
             <p>
-              Your maximum valuation defines your limit. Eligible bids settle at
-              one valuation, rather than competing on who clicks first.
+              Name your maximum FDV before reveal. Every accepted bid settles at
+              the same clearing FDV, not at the speed of a click.
             </p>
             <a href="#price-discovery" className="sama-quiet-link">
-              Understand the mechanism{" "}
-              <ArrowUpRight size={16} aria-hidden="true" />
+              See the mechanism <ArrowUpRight size={16} aria-hidden="true" />
             </a>
           </article>
           <article className="sama-principle" data-reveal>
             <div className="sama-principle-top">
-              <span>02</span>
+              <span>Settlement</span>
               <ScanLine aria-hidden="true" />
             </div>
             <h3>
-              An allocation.
+              An allocation
               <br />
-              With a paper trail.
+              with a paper trail.
             </h3>
             <p>
-              Deposits, settlement, and claims leave onchain records. The
-              calculation can be checked against the published protocol rules.
+              The result is derived onchain. Accepted capital, refunds, and
+              claims are visible against a published rule set.
             </p>
             <a href="https://github.com/EndPx/sama" className="sama-quiet-link">
-              Inspect the source <ArrowUpRight size={16} aria-hidden="true" />
+              Inspect the code <ArrowUpRight size={16} aria-hidden="true" />
             </a>
           </article>
           <article className="sama-principle" data-reveal>
             <div className="sama-principle-top">
-              <span>03</span>
+              <span>After the round</span>
               <ShieldCheck aria-hidden="true" />
             </div>
             <h3>
-              A next step.
+              Claim what is yours.
               <br />
-              Not a promise.
+              Decide what follows.
             </h3>
             <p>
-              Claim tokens and unused deposits separately. Create a listing if
-              you choose. A secondary market never guarantees a buyer.
+              Claim KIRA and unused deposits separately. A listing is optional;
+              a buyer and liquidity are never guaranteed.
             </p>
             <Link href="/market/kira" className="sama-quiet-link">
-              See the marketplace <ArrowUpRight size={16} aria-hidden="true" />
+              Explore the marketplace{" "}
+              <ArrowUpRight size={16} aria-hidden="true" />
             </Link>
           </article>
         </div>
@@ -177,11 +186,11 @@ export default function Home() {
       <section id="price-discovery" className="sama-mechanism-section">
         <div className="page-shell sama-mechanism-grid">
           <div className="stack" data-reveal>
-            <p className="eyebrow">A limit, not a blind commitment</p>
+            <p className="eyebrow">The bid, explained</p>
             <h2>
-              Your conviction.
+              Your ceiling.
               <br />
-              <em>Your ceiling.</em>
+              <em>Your terms.</em>
             </h2>
             <p className="lede">
               Decide the highest company valuation you are comfortable with.
