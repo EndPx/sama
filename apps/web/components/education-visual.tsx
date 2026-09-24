@@ -66,7 +66,7 @@ const scenes: Record<
     title: "Issuer's view",
     index: "S / 02",
     caption: "Terms are fixed before demand is known.",
-    foot: "One fictional Kirana AI round",
+    foot: "One fictional startup round",
     blocks: [
       {
         x: 72,

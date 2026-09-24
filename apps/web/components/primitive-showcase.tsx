@@ -200,7 +200,7 @@ export function PrimitiveShowcase() {
               </EmptyDescription>
             </EmptyHeader>
             <EmptyContent>
-              <Button variant="outline">Explore Kirana AI</Button>
+              <Button variant="outline">Explore the demo</Button>
             </EmptyContent>
           </Empty>
         </TabsContent>

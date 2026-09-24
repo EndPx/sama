@@ -541,7 +541,7 @@ function Participant({
           <AlertDescription>
             Your connected wallet has not committed to this offering.{" "}
             <Link className="text-link" href="/startups/kirana-ai#participate">
-              Visit Kirana AI to participate.
+              Visit the demo round to try a test bid.
             </Link>
           </AlertDescription>
         </Alert>

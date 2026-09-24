@@ -11,7 +11,7 @@ const decisions = [
     phase: "Read",
     title: "Understand the offering",
     description:
-      "Kirana AI is fictional. Its offered allocation, FDV range, minimum raise, and deadlines are fixed before anyone bids.",
+      "The demo startup is fictional. Its offered allocation, FDV range, minimum raise, and deadlines are fixed before anyone bids.",
   },
   {
     number: "02",
@@ -45,7 +45,7 @@ function DecisionPicture({
     return (
       <div className="decision-picture decision-read" aria-hidden="true">
         <div className="decision-term-sheet" data-path-piece>
-          <span>KIRANA AI / FIXED TERMS</span>
+          <span>DEMO STARTUP / FIXED TERMS</span>
           <div>
             <small>Allocation</small>
             <strong>10%</strong>

@@ -8,7 +8,7 @@ import { ParticipantPath } from "@/components/participant-path";
 export const metadata: Metadata = {
   title: "For participants",
   description:
-    "Understand the fictional Kirana AI offering, make a valuation-limited testnet bid, and follow settlement, claims, and refunds.",
+    "Explore a fictional startup round, make a valuation-limited testnet bid, and follow the result, claims, and refunds.",
 };
 
 export default function InvestorsPage() {

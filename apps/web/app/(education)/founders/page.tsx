@@ -20,10 +20,10 @@ export default function FoundersPage() {
             A round with <em>readable rules.</em>
           </>
         }
-        description="Founders should be able to explain the terms before the first bid and the result after the last reveal. Kirana AI is the fixed fictional case SAMA uses to test that idea."
+        description="Founders should be able to explain the terms before the first bid and the result after the last reveal. SAMA tests that idea with one fictional startup round."
         art={<EducationVisual kind="founder" />}
         primary={{ href: "/auction", label: "View the auction" }}
-        secondary={{ href: "/explore", label: "Explore Kirana AI" }}
+        secondary={{ href: "/explore", label: "Explore the demo" }}
       />
 
       <section
@@ -79,8 +79,8 @@ export default function FoundersPage() {
           <div>
             <h2 id="founder-scope">One working case, deliberately narrow.</h2>
             <p>
-              The prototype proves a mechanism with Kirana AI; it is not a live
-              founder onboarding or legal fundraising service.
+              The prototype proves a mechanism with one fictional startup; it is
+              not a live founder onboarding or legal fundraising service.
             </p>
           </div>
         </div>

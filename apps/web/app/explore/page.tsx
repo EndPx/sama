@@ -22,7 +22,7 @@ export default function Explore() {
       <Card className="max-w-3xl">
         <CardHeader className="gap-4">
           <Badge variant="secondary">Fictional startup · simulated token</Badge>
-          <CardTitle className="text-2xl">Kirana AI</CardTitle>
+          <CardTitle className="text-2xl">The demo startup</CardTitle>
         </CardHeader>
         <CardContent className="space-y-5">
           <p className="text-muted-foreground">

@@ -20,7 +20,7 @@ export default function TokenModelPage() {
             An allocation you can <em>follow.</em>
           </>
         }
-        description="KIRA records a claim from Kirana AI's fictional round and lets the demo test transfers after the auction. It is a capped, eligibility-restricted test token, not a legal claim on a company."
+        description="KIRA records a claim from the fictional demo round and lets SAMA test transfers after the auction. It is a capped, eligibility-restricted test token, not a legal claim on a company."
         tone="forest"
         art={<EducationVisual kind="token" />}
         primary={{ href: "/auction", label: "See the allocation" }}
