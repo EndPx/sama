@@ -220,6 +220,28 @@
   font-size: 14px;
   padding-block: 12px;
 }
+.site-header nav a,
+.site-header-docs {
+  position: relative;
+}
+.site-header nav a::after,
+.site-header-docs::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 7px;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 240ms var(--ease-state);
+  pointer-events: none;
+}
+.site-header nav a:is(:hover, :focus-visible)::after,
+.site-header-docs:is(:hover, :focus-visible)::after {
+  transform: scaleX(1);
+}
 .site-header-docs:hover {
   color: var(--ring);
 }
@@ -513,6 +535,9 @@ body:has(.sama-landing) .site-header[data-scrolled="false"] a:focus-visible {
   .site-header nav a {
     white-space: nowrap;
     padding-block: 6px;
+  }
+  .site-header nav a::after {
+    bottom: 1px;
   }
   .footer-stage-inner {
     gap: 20px;
