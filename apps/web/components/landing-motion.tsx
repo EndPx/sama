@@ -31,7 +31,8 @@ export function LandingMotion({ children }: { children: ReactNode }) {
               start: "top 88px",
               end: () => `+=${window.innerHeight * 1.25}`,
               pin: true,
-              scrub: 0.5,
+              scrub: 0.9,
+              refreshPriority: 1,
               invalidateOnRefresh: true,
             },
           });
@@ -40,8 +41,8 @@ export function LandingMotion({ children }: { children: ReactNode }) {
             .to(
               art,
               {
-                x: () => -scene.clientWidth * 0.46,
-                scale: 0.97,
+                x: () => -scene.clientWidth * 0.44,
+                scale: 0.92,
                 duration: 0.64,
               },
               0.1,
@@ -54,27 +55,6 @@ export function LandingMotion({ children }: { children: ReactNode }) {
             )
             .to({}, { duration: 0.2 });
           return () => element.classList.remove("has-scroll-story");
-        },
-        element,
-      );
-      media.add(
-        "(prefers-reduced-motion: no-preference)",
-        () => {
-          gsap.utils
-            .toArray<HTMLElement>("[data-reveal]", element)
-            .forEach((target) => {
-              gsap.from(target, {
-                y: 24,
-                opacity: 0.3,
-                duration: 0.65,
-                ease: "power2.out",
-                scrollTrigger: {
-                  trigger: target,
-                  start: "top 94%",
-                  once: true,
-                },
-              });
-            });
         },
         element,
       );

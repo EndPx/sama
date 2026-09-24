@@ -80,6 +80,7 @@ export function AssemblyStory() {
               end: () => `+=${window.innerHeight * 1.6}`,
               pin: true,
               scrub: 1,
+              refreshPriority: -1,
               invalidateOnRefresh: true,
             },
           });
