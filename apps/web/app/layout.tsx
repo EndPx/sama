@@ -115,7 +115,7 @@ export default function RootLayout({
               </div>
               <p className="footer-disclaimer">
                 Testnet demonstration only. The featured startup is fictional;
-                The demo token is simulated, not a legal share or claim to
+                the demo token is simulated, not a legal share or claim to
                 returns. demoUSDC has no monetary value.
               </p>
             </div>
