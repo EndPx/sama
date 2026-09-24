@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import React from "react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   cleanup,
   fireEvent,
@@ -9,41 +9,16 @@ import {
   within,
 } from "@testing-library/react";
 
-const mock = vi.hoisted(() => ({
-  address: undefined as string | undefined,
-  configured: false,
-}));
-
-vi.mock("wagmi", () => ({
-  useAccount: () => ({ address: mock.address }),
-}));
-
 vi.mock("@/lib/config", () => ({
-  get configured() {
-    return mock.configured;
-  },
   docsUrl: "https://docs.example.test/",
-  networkBadge: "Arbitrum Sepolia Testnet",
-}));
-
-vi.mock("@/components/offering-panel", () => ({
-  OfferingPanel: ({ portfolio }: { portfolio?: boolean }) =>
-    portfolio ? "Portfolio transactions" : "Round transactions",
-}));
-vi.mock("@/components/marketplace-panel", () => ({
-  MarketplacePanel: () => "Marketplace transactions",
 }));
 
 import { DemoEntry } from "./demo-entry";
 
-beforeEach(() => {
-  mock.address = undefined;
-  mock.configured = false;
-});
 afterEach(cleanup);
 
-describe("direct demo preview", () => {
-  it("opens the product without login or a connected wallet", () => {
+describe("mock-only demo workspace", () => {
+  it("opens without login, wallet state, or transaction actions", () => {
     render(<DemoEntry />);
 
     expect(
@@ -51,10 +26,14 @@ describe("direct demo preview", () => {
         name: "A clearer way to join a public round.",
       }),
     ).toBeTruthy();
-    expect(screen.getByText("No wallet connected")).toBeTruthy();
+    expect(screen.getAllByText("Sample data").length).toBeGreaterThan(0);
+    expect(screen.getByText("Example profile")).toBeTruthy();
     expect(screen.getByText("Fixed example, not live activity")).toBeTruthy();
-    expect(screen.queryByRole("button", { name: /sign in/i })).toBeNull();
-    expect(screen.queryByText("Round transactions")).toBeNull();
+    expect(
+      screen.queryByRole("button", {
+        name: /sign in|connect wallet|buy|claim/i,
+      }),
+    ).toBeNull();
   });
 
   it("explains exact accepted and refundable values for a selected reference bid", () => {
@@ -73,47 +52,64 @@ describe("direct demo preview", () => {
     expect(
       within(detail).getByText("Refundable").parentElement?.textContent,
     ).toContain("100,000 demoUSDC");
-    expect(
-      within(detail).getByText(/full deposit can be claimed back/i),
-    ).toBeTruthy();
   });
 
-  it("keeps preview views reachable without fabricating transaction controls", () => {
+  it("shows the locked round terms and explores its mock lifecycle", () => {
     render(<DemoEntry />);
 
     fireEvent.click(screen.getByRole("button", { name: "Explore the round" }));
-    expect(screen.getByText("The round will open here.")).toBeTruthy();
     const terms = screen.getByRole("region", { name: "Reference offer terms" });
     expect(within(terms).getByText("10%")).toBeTruthy();
     expect(within(terms).getByText("4M to 6M")).toBeTruthy();
     expect(within(terms).getByText("400,000")).toBeTruthy();
-    expect(
-      screen.getByText(/Public transactions are not available yet/i),
-    ).toBeTruthy();
-    expect(screen.queryByText("Round transactions")).toBeNull();
+    expect(screen.getByText("One value made the round work.")).toBeTruthy();
 
-    fireEvent.click(screen.getByRole("button", { name: "Portfolio" }));
-    expect(screen.getByText("Your activity belongs here.")).toBeTruthy();
-
-    fireEvent.click(screen.getByRole("button", { name: "Marketplace" }));
-    expect(screen.getByText("The marketplace follows the round.")).toBeTruthy();
-    expect(
-      screen
-        .getByRole("button", { name: "Marketplace" })
-        .getAttribute("aria-pressed"),
-    ).toBe("true");
+    fireEvent.click(screen.getByRole("button", { name: "Step 01: Commit" }));
+    expect(screen.getByText("Five people chose their limits.")).toBeTruthy();
+    expect(screen.queryByRole("button", { name: /commit bid/i })).toBeNull();
   });
 
-  it("mounts the existing transaction panels when a deployment is configured", async () => {
-    mock.configured = true;
+  it("switches between fixture-backed example portfolio outcomes", () => {
     render(<DemoEntry />);
-
-    fireEvent.click(screen.getByRole("button", { name: "The round" }));
-    expect(await screen.findByText("Round transactions")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Portfolio" }));
-    expect(await screen.findByText("Portfolio transactions")).toBeTruthy();
+
+    const portfolio = screen.getByRole("region", { name: "Sample portfolio" });
+    expect(within(portfolio).getByText("62,500")).toBeTruthy();
+    expect(within(portfolio).getByText("120,000")).toBeTruthy();
+
+    fireEvent.click(within(portfolio).getByRole("button", { name: /Bid E/i }));
+    expect(within(portfolio).getByText("312,500")).toBeTruthy();
+    fireEvent.click(within(portfolio).getByRole("button", { name: /Bid A/i }));
+    expect(
+      within(portfolio).getByText("Refund in example").parentElement
+        ?.textContent,
+    ).toContain("100,000");
+    expect(
+      within(portfolio).getByText(/full deposit is refundable/i),
+    ).toBeTruthy();
+  });
+
+  it("previews marketplace quotes without changing listing state", () => {
+    render(<DemoEntry />);
     fireEvent.click(screen.getByRole("button", { name: "Marketplace" }));
-    expect(await screen.findByText("Marketplace transactions")).toBeTruthy();
-    expect(screen.queryByText("The round will open here.")).toBeNull();
+
+    const market = screen.getByRole("region", { name: "Sample marketplace" });
+    expect(within(market).getByText("No live listings")).toBeTruthy();
+    expect(within(market).getByText("240")).toBeTruthy();
+    fireEvent.click(
+      within(market).getByRole("button", { name: /Listing 02/i }),
+    );
+    expect(within(market).getByText("275")).toBeTruthy();
+    fireEvent.change(
+      within(market).getByRole("textbox", { name: "Demo tokens to preview" }),
+      { target: { value: "7000" } },
+    );
+    expect(within(market).getByRole("alert").textContent).toMatch(
+      /available amount/i,
+    );
+    expect(within(market).getByText("6,000")).toBeTruthy();
+    expect(
+      within(market).getByText(/No wallet action, order, or listing change/i),
+    ).toBeTruthy();
   });
 });

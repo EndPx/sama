@@ -28,30 +28,30 @@ Status: required release gate for the testnet prototype.
 
 ## Primary threats and controls
 
-| Threat | Control | Verification |
-|---|---|---|
-| Reentrancy during claims or purchases | Checks-effects-interactions, pull claims, ReentrancyGuard | Malicious-token/callback tests where applicable |
-| False or incomplete settlement input | Verify order, uniqueness, completeness, status, and arithmetic onchain | Mutation and fuzz tests |
-| Settlement denial through unbounded work | Hard bidder cap and gas snapshot | Maximum-size settlement test |
-| Double reveal, settlement, claim, or withdrawal | Explicit state flags updated before transfers | Unit and invariant tests |
-| Insolvent escrow | Fund-conservation accounting | Stateful invariant test |
-| Token over-allocation | Fixed cap and allocation conservation | Stateful invariant test |
-| Ineligible transfer or purchase | Registry checks at each boundary | Unit/fuzz tests |
-| Seller balance race | Marketplace escrows KIRA when listing | Integration test |
-| Partial-fill rounding extracts value or leaves free KIRA | Remaining-amount/remaining-price accounting, full-precision ceiling division, and rejection of unpriced remainders | Boundary and split-sequence fuzz tests |
-| Buyer pays more than a stale quote | Buyer-supplied maximum cost checked before state changes or transfers | Price-protection unit test |
-| Seller eligibility revocation freezes listed KIRA | Seller-authorized cancellation to any eligible recipient | Revocation and alternate-recipient integration test |
-| Marketplace KIRA accounting becomes insolvent | Aggregate escrow counter and per-listing conservation checks | Stateful marketplace invariant test |
-| Repeated fill or cancellation moves assets twice | Terminal listing status set before external transfers | Unit and invariant tests |
-| Observable bid information | Honest copy: maximum FDV sealed, deposit public | UX review and README disclaimer |
-| Lost reveal secret | Local persistence, exportable backup, reveal warning | Browser recovery test |
-| Privileged-key compromise | Encrypted keystore, role separation, optional multisig | Deployment checklist |
-| Secret committed to Git | Ignore rules, Gitleaks CI, GitHub push protection | Clean scan on every push/PR |
-| RPC outage or stale response | Primary/fallback providers and receipt verification | Failure rehearsal |
-| Misleading transaction success | Wait for canonical receipt and surface reverts | UI integration test |
-| Local fixture mistaken for a public testnet deployment | Transaction screens label the configured network; chain checks still gate every write | Config tests and local browser inspection |
-| Demo helper used on a live-money chain | Constructor chain restriction to 421614 or 31337 | Wrong-chain deployment tests |
-| Enrollment helper redirects authority | Enroll only the caller; no role-management or arbitrary-call functions | Caller-scope and unauthorized-role tests |
+| Threat                                                   | Control                                                                                                            | Verification                                        |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------- |
+| Reentrancy during claims or purchases                    | Checks-effects-interactions, pull claims, ReentrancyGuard                                                          | Malicious-token/callback tests where applicable     |
+| False or incomplete settlement input                     | Verify order, uniqueness, completeness, status, and arithmetic onchain                                             | Mutation and fuzz tests                             |
+| Settlement denial through unbounded work                 | Hard bidder cap and gas snapshot                                                                                   | Maximum-size settlement test                        |
+| Double reveal, settlement, claim, or withdrawal          | Explicit state flags updated before transfers                                                                      | Unit and invariant tests                            |
+| Insolvent escrow                                         | Fund-conservation accounting                                                                                       | Stateful invariant test                             |
+| Token over-allocation                                    | Fixed cap and allocation conservation                                                                              | Stateful invariant test                             |
+| Ineligible transfer or purchase                          | Registry checks at each boundary                                                                                   | Unit/fuzz tests                                     |
+| Seller balance race                                      | Marketplace escrows KIRA when listing                                                                              | Integration test                                    |
+| Partial-fill rounding extracts value or leaves free KIRA | Remaining-amount/remaining-price accounting, full-precision ceiling division, and rejection of unpriced remainders | Boundary and split-sequence fuzz tests              |
+| Buyer pays more than a stale quote                       | Buyer-supplied maximum cost checked before state changes or transfers                                              | Price-protection unit test                          |
+| Seller eligibility revocation freezes listed KIRA        | Seller-authorized cancellation to any eligible recipient                                                           | Revocation and alternate-recipient integration test |
+| Marketplace KIRA accounting becomes insolvent            | Aggregate escrow counter and per-listing conservation checks                                                       | Stateful marketplace invariant test                 |
+| Repeated fill or cancellation moves assets twice         | Terminal listing status set before external transfers                                                              | Unit and invariant tests                            |
+| Observable bid information                               | Honest copy: maximum FDV sealed, deposit public                                                                    | UX review and README disclaimer                     |
+| Lost reveal secret                                       | Local persistence, exportable backup, reveal warning                                                               | Browser recovery test                               |
+| Privileged-key compromise                                | Encrypted keystore, role separation, optional multisig                                                             | Deployment checklist                                |
+| Secret committed to Git                                  | Ignore rules, Gitleaks CI, GitHub push protection                                                                  | Clean scan on every push/PR                         |
+| RPC outage or stale response                             | Primary/fallback providers and receipt verification                                                                | Failure rehearsal                                   |
+| Misleading transaction success                           | Wait for canonical receipt and surface reverts                                                                     | UI integration test                                 |
+| Local fixture mistaken for a public testnet deployment   | Transaction screens label the configured network; chain checks still gate every write                              | Config tests and local browser inspection           |
+| Demo helper used on a live-money chain                   | Constructor chain restriction to 421614 or 31337                                                                   | Wrong-chain deployment tests                        |
+| Enrollment helper redirects authority                    | Enroll only the caller; no role-management or arbitrary-call functions                                             | Caller-scope and unauthorized-role tests            |
 
 ## Known limitations
 
@@ -69,7 +69,7 @@ Status: required release gate for the testnet prototype.
 ## Browser transaction boundaries
 
 - Wallet onboarding introduces Privy as an external authentication and wallet-availability dependency. Local development can use an injected wallet without Privy. Every signing request is bound to the selected account and chain, with provider identity checked again after simulation.
-- `/demo` is a public, direct entry preview. It is not an authenticated workspace. Without a valid deployment it exposes public explanatory content and explicit unavailable states; with a valid deployment it mounts the existing wallet-dependent transaction panels. The reference auction fixture is labeled illustrative, never presented as visitor or live account state. Removing the former Privy presentation gate does not grant signing authority or onchain eligibility; wallet ownership, selected chain, contract eligibility, fixed-block reads, and receipt confirmation remain the security boundaries.
+- `/demo` is a public, direct entry mock preview. It does not mount a wallet provider, read a chain, request a signature, or mount transaction panels, even if public deployment configuration exists. The round and example portfolio reuse the published five-bid fixture; the marketplace listings are separately illustrative and never onchain inventory. Labels identify every view as sample data, and the quantity calculator changes only a local quote preview. It must not report a mock balance, refund, order, or claim as the visitor's state or as a confirmed transaction. Existing transaction panels elsewhere retain wallet ownership, selected-chain, contract-eligibility, fixed-block-read, and receipt-confirmation boundaries; restoring them to `/demo` requires an explicit product decision and browser acceptance.
 - Privy remains an external wallet and authentication dependency when its public App ID is configured. The App ID is browser configuration; the Privy app secret remains server-only and is not used by this client. When no App ID is configured, only the existing injected-wallet path is available; no session, connected address, or balance is fabricated.
 - A simulated call is not proof of execution. The transaction runner distinguishes signing, pending, confirmed, reverted, rejected, and unknown outcomes. Repricing follows the replacement receipt; a cancellation or a different-call replacement cannot confirm the original action. An unknown hash blocks resubmission and supports explicit receipt rechecking without a new signature.
 - Offering and listing reads share a fixed block tag within each snapshot. A failed refresh must be presented as unavailable or stale data, not a zero balance. Transactions that depend on those reads fail closed; `maxCost` still protects a purchase against movement after a successful read.

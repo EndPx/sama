@@ -1,23 +1,21 @@
 "use client";
 
-import React, { Suspense, lazy, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useAccount } from "wagmi";
 import {
   ArrowRight,
   ArrowUpRight,
   BookOpen,
-  CircleHelp,
   Compass,
   Gavel,
   LayoutGrid,
   Store,
-  Wallet,
+  UserRound,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { shortAddress } from "@/lib/amounts";
-import { configured, docsUrl, networkBadge } from "@/lib/config";
+import { docsUrl } from "@/lib/config";
+import { MockMarketplace, MockPortfolio, MockRound } from "./mock-views";
 import {
   formatWholeUnits,
   referenceAuction,
@@ -26,17 +24,6 @@ import {
 
 type DemoView = "overview" | "round" | "portfolio" | "market";
 type ReferenceBid = (typeof referenceBids)[number];
-
-const OfferingPanel = lazy(() =>
-  import("@/components/offering-panel").then((module) => ({
-    default: module.OfferingPanel,
-  })),
-);
-const MarketplacePanel = lazy(() =>
-  import("@/components/marketplace-panel").then((module) => ({
-    default: module.MarketplacePanel,
-  })),
-);
 
 const views = [
   { id: "overview", label: "Overview", icon: Compass },
@@ -50,22 +37,22 @@ const viewCopy: Record<
   { eyebrow: string; title: string; description: string }
 > = {
   round: {
-    eyebrow: "Participate",
-    title: "Follow the round.",
+    eyebrow: "Round / Sample data",
+    title: "Follow a round from bid to outcome.",
     description:
-      "Choose your terms, keep your reveal backup, and see exactly what happens after the round closes.",
+      "Explore the exact five bid example behind SAMA. Every number is illustrative, but the rules and outcome match the published auction specification.",
   },
   portfolio: {
-    eyebrow: "Your position",
-    title: "Everything in one place.",
+    eyebrow: "Portfolio / Sample data",
+    title: "See what each bid becomes.",
     description:
-      "Your deposits, allocations, and refunds will be shown here for the wallet you connect.",
+      "Switch between example bidders to see their accepted deposit, refund, and demo token allocation. None of these positions belongs to this browser.",
   },
   market: {
-    eyebrow: "After the round",
-    title: "Explore the marketplace.",
+    eyebrow: "Marketplace / Sample data",
+    title: "A place to trade after the round.",
     description:
-      "Browse or trade demo tokens once an offering has settled and the testnet contracts are connected.",
+      "Once a round ends, holders can offer demo tokens to others. Explore example listings and see a price without buying anything.",
   },
 };
 
@@ -98,7 +85,7 @@ function Intro({
       </div>
       <span className="demo-preview-label">
         <span aria-hidden="true" />
-        {configured ? "Testnet workspace" : "Product preview"}
+        Sample data
       </span>
     </div>
   );
@@ -322,165 +309,20 @@ function Overview({ openRound }: { openRound: () => void }) {
   );
 }
 
-function ContextRail({ view }: { view: Exclude<DemoView, "overview"> }) {
-  const entries = {
-    round: [
-      ["01", "Prepare", "Connect a wallet and review the test round."],
-      ["02", "Commit", "Set your deposit and maximum value."],
-      ["03", "Reveal", "Use your saved backup when reveal opens."],
-      ["04", "Claim", "Collect any allocation and refund after settlement."],
-    ],
-    portfolio: [
-      ["01", "Connect", "Your connected wallet determines what appears."],
-      ["02", "Review", "Check commitments and their confirmed status."],
-      ["03", "Claim", "Receive what the settled round owes this wallet."],
-    ],
-    market: [
-      ["01", "List", "Owners can offer demo tokens for test currency."],
-      ["02", "Browse", "Review price and remaining quantity."],
-      ["03", "Trade", "A purchase settles only after wallet confirmation."],
-    ],
-  } as const;
-  return (
-    <aside className="demo-context-rail" aria-label="View guide">
-      <p className="demo-overline">How it works</p>
-      <ol>
-        {entries[view].map(([number, title, description]) => (
-          <li key={number}>
-            <span>{number}</span>
-            <div>
-              <strong>{title}</strong>
-              <p>{description}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
-      <a href={docsUrl} target="_blank" rel="noopener noreferrer">
-        Read the full guide <ArrowUpRight aria-hidden="true" />
-      </a>
-    </aside>
-  );
-}
-
-function PreviewUnavailable({
-  view,
-  openOverview,
-}: {
-  view: Exclude<DemoView, "overview">;
-  openOverview: () => void;
-}) {
-  const content = {
-    round: {
-      title: "The round will open here.",
-      description:
-        "Once the public testnet contracts are connected, this space will guide a wallet through a bid, reveal, settlement, and claims.",
-    },
-    portfolio: {
-      title: "Your activity belongs here.",
-      description:
-        "A connected testnet round will show confirmed activity for your own wallet. This preview has no account data to display.",
-    },
-    market: {
-      title: "The marketplace follows the round.",
-      description:
-        "Listings and purchases will appear here after a testnet offering settles. No listings are presented as live in this preview.",
-    },
-  }[view];
-  return (
-    <section className="demo-preview-empty" aria-label="Preview availability">
-      <span className="demo-preview-empty-mark" aria-hidden="true">
-        <Image src="/brand/sama-mark.png" alt="" width={40} height={40} />
-      </span>
-      <p className="demo-overline">Coming into focus</p>
-      <h2>{content.title}</h2>
-      <p>{content.description}</p>
-      <Button type="button" variant="outline" onClick={openOverview}>
-        Review the example <ArrowRight data-icon="inline-end" />
-      </Button>
-    </section>
-  );
-}
-
-function TransactionView({
-  view,
-  openOverview,
-}: {
-  view: Exclude<DemoView, "overview">;
-  openOverview: () => void;
-}) {
+function SampleView({ view }: { view: Exclude<DemoView, "overview"> }) {
   const copy = viewCopy[view];
   return (
     <div className="demo-transaction-view demo-view-enter">
       <Intro {...copy} />
-      {view === "round" && (
-        <section
-          className="demo-offer-brief"
-          aria-label="Reference offer terms"
-        >
-          <div>
-            <p className="demo-overline">Published example</p>
-            <h2>One offer. One set of rules.</h2>
-            <p>
-              These are the terms of the fictional reference round, not a live
-              startup offering.
-            </p>
-          </div>
-          <dl>
-            <div>
-              <dt>Company allocation</dt>
-              <dd>{referenceAuction.allocationPercent.toString()}%</dd>
-            </div>
-            <div>
-              <dt>Company value range</dt>
-              <dd>
-                {Number(referenceAuction.fdvFloor) / 1_000_000}M to{" "}
-                {Number(referenceAuction.fdvCeiling) / 1_000_000}M
-              </dd>
-            </div>
-            <div>
-              <dt>Minimum for success</dt>
-              <dd>{formatWholeUnits(referenceAuction.minimumRaise)}</dd>
-            </div>
-          </dl>
-        </section>
-      )}
-      {!configured && (
-        <div className="demo-release-note" role="status">
-          <CircleHelp aria-hidden="true" />
-          <p>
-            <strong>Public transactions are not available yet.</strong> The
-            testnet contracts are not connected to this preview. You can still
-            inspect the product flow and the reference round.
-          </p>
-        </div>
-      )}
-      <div className="demo-transaction-layout">
-        <div className="demo-transaction-primary">
-          {configured ? (
-            <Suspense
-              fallback={
-                <p role="status" className="demo-panel-loading">
-                  Loading transaction tools
-                </p>
-              }
-            >
-              {view === "round" && <OfferingPanel />}
-              {view === "portfolio" && <OfferingPanel portfolio />}
-              {view === "market" && <MarketplacePanel />}
-            </Suspense>
-          ) : (
-            <PreviewUnavailable view={view} openOverview={openOverview} />
-          )}
-        </div>
-        <ContextRail view={view} />
-      </div>
+      {view === "round" && <MockRound referenceDesk={<ReferenceRoundDesk />} />}
+      {view === "portfolio" && <MockPortfolio />}
+      {view === "market" && <MockMarketplace />}
     </div>
   );
 }
 
 export function DemoEntry() {
   const [view, setView] = useState<DemoView>("overview");
-  const { address } = useAccount();
 
   function openView(next: DemoView) {
     setView(next);
@@ -496,10 +338,10 @@ export function DemoEntry() {
           <span className="demo-header-title">Round workspace</span>
         </div>
         <div className="demo-workspace-header-actions">
-          <span className="demo-network-label">{networkBadge}</span>
+          <span className="demo-network-label">Mock workspace</span>
           <span className="demo-account-pill">
-            <Wallet aria-hidden="true" />
-            {address ? shortAddress(address) : "No wallet connected"}
+            <UserRound aria-hidden="true" />
+            Example profile
           </span>
           <a href={docsUrl} target="_blank" rel="noopener noreferrer">
             <BookOpen aria-hidden="true" /> Docs
@@ -532,13 +374,10 @@ export function DemoEntry() {
               <div className="demo-rail-status">
                 <span className="demo-rail-status-dot" aria-hidden="true" />
                 <div>
-                  <strong>
-                    {configured ? "Testnet connected" : "Preview mode"}
-                  </strong>
+                  <strong>Sample data</strong>
                   <p>
-                    {configured
-                      ? "Wallet activity is read from the connected testnet."
-                      : "Explore the product before its public testnet release."}
+                    Illustrative screens only. No wallet or transaction is
+                    connected.
                   </p>
                 </div>
               </div>
@@ -553,18 +392,15 @@ export function DemoEntry() {
             <span>
               Workspace / {views.find((item) => item.id === view)?.label}
             </span>
-            <span>{networkBadge}</span>
+            <span>Sample data / No live activity</span>
           </div>
           {view === "overview" ? (
             <Overview openRound={() => openView("round")} />
           ) : (
-            <TransactionView
-              view={view}
-              openOverview={() => openView("overview")}
-            />
+            <SampleView view={view} />
           )}
           <div className="demo-main-bottomline">
-            <span>Testnet demonstration</span>
+            <span>Mock product preview · No transactions</span>
             <a href={docsUrl} target="_blank" rel="noopener noreferrer">
               How SAMA works <ArrowUpRight aria-hidden="true" />
             </a>

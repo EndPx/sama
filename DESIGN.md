@@ -18,25 +18,25 @@ The [Crafts pitch](https://www.youtube.com/watch?v=4HIgikZlpb8) and [Colosseum p
 
 ## 2. Color
 
-| Semantic token | Value | Role |
-| --- | --- | --- |
-| background | `#f6f4ed` | Warm page canvas, retained from scaffold |
-| foreground | `#192d25` | Reading and headings |
-| card / popover | `#fffdf8` | Raised paper surfaces, retained |
-| primary | `#173f35` | Forest action and identity |
-| primary-foreground | `#fffdf8` | Text on forest |
-| secondary / accent | `#e4eadf` | Sage selection and secondary surfaces |
-| secondary-foreground / accent-foreground | `#173f35` | Sage contrast |
-| muted | `#efeee6` | Recessed surface |
-| muted-foreground | `#55655a` | Secondary readable text |
-| border / input | `#cbd4c7` | Component edges |
-| ring | `#376854` | Keyboard focus |
-| destructive | `#a32d27` | Error text and destructive action |
-| success | `#236347` | Confirmed receipt, never pending |
-| warning | `#825217` | Recoverable warning |
-| forest-deep | `#102e27` | Dark editorial feature |
-| sage-light | `#edf1e4` | Campus surround |
-| white | `#ffffff` | Highlight and white-on-destructive |
+| Semantic token                           | Value     | Role                                     |
+| ---------------------------------------- | --------- | ---------------------------------------- |
+| background                               | `#f6f4ed` | Warm page canvas, retained from scaffold |
+| foreground                               | `#192d25` | Reading and headings                     |
+| card / popover                           | `#fffdf8` | Raised paper surfaces, retained          |
+| primary                                  | `#173f35` | Forest action and identity               |
+| primary-foreground                       | `#fffdf8` | Text on forest                           |
+| secondary / accent                       | `#e4eadf` | Sage selection and secondary surfaces    |
+| secondary-foreground / accent-foreground | `#173f35` | Sage contrast                            |
+| muted                                    | `#efeee6` | Recessed surface                         |
+| muted-foreground                         | `#55655a` | Secondary readable text                  |
+| border / input                           | `#cbd4c7` | Component edges                          |
+| ring                                     | `#376854` | Keyboard focus                           |
+| destructive                              | `#a32d27` | Error text and destructive action        |
+| success                                  | `#236347` | Confirmed receipt, never pending         |
+| warning                                  | `#825217` | Recoverable warning                      |
+| forest-deep                              | `#102e27` | Dark editorial feature                   |
+| sage-light                               | `#edf1e4` | Campus surround                          |
+| white                                    | `#ffffff` | Highlight and white-on-destructive       |
 
 No color-only state communication. Light appearance is intentional; do not invent a dark theme. Components consume semantic variables.
 
@@ -58,26 +58,28 @@ Education routes use the existing page-grid pattern: a two-column editorial hero
 
 Installed shadcn/Radix is the reusable source layer. Primitive showcase `/design-system` is development-only and precedes product-screen work.
 
-| Primitive | Anatomy and required states |
-| --- | --- |
-| Button | Primary, secondary, outline, ghost, destructive; default/hover/focus/active/disabled/busy. Default and large touch targets at least 44 px. Busy includes text and aria-busy. |
-| Field / Input | Label, control, optional description, error; empty/filled/focus/disabled/invalid. aria-invalid and describedby bind feedback. |
-| Card | Header/title/description/content/footer; no nested ornamental card grids. |
-| Badge | Plain text status; secondary, outline, error variants. |
-| Alert | Title plus description, optional action; neutral/error/status. No secret values in messages. |
-| Tabs | Tab list, triggers, associated panels; keyboard/active/focus states. |
-| Dialog | Accessible title/description, close, focus trap and return, scroll when needed. Never auto-signs a transaction. |
-| Empty | Clear absence, explanation, actionable recovery; distinct from RPC failure. |
-| Skeleton | Reserves final content space; labeled loading region. |
-| Separator | Decorative hierarchy; never substitutes for section semantics. |
-| Select | Labeled trigger, content, group/items; selection/focus/disabled. |
-| PageIntro | Eyebrow, one h1, bounded explanatory paragraph. |
-| Stat | Label, exact/formatted value, optional unit; no invented live values. |
-| TransactionStatus | Preparing/signing/pending/confirmed/reverted/rejected/unknown; persistent hash link, live region, retry only when safe. |
-| WalletGate | Disconnected/loading/wrong network/connected; explicit wallet identity, no silent account substitution. |
-| EducationHero | Eyebrow, one h1, one bounded introductory paragraph, primary/secondary links, and a factual visual panel; static across Investors, Founders, Token model, Auction, and Getting started. The panel has paper and forest variants, and holds real fixture or protocol terms, never invented live numbers. |
-| DemoWorkspace | Direct entry preview with a stable identity rail, Overview/Round/Portfolio/Marketplace navigation, environment status, and honest wallet identity. Narrow widths move the rail into a visible horizontal navigation strip. Each transaction view reuses the existing receipt aware panels. |
-| ReferenceRoundDesk | Interactive view of the five bid auction fixture, with a selected bid detail and exact accepted/refundable amounts. It is always labeled as a reference example, never as live demand or the visitor's account. |
+| Primitive          | Anatomy and required states                                                                                                                                                                                                                                                                                                              |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Button             | Primary, secondary, outline, ghost, destructive; default/hover/focus/active/disabled/busy. Default and large touch targets at least 44 px. Busy includes text and aria-busy.                                                                                                                                                             |
+| Field / Input      | Label, control, optional description, error; empty/filled/focus/disabled/invalid. aria-invalid and describedby bind feedback.                                                                                                                                                                                                            |
+| Card               | Header/title/description/content/footer; no nested ornamental card grids.                                                                                                                                                                                                                                                                |
+| Badge              | Plain text status; secondary, outline, error variants.                                                                                                                                                                                                                                                                                   |
+| Alert              | Title plus description, optional action; neutral/error/status. No secret values in messages.                                                                                                                                                                                                                                             |
+| Tabs               | Tab list, triggers, associated panels; keyboard/active/focus states.                                                                                                                                                                                                                                                                     |
+| Dialog             | Accessible title/description, close, focus trap and return, scroll when needed. Never auto-signs a transaction.                                                                                                                                                                                                                          |
+| Empty              | Clear absence, explanation, actionable recovery; distinct from RPC failure.                                                                                                                                                                                                                                                              |
+| Skeleton           | Reserves final content space; labeled loading region.                                                                                                                                                                                                                                                                                    |
+| Separator          | Decorative hierarchy; never substitutes for section semantics.                                                                                                                                                                                                                                                                           |
+| Select             | Labeled trigger, content, group/items; selection/focus/disabled.                                                                                                                                                                                                                                                                         |
+| PageIntro          | Eyebrow, one h1, bounded explanatory paragraph.                                                                                                                                                                                                                                                                                          |
+| Stat               | Label, exact/formatted value, optional unit; no invented live values.                                                                                                                                                                                                                                                                    |
+| TransactionStatus  | Preparing/signing/pending/confirmed/reverted/rejected/unknown; persistent hash link, live region, retry only when safe.                                                                                                                                                                                                                  |
+| WalletGate         | Disconnected/loading/wrong network/connected; explicit wallet identity, no silent account substitution.                                                                                                                                                                                                                                  |
+| EducationHero      | Eyebrow, one h1, one bounded introductory paragraph, primary/secondary links, and a factual visual panel; static across Investors, Founders, Token model, Auction, and Getting started. The panel has paper and forest variants, and holds real fixture or protocol terms, never invented live numbers.                                  |
+| DemoWorkspace      | Direct entry mock preview with a stable navigation rail, Overview/Round/Portfolio/Marketplace views, persistent "Sample data" state, and an example profile instead of a wallet identity. Tablet widths use a horizontal navigation strip; phone widths show all four views in a two-row grid. No transaction panel mounts in this mode. |
+| ReferenceRoundDesk | Interactive view of the five bid auction fixture, with a selected bid detail and exact accepted/refundable amounts. It is always labeled as a reference example, never as live demand or the visitor's account.                                                                                                                          |
+| SamplePortfolio    | Selectable example bidder profiles drawn from the locked five bid fixture. Deposit, accepted, refund, and demo token allocation remain mathematically linked; selection never changes a connected wallet or suggests a claim was executed.                                                                                               |
+| SampleMarketplace  | Selectable illustrative listings with a quantity field and deterministic quote preview. A preview cannot submit a transaction or mutate a listing. Amounts and remaining prices follow the marketplace rounding specification.                                                                                                           |
 
 ## 6. Motion and interaction
 
@@ -101,8 +103,8 @@ Education-page content addresses three readers: a first-time bidder, a founder a
 
 ## 9. Demo preview and workspace contract
 
-The owner has deferred login testing and requested direct entry to the application. `/demo` therefore opens in clearly labeled preview mode without an authentication gate. This is a public educational surface, not an account session. Wallet connection remains optional for browsing and required by existing transaction panels for personalized state or signing. A configured public Privy App ID enables Privy wallet tools; local Anvil retains an injected wallet path. A missing App ID never creates a simulated account.
+The owner has deferred login testing and requested direct entry to the application. For the current design iteration, `/demo` is a mock-only product preview without an authentication gate, wallet provider, chain reads, or transaction controls. This is a public educational surface, not an account session. The existing receipt-aware transaction panels remain separate from this route and are not represented by the mock screens. A configured deployment or public Privy App ID does not silently turn `/demo` into a live workspace.
 
-The shell composes a navigation rail, one primary reading surface, and a contextual aside using the [panel layout](https://github.com/changeroa/StyleGallery/blob/main/patterns/viewport-shell/panel-layout.md) and [sticky aside](https://github.com/changeroa/StyleGallery/blob/main/patterns/split-sidebar/sticky-aside.md) contracts. The document owns vertical scroll. At 375 px the navigation becomes a horizontal strip and all detail panels follow their parent content in DOM order. A selected reference bid uses restrained state feedback informed by the [beui tabs source](https://beui.dev/r/tabs), without importing its animation dependency. Keyboard focus, selection text, and reduced motion remain functional without animation.
+The shell composes a navigation rail and one primary reading surface using the [panel layout](https://github.com/changeroa/StyleGallery/blob/main/patterns/viewport-shell/panel-layout.md) and [sticky aside](https://github.com/changeroa/StyleGallery/blob/main/patterns/split-sidebar/sticky-aside.md) contracts. The document owns vertical scroll. At 375 px all four navigation choices are visible in a two-row grid, and all detail panels follow their parent content in DOM order. A selected reference bid uses restrained state feedback informed by the [beui tabs source](https://beui.dev/r/tabs), without importing its animation dependency. Keyboard focus, selection text, and reduced motion remain functional without animation.
 
-The overview explains the product in plain English and uses only the locked five bid fixture from `docs/AUCTION_SPEC.md`. It must say that the illustration is not live activity. The workspace always identifies Arbitrum Sepolia or local Anvil, shows the actual connected address or an explicit disconnected state, never displays illustrative balances as live account state, and does not replace receipt confirmation on transaction screens. Neither opening the app nor switching views constitutes login or onchain eligibility.
+The overview explains the product in plain English and uses only the locked five bid fixture from `docs/AUCTION_SPEC.md`. It must say that the illustration is not live activity. The round and portfolio reuse that fixture; mock marketplace listings are separately marked illustrative and never presented as onchain inventory. The header says "Sample data" and "Example profile", not a connected address. No mock value is a wallet balance, verified transaction, claimable entitlement, or live listing. The quantity calculator returns a preview quote only and makes no purchase. Neither opening the app nor switching views constitutes login or onchain eligibility. Restoring live transactions to `/demo` requires a separate, explicit release decision and real receipt verification.
