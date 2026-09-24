@@ -4,6 +4,7 @@ import {
   bidCommitment,
   FDV_CEILING,
   FDV_FLOOR,
+  formatAmount,
   parseAmount,
   parseFdv,
   quoteFill,
@@ -14,6 +15,10 @@ const bidder = "0x00000000000000000000000000000000000000b1" as const;
 const nonce = `0x${"ab".repeat(32)}` as const;
 
 describe("amount boundaries", () => {
+  it("labels unavailable amounts without an ambiguous dash", () => {
+    expect(formatAmount(undefined)).toBe("Not available");
+  });
+
   it("parses exact decimal base units and rejects ambiguous input", () => {
     expect(parseAmount("12.34", 6)).toBe(12_340_000n);
     for (const value of ["", "01", ".1", "1.", "1e6", "1,000", "-1", "0"]) {

@@ -64,8 +64,8 @@ export function PrimitiveShowcase() {
         <p className="eyebrow">SAMA / component workshop</p>
         <h1>Clear by design.</h1>
         <p className="lede">
-          Reusable states before live transactions. This is a local-only
-          interface test, not onchain evidence.
+          Reusable states before live transactions. This is a local interface
+          test, not onchain evidence.
         </p>
       </div>
       <div className="cluster">

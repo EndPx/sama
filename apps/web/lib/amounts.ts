@@ -48,7 +48,7 @@ export function formatAmount(
   decimals = 6,
   fractionDigits = 2,
 ) {
-  if (value === undefined) return "—";
+  if (value === undefined) return "Not available";
   const scale = 10n ** BigInt(decimals);
   const whole = (value / scale).toLocaleString("en-US");
   const fraction = (value % scale)

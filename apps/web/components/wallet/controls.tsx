@@ -41,7 +41,7 @@ function ExternalConnection() {
       </Button>
       {error && (
         <p role="alert" className="text-sm text-destructive">
-          Could not connect. Unlock an Ethereum-compatible browser wallet and
+          Could not connect. Unlock a browser wallet that supports Ethereum and
           try again.
         </p>
       )}

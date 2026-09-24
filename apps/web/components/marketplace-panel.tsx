@@ -203,7 +203,7 @@ export function MarketplacePanel() {
             KIRA marketplace
           </h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-            KIRA and SAMA demoUSDC are demo-only simulated assets with no
+            KIRA and SAMA demoUSDC are simulated assets for this demo with no
             monetary value. This interface is not investment advice.
           </p>
         </div>
@@ -213,9 +213,9 @@ export function MarketplacePanel() {
         <AlertCircle />
         <AlertTitle>Pricing and escrow disclosure</AlertTitle>
         <AlertDescription>
-          Listings escrow KIRA. Partial-fill quotes use current remaining
-          amounts and a ceiling calculation; the submitted maximum cost is the
-          displayed quote, so stale prices cannot charge more.
+          Listings escrow KIRA. Quotes for partial purchases use current
+          remaining amounts and a ceiling calculation; the submitted maximum
+          cost is the displayed quote, so stale prices cannot charge more.
         </AlertDescription>
       </Alert>
       {!address || wrongChain ? (
@@ -225,8 +225,8 @@ export function MarketplacePanel() {
               {wrongChain ? "Wrong network" : "Connect a wallet to trade"}
             </CardTitle>
             <CardDescription>
-              Browsing remains read-only until a connected wallet is on the
-              configured {networkName} network.
+              Browsing remains available without a wallet. To trade, connect a
+              wallet on the configured {networkName} network.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -249,8 +249,8 @@ export function MarketplacePanel() {
           <AlertCircle />
           <AlertTitle>Listings could not be loaded</AlertTitle>
           <AlertDescription>
-            Network data is unavailable; no empty-market conclusion is being
-            made.
+            Network data is unavailable, so we cannot tell whether the market is
+            empty.
           </AlertDescription>
         </Alert>
       )}
@@ -269,8 +269,8 @@ export function MarketplacePanel() {
         <CardHeader>
           <CardTitle>Create a listing</CardTitle>
           <CardDescription>
-            Enter exact token amounts. KIRA approval is a separate
-            receipt-confirmed transaction before listing escrow.
+            Enter exact token amounts. KIRA approval is a separate transaction
+            that must be confirmed before listing escrow.
           </CardDescription>
         </CardHeader>
         <CardContent>
