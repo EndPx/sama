@@ -38,15 +38,20 @@ export default function RootLayout({
               <Link href="/founders">Founders</Link>
               <Link href="/stakeholder-tokens">Stakeholder Tokens</Link>
               <Link href="/auction">Auction</Link>
-              <a href="https://sama-3.gitbook.io/sama-product-and-protocol/">
+            </nav>
+            <div className="site-header-actions">
+              <a
+                className="site-header-docs"
+                href="https://sama-3.gitbook.io/sama-product-and-protocol/"
+              >
                 Docs
               </a>
-            </nav>
-            <Button variant="outline" asChild>
-              <Link href="/startups/kirana-ai#participate">
-                Open demo <ArrowUpRight data-icon="inline-end" />
-              </Link>
-            </Button>
+              <Button variant="outline" asChild>
+                <Link href="/startups/kirana-ai#participate">
+                  Open demo <ArrowUpRight data-icon="inline-end" />
+                </Link>
+              </Button>
+            </div>
           </div>
         </HeaderScrollFrame>
         <main id="main">{children}</main>

@@ -210,6 +210,19 @@
 .site-header-inner > :last-child {
   justify-self: end;
 }
+.site-header-actions {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.8vw, 28px);
+  white-space: nowrap;
+}
+.site-header-docs {
+  font-size: 14px;
+  padding-block: 12px;
+}
+.site-header-docs:hover {
+  color: var(--ring);
+}
 .wordmark {
   display: inline-flex;
   align-items: center;
@@ -246,7 +259,10 @@ body:has(.sama-landing) .site-header[data-scrolled="false"] .wordmark {
   color: #f7f5e9;
 }
 body:has(.sama-landing) .site-header[data-scrolled="false"] .wordmark-dot,
-body:has(.sama-landing) .site-header[data-scrolled="false"] nav a:hover {
+body:has(.sama-landing) .site-header[data-scrolled="false"] nav a:hover,
+body:has(.sama-landing)
+  .site-header[data-scrolled="false"]
+  .site-header-docs:hover {
   color: #c5d9c6;
 }
 body:has(.sama-landing) .site-header[data-scrolled="false"] .wordmark img {
@@ -270,7 +286,8 @@ body:has(.sama-landing) .site-header[data-scrolled="false"] a:focus-visible {
 .site-header .wordmark,
 .site-header .wordmark-dot,
 .site-header .wordmark img,
-.site-header nav a {
+.site-header nav a,
+.site-header-docs {
   transition:
     color 300ms var(--ease-state),
     filter 300ms var(--ease-state);
