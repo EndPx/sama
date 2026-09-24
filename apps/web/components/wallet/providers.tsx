@@ -54,7 +54,7 @@ export default function WalletProviders({
       config={{
         supportedChains: [chain],
         defaultChain: chain,
-        loginMethods: ["email", "wallet"],
+        loginMethods: ["email", "google", "apple", "wallet"],
         appearance: {
           theme: "light",
           accentColor: "#173f35",

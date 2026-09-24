@@ -47,7 +47,7 @@ export default function RootLayout({
                 Docs
               </a>
               <Button variant="outline" asChild>
-                <Link href="/startups/kirana-ai#participate">
+                <Link href="/demo">
                   Open demo <ArrowUpRight data-icon="inline-end" />
                 </Link>
               </Button>
