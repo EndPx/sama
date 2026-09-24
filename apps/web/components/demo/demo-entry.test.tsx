@@ -18,17 +18,22 @@ import { DemoEntry } from "./demo-entry";
 afterEach(cleanup);
 
 describe("mock-only demo workspace", () => {
-  it("opens without login, wallet state, or transaction actions", () => {
+  it("opens on an account dashboard, not a product explainer", () => {
     render(<DemoEntry />);
 
-    expect(
-      screen.getByRole("heading", {
-        name: "A clearer way to join a public round.",
-      }),
-    ).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Overview" })).toBeTruthy();
+    expect(screen.getByText("62,500")).toBeTruthy();
+    expect(screen.getByText("120,000")).toBeTruthy();
     expect(screen.getAllByText("Sample data").length).toBeGreaterThan(0);
-    expect(screen.getByText("Example profile")).toBeTruthy();
-    expect(screen.getByText("Fixed example, not live activity")).toBeTruthy();
+    expect(screen.getAllByText("Sample account B").length).toBeGreaterThan(0);
+    expect(
+      screen.getByRole("heading", { name: "Recent activity" }),
+    ).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Market watch" })).toBeTruthy();
+    expect(
+      screen.queryByText(/a clearer way to join a public round/i),
+    ).toBeNull();
+    expect(screen.queryByText(/what sama does/i)).toBeNull();
     expect(
       screen.queryByRole("button", {
         name: /sign in|connect wallet|buy|claim/i,
@@ -36,8 +41,9 @@ describe("mock-only demo workspace", () => {
     ).toBeNull();
   });
 
-  it("explains exact accepted and refundable values for a selected reference bid", () => {
+  it("shows exact settlement values when reviewing the round ledger", () => {
     render(<DemoEntry />);
+    fireEvent.click(screen.getByRole("button", { name: "Review round" }));
 
     const detail = screen.getByRole("complementary", {
       name: "Selected reference bid",
@@ -54,22 +60,22 @@ describe("mock-only demo workspace", () => {
     ).toContain("100,000 demoUSDC");
   });
 
-  it("shows the locked round terms and explores its mock lifecycle", () => {
+  it("shows locked terms as a settled round record without an educational stepper", () => {
     render(<DemoEntry />);
 
-    fireEvent.click(screen.getByRole("button", { name: "Explore the round" }));
+    fireEvent.click(screen.getByRole("button", { name: "Review round" }));
     const terms = screen.getByRole("region", { name: "Reference offer terms" });
     expect(within(terms).getByText("10%")).toBeTruthy();
     expect(within(terms).getByText("4M to 6M")).toBeTruthy();
     expect(within(terms).getByText("400,000")).toBeTruthy();
-    expect(screen.getByText("One value made the round work.")).toBeTruthy();
-
-    fireEvent.click(screen.getByRole("button", { name: "Step 01: Commit" }));
-    expect(screen.getByText("Five people chose their limits.")).toBeTruthy();
+    expect(screen.getByText("Settled")).toBeTruthy();
+    expect(
+      screen.queryByRole("button", { name: /Step 01: Commit/i }),
+    ).toBeNull();
     expect(screen.queryByRole("button", { name: /commit bid/i })).toBeNull();
   });
 
-  it("switches between fixture-backed example portfolio outcomes", () => {
+  it("keeps the selected fixture account consistent across portfolio and overview", () => {
     render(<DemoEntry />);
     fireEvent.click(screen.getByRole("button", { name: "Portfolio" }));
 
@@ -77,16 +83,33 @@ describe("mock-only demo workspace", () => {
     expect(within(portfolio).getByText("62,500")).toBeTruthy();
     expect(within(portfolio).getByText("120,000")).toBeTruthy();
 
-    fireEvent.click(within(portfolio).getByRole("button", { name: /Bid E/i }));
+    fireEvent.change(
+      within(portfolio).getByRole("combobox", { name: "Sample account" }),
+      {
+        target: { value: "E" },
+      },
+    );
     expect(within(portfolio).getByText("312,500")).toBeTruthy();
-    fireEvent.click(within(portfolio).getByRole("button", { name: /Bid A/i }));
+    fireEvent.click(screen.getByRole("button", { name: "Overview" }));
+    expect(screen.getAllByText("Sample account E").length).toBeGreaterThan(0);
+    expect(screen.getByText("312,500")).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Portfolio" }));
+    const updatedPortfolio = screen.getByRole("region", {
+      name: "Sample portfolio",
+    });
+    fireEvent.change(
+      within(updatedPortfolio).getByRole("combobox", {
+        name: "Sample account",
+      }),
+      { target: { value: "A" } },
+    );
     expect(
-      within(portfolio).getByText("Refund in example").parentElement
+      within(updatedPortfolio).getByText("Refundable").parentElement
         ?.textContent,
     ).toContain("100,000");
     expect(
-      within(portfolio).getByText(/full deposit is refundable/i),
-    ).toBeTruthy();
+      within(updatedPortfolio).getAllByText("Full refund").length,
+    ).toBeGreaterThan(0);
   });
 
   it("previews marketplace quotes without changing listing state", () => {
@@ -101,7 +124,7 @@ describe("mock-only demo workspace", () => {
     );
     expect(within(market).getByText("275")).toBeTruthy();
     fireEvent.change(
-      within(market).getByRole("textbox", { name: "Demo tokens to preview" }),
+      within(market).getByRole("textbox", { name: "Demo tokens" }),
       { target: { value: "7000" } },
     );
     expect(within(market).getByRole("alert").textContent).toMatch(
@@ -109,7 +132,7 @@ describe("mock-only demo workspace", () => {
     );
     expect(within(market).getByText("6,000")).toBeTruthy();
     expect(
-      within(market).getByText(/No wallet action, order, or listing change/i),
+      within(market).getByText(/Sample quote only. No order submitted/i),
     ).toBeTruthy();
   });
 });

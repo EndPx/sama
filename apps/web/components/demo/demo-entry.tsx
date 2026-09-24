@@ -7,6 +7,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   BookOpen,
+  Check,
   Compass,
   Gavel,
   LayoutGrid,
@@ -15,44 +16,45 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { docsUrl } from "@/lib/config";
+import {
+  formatSampleUsdc,
+  sampleListings,
+  sampleProfiles,
+} from "@/lib/mock-workspace";
 import { MockMarketplace, MockPortfolio, MockRound } from "./mock-views";
 import {
   formatWholeUnits,
   referenceAuction,
   referenceBids,
+  referenceKiraEntitlement,
 } from "@/lib/reference-auction";
 
 type DemoView = "overview" | "round" | "portfolio" | "market";
 type ReferenceBid = (typeof referenceBids)[number];
+type SampleBidder = (typeof sampleProfiles)[number]["bid"]["bidder"];
 
 const views = [
   { id: "overview", label: "Overview", icon: Compass },
-  { id: "round", label: "The round", icon: Gavel },
+  { id: "round", label: "Round", icon: Gavel },
   { id: "portfolio", label: "Portfolio", icon: LayoutGrid },
   { id: "market", label: "Marketplace", icon: Store },
 ] as const;
 
 const viewCopy: Record<
   Exclude<DemoView, "overview">,
-  { eyebrow: string; title: string; description: string }
+  { eyebrow: string; title: string }
 > = {
   round: {
-    eyebrow: "Round / Sample data",
-    title: "Follow a round from bid to outcome.",
-    description:
-      "Explore the exact five bid example behind SAMA. Every number is illustrative, but the rules and outcome match the published auction specification.",
+    eyebrow: "Sample round / Settled",
+    title: "Round details",
   },
   portfolio: {
-    eyebrow: "Portfolio / Sample data",
-    title: "See what each bid becomes.",
-    description:
-      "Switch between example bidders to see their accepted deposit, refund, and demo token allocation. None of these positions belongs to this browser.",
+    eyebrow: "Sample account",
+    title: "Portfolio",
   },
   market: {
-    eyebrow: "Marketplace / Sample data",
-    title: "A place to trade after the round.",
-    description:
-      "Once a round ends, holders can offer demo tokens to others. Explore example listings and see a price without buying anything.",
+    eyebrow: "Sample marketplace",
+    title: "Marketplace",
   },
 };
 
@@ -67,26 +69,13 @@ function Wordmark() {
   );
 }
 
-function Intro({
-  eyebrow,
-  title,
-  description,
-}: {
-  eyebrow: string;
-  title: string;
-  description: string;
-}) {
+function Intro({ eyebrow, title }: { eyebrow: string; title: string }) {
   return (
     <div className="demo-page-intro">
       <div className="demo-page-intro-copy">
         <p className="demo-overline">{eyebrow}</p>
         <h1>{title}</h1>
-        <p>{description}</p>
       </div>
-      <span className="demo-preview-label">
-        <span aria-hidden="true" />
-        Sample data
-      </span>
     </div>
   );
 }
@@ -96,16 +85,18 @@ function formatBid(amount: bigint) {
 }
 
 function bidOutcome(bid: ReferenceBid) {
-  if (bid.accepted === 0n)
-    return "This bid was below the clearing value. The full deposit can be claimed back.";
-  if (bid.refund > 0n)
-    return "This bid met the clearing value. Part was accepted, and the unused deposit can be claimed back.";
-  return "This bid met the clearing value. The full deposit was accepted at the same price as every other winning bid.";
+  if (bid.accepted === 0n) return "Full refund";
+  if (bid.refund > 0n) return "Partial allocation";
+  return "Full allocation";
 }
 
-function ReferenceRoundDesk() {
+function ReferenceRoundDesk({
+  initialBidder,
+}: {
+  initialBidder: SampleBidder;
+}) {
   const [selectedBidder, setSelectedBidder] =
-    useState<ReferenceBid["bidder"]>("B");
+    useState<ReferenceBid["bidder"]>(initialBidder);
   const selected =
     referenceBids.find((bid) => bid.bidder === selectedBidder) ??
     referenceBids[3];
@@ -115,31 +106,25 @@ function ReferenceRoundDesk() {
     <section className="demo-reference" aria-labelledby="demo-reference-title">
       <div className="demo-section-heading">
         <div>
-          <p className="demo-overline">The reference round</p>
-          <h2 id="demo-reference-title">One price. Every bid accounted for.</h2>
-          <p>
-            Five independent test bids meet at one clearing value. Select a bid
-            to see where its deposit goes.
-          </p>
+          <p className="demo-overline">Five revealed bids</p>
+          <h2 id="demo-reference-title">Settlement ledger</h2>
         </div>
-        <span className="demo-example-tag">
-          Fixed example, not live activity
-        </span>
+        <span className="demo-example-tag">Sample data</span>
       </div>
       <div className="demo-reference-surface">
         <div className="demo-reference-topline">
           <div>
-            <span>Clearing company value</span>
+            <span>Clearing value / FDV</span>
             <strong>
               {(Number(referenceAuction.clearingFdv) / 1_000_000).toFixed(1)}M
             </strong>
           </div>
           <div>
-            <span>Accepted for the round</span>
+            <span>Accepted / demoUSDC</span>
             <strong>{formatWholeUnits(referenceAuction.acceptedTotal)}</strong>
           </div>
           <div>
-            <span>Available to refund</span>
+            <span>Refundable / demoUSDC</span>
             <strong>{formatWholeUnits(referenceAuction.refundTotal)}</strong>
           </div>
         </div>
@@ -147,7 +132,7 @@ function ReferenceRoundDesk() {
           <div className="demo-reference-ledger">
             <div className="demo-reference-ledger-header">
               <span>Bid</span>
-              <span>Deposit outcome</span>
+              <span>Allocation</span>
               <span>Accepted / refund</span>
             </div>
             <div className="demo-bid-list" aria-label="Reference bids">
@@ -203,12 +188,12 @@ function ReferenceRoundDesk() {
             aria-label="Selected reference bid"
             aria-live="polite"
           >
-            <p className="demo-overline">Selected bid</p>
+            <p className="demo-overline">Bid record</p>
             <div className="demo-bid-detail-title">
               <span>{selected.bidder}</span>
               <div>
                 <h3>Bid {selected.bidder}</h3>
-                <p>Willing to participate up to {selected.maxFdv}</p>
+                <p>Maximum {selected.maxFdv} FDV</p>
               </div>
             </div>
             <dl>
@@ -228,94 +213,224 @@ function ReferenceRoundDesk() {
             <p className="demo-bid-explanation">{bidOutcome(selected)}</p>
           </aside>
         </div>
-        <p className="demo-reference-footnote">
-          {formatWholeUnits(referenceAuction.depositTotal)} demoUSDC deposited
-          in this illustration. All figures are from the published test fixture.
-        </p>
       </div>
     </section>
   );
 }
 
-function Overview({ openRound }: { openRound: () => void }) {
+function Overview({
+  selectedBidder,
+  openView,
+}: {
+  selectedBidder: SampleBidder;
+  openView: (view: DemoView) => void;
+}) {
+  const profile =
+    sampleProfiles.find(({ bid }) => bid.bidder === selectedBidder) ??
+    sampleProfiles[0];
+  const { bid } = profile;
+  const tokenAllocation = referenceKiraEntitlement(bid.accepted);
+  const listing = sampleListings[0];
+  const status =
+    bid.accepted === 0n
+      ? "Refund only"
+      : bid.refund > 0n
+        ? "Partially filled"
+        : "Filled";
+
   return (
     <div className="demo-overview demo-view-enter">
-      <Intro
-        eyebrow="SAMA workspace / Overview"
-        title="A clearer way to join a public round."
-        description="Explore how a startup can invite the public to take part, then give everyone one understandable outcome. This workspace lets you inspect the example before connecting a wallet."
-      />
-      <section className="demo-feature" aria-label="What SAMA does">
-        <div className="demo-feature-copy">
-          <p className="demo-overline">From interest to outcome</p>
-          <h2>One place for the whole round.</h2>
-          <p>
-            A startup shares its plan. People place test bids at values they
-            believe in. When bidding ends, the rules produce one clearing value
-            and make unused deposits claimable.
-          </p>
-          <Button type="button" onClick={openRound}>
-            Explore the round <ArrowRight data-icon="inline-end" />
-          </Button>
+      <div className="demo-dashboard-heading">
+        <div>
+          <p className="demo-overline">Sample account {bid.bidder}</p>
+          <h1>Overview</h1>
         </div>
-        <div className="demo-feature-art" aria-hidden="true">
-          <span className="demo-feature-orbit" />
-          <Image
-            src="/brand/sama-confluence-footer.png"
-            alt=""
-            width={1254}
-            height={1254}
-            priority
-            sizes="(max-width: 767px) 80vw, 38vw"
-          />
-        </div>
-      </section>
-      <ReferenceRoundDesk />
-      <section className="demo-journey" aria-labelledby="demo-journey-title">
-        <div className="demo-section-heading">
-          <div>
-            <p className="demo-overline">Your path</p>
-            <h2 id="demo-journey-title">Know what happens next.</h2>
+        <span className="demo-preview-label">
+          <span aria-hidden="true" />
+          Sample data
+        </span>
+      </div>
+
+      <div className="demo-dashboard-primary">
+        <section
+          className="demo-position-hero"
+          aria-labelledby="demo-allocation-title"
+        >
+          <div className="demo-position-hero-top">
+            <p id="demo-allocation-title">Token allocation</p>
+            <span>
+              <Check aria-hidden="true" /> Settled
+            </span>
           </div>
+          <div className="demo-position-amount">
+            <strong>{formatWholeUnits(tokenAllocation)}</strong>
+            <span>demo tokens</span>
+          </div>
+          <div className="demo-position-hero-bottom">
+            <span>
+              Sample bid {bid.bidder} · {status}
+            </span>
+            <Button type="button" onClick={() => openView("portfolio")}>
+              View position <ArrowRight data-icon="inline-end" />
+            </Button>
+          </div>
+          <Image
+            className="demo-position-watermark"
+            src="/brand/sama-mark.png"
+            alt=""
+            width={224}
+            height={224}
+            aria-hidden="true"
+          />
+        </section>
+        <div className="demo-dashboard-side">
+          <section
+            className="demo-refund-panel"
+            aria-labelledby="demo-refund-title"
+          >
+            <div className="demo-panel-topline">
+              <span>Refund</span>
+              <span>01 / 02</span>
+            </div>
+            <h2 id="demo-refund-title">Refundable amount</h2>
+            <div className="demo-panel-value">
+              <strong>{formatWholeUnits(bid.refund)}</strong>
+              <span>demoUSDC</span>
+            </div>
+            <button type="button" onClick={() => openView("portfolio")}>
+              Review refund <ArrowUpRight aria-hidden="true" />
+            </button>
+          </section>
+          <section
+            className="demo-round-panel"
+            aria-labelledby="demo-round-title"
+          >
+            <div className="demo-panel-topline">
+              <span>Round</span>
+              <span>02 / 02</span>
+            </div>
+            <h2 id="demo-round-title">Settled</h2>
+            <p>Cleared at 4.8M FDV</p>
+            <button type="button" onClick={() => openView("round")}>
+              Review round <ArrowUpRight aria-hidden="true" />
+            </button>
+          </section>
         </div>
-        <ol>
-          <li>
-            <span>01</span>
-            <h3>Choose your limit</h3>
-            <p>
-              Pick a test deposit and the highest company value you would
-              accept.
-            </p>
-          </li>
-          <li>
-            <span>02</span>
-            <h3>Reveal your bid</h3>
-            <p>
-              Keep your backup safe, then reveal when the round enters its
-              reveal window.
-            </p>
-          </li>
-          <li>
-            <span>03</span>
-            <h3>See your result</h3>
-            <p>
-              One value settles the round. Claim a demo allocation or any unused
-              deposit.
-            </p>
-          </li>
-        </ol>
+      </div>
+
+      <section className="demo-account-metrics" aria-label="Sample bid summary">
+        <div>
+          <span>Deposited</span>
+          <strong>{formatWholeUnits(bid.deposit)}</strong>
+          <small>demoUSDC</small>
+        </div>
+        <div>
+          <span>Accepted</span>
+          <strong>{formatWholeUnits(bid.accepted)}</strong>
+          <small>demoUSDC</small>
+        </div>
+        <div>
+          <span>Maximum bid</span>
+          <strong>{bid.maxFdv}</strong>
+          <small>FDV</small>
+        </div>
       </section>
+
+      <div className="demo-dashboard-lower">
+        <section
+          className="demo-activity-panel"
+          aria-labelledby="demo-activity-title"
+        >
+          <div className="demo-panel-heading">
+            <div>
+              <p className="demo-overline">Sample history</p>
+              <h2 id="demo-activity-title">Recent activity</h2>
+            </div>
+            <button type="button" onClick={() => openView("round")}>
+              View ledger <ArrowUpRight aria-hidden="true" />
+            </button>
+          </div>
+          <ol className="demo-activity-list">
+            <li>
+              <span className="demo-activity-marker" aria-hidden="true" />
+              <div>
+                <strong>Round settled</strong>
+                <span>
+                  {formatWholeUnits(bid.accepted)} accepted ·{" "}
+                  {formatWholeUnits(bid.refund)} refundable
+                </span>
+              </div>
+            </li>
+            <li>
+              <span className="demo-activity-marker" aria-hidden="true" />
+              <div>
+                <strong>Bid revealed</strong>
+                <span>Maximum {bid.maxFdv} FDV</span>
+              </div>
+            </li>
+            <li>
+              <span className="demo-activity-marker" aria-hidden="true" />
+              <div>
+                <strong>Deposit recorded</strong>
+                <span>{formatWholeUnits(bid.deposit)} demoUSDC</span>
+              </div>
+            </li>
+          </ol>
+        </section>
+        <section
+          className="demo-market-panel"
+          aria-labelledby="demo-market-title"
+        >
+          <div className="demo-panel-heading">
+            <div>
+              <p className="demo-overline">Sample listing 01</p>
+              <h2 id="demo-market-title">Market watch</h2>
+            </div>
+            <Store aria-hidden="true" />
+          </div>
+          <div className="demo-market-amount">
+            <strong>{formatWholeUnits(listing.remainingTokens)}</strong>
+            <span>demo tokens available</span>
+          </div>
+          <div className="demo-market-meta">
+            <span>Full listing price</span>
+            <strong>
+              {formatSampleUsdc(listing.remainingPriceUsdc)} demoUSDC
+            </strong>
+          </div>
+          <button type="button" onClick={() => openView("market")}>
+            Browse listings <ArrowUpRight aria-hidden="true" />
+          </button>
+        </section>
+      </div>
     </div>
   );
 }
 
-function SampleView({ view }: { view: Exclude<DemoView, "overview"> }) {
+function SampleView({
+  view,
+  selectedBidder,
+  onSelectBidder,
+}: {
+  view: Exclude<DemoView, "overview">;
+  selectedBidder: SampleBidder;
+  onSelectBidder: (bidder: SampleBidder) => void;
+}) {
   const copy = viewCopy[view];
   return (
     <div className="demo-transaction-view demo-view-enter">
       <Intro {...copy} />
-      {view === "round" && <MockRound referenceDesk={<ReferenceRoundDesk />} />}
-      {view === "portfolio" && <MockPortfolio />}
+      {view === "round" && (
+        <MockRound
+          referenceDesk={<ReferenceRoundDesk initialBidder={selectedBidder} />}
+        />
+      )}
+      {view === "portfolio" && (
+        <MockPortfolio
+          selectedBidder={selectedBidder}
+          onSelectBidder={onSelectBidder}
+        />
+      )}
       {view === "market" && <MockMarketplace />}
     </div>
   );
@@ -323,6 +438,7 @@ function SampleView({ view }: { view: Exclude<DemoView, "overview"> }) {
 
 export function DemoEntry() {
   const [view, setView] = useState<DemoView>("overview");
+  const [selectedBidder, setSelectedBidder] = useState<SampleBidder>("B");
 
   function openView(next: DemoView) {
     setView(next);
@@ -335,13 +451,13 @@ export function DemoEntry() {
         <div className="demo-workspace-header-start">
           <Wordmark />
           <span className="demo-header-divider" aria-hidden="true" />
-          <span className="demo-header-title">Round workspace</span>
+          <span className="demo-header-title">Workspace</span>
         </div>
         <div className="demo-workspace-header-actions">
-          <span className="demo-network-label">Mock workspace</span>
+          <span className="demo-network-label">Sample data</span>
           <span className="demo-account-pill">
             <UserRound aria-hidden="true" />
-            Example profile
+            Sample account {selectedBidder}
           </span>
           <a href={docsUrl} target="_blank" rel="noopener noreferrer">
             <BookOpen aria-hidden="true" /> Docs
@@ -374,11 +490,8 @@ export function DemoEntry() {
               <div className="demo-rail-status">
                 <span className="demo-rail-status-dot" aria-hidden="true" />
                 <div>
-                  <strong>Sample data</strong>
-                  <p>
-                    Illustrative screens only. No wallet or transaction is
-                    connected.
-                  </p>
+                  <strong>Preview mode</strong>
+                  <p>No wallet connected</p>
                 </div>
               </div>
               <Link href="/" className="demo-site-link">
@@ -392,19 +505,17 @@ export function DemoEntry() {
             <span>
               Workspace / {views.find((item) => item.id === view)?.label}
             </span>
-            <span>Sample data / No live activity</span>
+            <span>Sample data</span>
           </div>
           {view === "overview" ? (
-            <Overview openRound={() => openView("round")} />
+            <Overview selectedBidder={selectedBidder} openView={openView} />
           ) : (
-            <SampleView view={view} />
+            <SampleView
+              view={view}
+              selectedBidder={selectedBidder}
+              onSelectBidder={setSelectedBidder}
+            />
           )}
-          <div className="demo-main-bottomline">
-            <span>Mock product preview · No transactions</span>
-            <a href={docsUrl} target="_blank" rel="noopener noreferrer">
-              How SAMA works <ArrowUpRight aria-hidden="true" />
-            </a>
-          </div>
         </div>
       </div>
     </section>
