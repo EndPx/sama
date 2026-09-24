@@ -140,31 +140,31 @@ export function AssemblyStory() {
     >
       <div className="page-shell sama-assembly-inner">
         <div className="sama-assembly-copy">
-          <p className="eyebrow">The reference round / assembled</p>
+          <p className="eyebrow">A round in motion</p>
           <h2 id="assembly-title">
-            Every deposit has <em>a destination.</em>
+            Everyone gets <em>the same answer.</em>
           </h2>
           <p>
-            Five fictional bids enter one contract. The published rule, not a
-            private allocation decision, determines what is accepted and what
-            can be refunded.
+            In this fictional example, five people join a startup round. The
+            published rules decide one shared company value, how much goes into
+            the round, and what can be claimed back.
           </p>
           <ol className="assembly-steps">
             <li data-assembly-step>
-              <span>01 / Commit</span>
-              <strong>700,000 demoUSDC enters escrow</strong>
+              <span>01 / Join</span>
+              <strong>700,000 test tokens placed in bids</strong>
             </li>
             <li data-assembly-step>
-              <span>02 / Clear</span>
-              <strong>One 4.8M FDV for accepted bids</strong>
+              <span>02 / Price</span>
+              <strong>One 4.8M company value for accepted bids</strong>
             </li>
             <li data-assembly-step>
-              <span>03 / Account</span>
-              <strong>480,000 accepted + 220,000 refundable</strong>
+              <span>03 / Result</span>
+              <strong>480,000 used + 220,000 claimable back</strong>
             </li>
           </ol>
           <Link href="/auction" className="sama-assembly-link">
-            Inspect the five bids <ArrowUpRight size={16} aria-hidden="true" />
+            Explore the example <ArrowUpRight size={16} aria-hidden="true" />
           </Link>
         </div>
         <div

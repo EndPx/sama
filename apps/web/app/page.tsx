@@ -23,32 +23,32 @@ export default function Home() {
         <div className="sama-campus-stage page-shell">
           <div className="sama-campus-intro">
             <p className="sama-kicker">
-              <span aria-hidden="true" /> A transparent startup auction, on
-              testnet
+              <span aria-hidden="true" /> A testnet prototype for public startup
+              rounds
             </p>
             <h1 id="home-title">
-              A price you
+              Startup funding,
               <br />
-              <span>can trace.</span>
+              <span>in the open.</span>
             </h1>
             <p className="sama-hero-description">
-              Set your valuation ceiling in a sealed bid. Reveal it when the
-              window opens. Then see one clearing price and exactly what was
-              accepted or returned.
+              SAMA explores a simple idea: a startup shares its story and round
+              with the public. People can learn about it, place a test bid, and
+              see the result together.
             </p>
             <div className="cluster sama-hero-actions">
               <Button size="lg" className="marketing-button" asChild>
                 <Link href="/explore">
-                  Explore Kirana AI <ArrowUpRight data-icon="inline-end" />
+                  Meet the demo startup <ArrowUpRight data-icon="inline-end" />
                 </Link>
               </Button>
-              <a className="sama-quiet-link" href="#price-discovery">
-                Understand the auction{" "}
-                <ArrowDown size={16} aria-hidden="true" />
+              <a className="sama-quiet-link" href="#how-sama-works">
+                How SAMA works <ArrowDown size={16} aria-hidden="true" />
               </a>
             </div>
             <p className="sama-demo-note">
-              {currentNetwork.name} prototype · simulated tokens · no real money
+              The startup in the demo is fictional. All bids use valueless test
+              tokens on {currentNetwork.name}.
             </p>
           </div>
           <div className="sama-campus-art">
@@ -58,35 +58,33 @@ export default function Home() {
             className="sama-field-note"
             aria-labelledby="field-note-title"
           >
-            <p className="sama-field-note-label">
-              What stays private—and what does not
-            </p>
+            <p className="sama-field-note-label">The idea behind SAMA</p>
             <h2 id="field-note-title">
-              A sealed limit.
-              <br />A public result.
+              From startup story
+              <br />
+              to shared outcome.
             </h2>
             <p>
-              Your deposit is visible from the start. Your maximum valuation
-              stays sealed until you reveal it.
+              A round should be easy to explore before anyone joins—and easy to
+              understand when it ends. You can try that journey in our testnet
+              demo.
             </p>
             <dl className="sama-disclosure">
               <div>
-                <dt>Commit</dt>
-                <dd>Deposit and commitment are public.</dd>
+                <dt>Startup</dt>
+                <dd>Shares its story and round terms.</dd>
               </div>
               <div>
-                <dt>Reveal</dt>
-                <dd>Your maximum FDV becomes public.</dd>
+                <dt>People</dt>
+                <dd>Choose how much to put into a test bid.</dd>
               </div>
               <div>
-                <dt>Settle</dt>
-                <dd>
-                  One price for accepted bids; unused deposits refundable.
-                </dd>
+                <dt>Everyone</dt>
+                <dd>Sees one result and what can be claimed back.</dd>
               </div>
             </dl>
             <Link href="/auction" className="sama-quiet-link">
-              Read the auction rules{" "}
+              See how a round works{" "}
               <ArrowUpRight size={16} aria-hidden="true" />
             </Link>
           </article>
@@ -95,90 +93,89 @@ export default function Home() {
       <div className="sama-principles-band">
         <div className="page-shell">
           <span>
-            <strong>10%</strong> offered allocation
+            <strong>01</strong> Meet the startup
           </span>
           <span>
-            <strong>4–6M</strong> demoUSDC FDV limits
+            <strong>02</strong> Choose a test bid
           </span>
           <span>
-            <strong>64</strong> revealed bids maximum
-          </span>
-          <span>
-            <strong>1</strong> clearing FDV
+            <strong>03</strong> See the shared result
           </span>
         </div>
       </div>
       <section
+        id="how-sama-works"
         className="page-shell sama-editorial-section"
         aria-labelledby="problem-title"
       >
         <div className="sama-section-lead" data-reveal>
-          <p className="eyebrow">How SAMA changes the experience</p>
+          <p className="eyebrow">Why SAMA exists</p>
           <h2 id="problem-title">
-            A round you can inspect,
+            One round. Clear for
             <br />
-            not just join.
+            both sides.
           </h2>
           <p>
-            The contract, not an offchain allocation desk, decides the result.
-            You can follow your deposit from commitment through settlement and
-            claim.
+            Startups need a way to reach beyond closed circles. People need to
+            know what they are joining. SAMA brings the startup, the terms, and
+            the outcome into one place.
           </p>
         </div>
         <div className="sama-principle-grid">
           <article className="sama-principle" data-reveal>
             <div className="sama-principle-top">
-              <span>Price discovery</span>
+              <span>For startups</span>
               <Scale aria-hidden="true" />
             </div>
             <h3>
-              A limit you choose.
+              Bring your story
               <br />
-              One price you share.
+              to more people.
             </h3>
             <p>
-              Name your maximum FDV before reveal. Every accepted bid settles at
-              the same clearing FDV, not at the speed of a click.
+              The vision is a public round where a founder can share what they
+              are building and invite support on clear terms. Today&apos;s demo
+              uses one fictional startup to show how that could work.
             </p>
-            <a href="#price-discovery" className="sama-quiet-link">
-              See the mechanism <ArrowUpRight size={16} aria-hidden="true" />
-            </a>
+            <Link href="/founders" className="sama-quiet-link">
+              See the founder view <ArrowUpRight size={16} aria-hidden="true" />
+            </Link>
           </article>
           <article className="sama-principle" data-reveal>
             <div className="sama-principle-top">
-              <span>Settlement</span>
+              <span>For the public</span>
               <ScanLine aria-hidden="true" />
             </div>
             <h3>
-              An allocation
+              Decide with more
               <br />
-              with a paper trail.
+              than a headline.
             </h3>
             <p>
-              The result is derived onchain. Accepted capital, refunds, and
-              claims are visible against a published rule set.
+              Explore the startup and the round before choosing a test bid. You
+              set the amount and the highest company value you would accept.
             </p>
-            <a href="https://github.com/EndPx/sama" className="sama-quiet-link">
-              Inspect the code <ArrowUpRight size={16} aria-hidden="true" />
-            </a>
+            <Link href="/explore" className="sama-quiet-link">
+              Explore the demo startup{" "}
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </Link>
           </article>
           <article className="sama-principle" data-reveal>
             <div className="sama-principle-top">
-              <span>After the round</span>
+              <span>For everyone</span>
               <ShieldCheck aria-hidden="true" />
             </div>
             <h3>
-              Claim what is yours.
+              See one result,
               <br />
-              Decide what follows.
+              not a mystery.
             </h3>
             <p>
-              Claim KIRA and unused deposits separately. A listing is optional;
-              a buyer and liquidity are never guaranteed.
+              Accepted bids use the same final company value. The result shows
+              what went into the round and what each person can claim back.
             </p>
-            <Link href="/market/kira" className="sama-quiet-link">
-              Explore the marketplace{" "}
-              <ArrowUpRight size={16} aria-hidden="true" />
+            <Link href="/auction" className="sama-quiet-link">
+              See an example round <ArrowUpRight size={16} aria-hidden="true" />
             </Link>
           </article>
         </div>
@@ -186,65 +183,65 @@ export default function Home() {
       <section id="price-discovery" className="sama-mechanism-section">
         <div className="page-shell sama-mechanism-grid">
           <div className="stack" data-reveal>
-            <p className="eyebrow">The bid, explained</p>
+            <p className="eyebrow">Your choice in the round</p>
             <h2>
-              Your ceiling.
+              Choose your limit.
               <br />
-              <em>Your terms.</em>
+              <em>See what happens.</em>
             </h2>
             <p className="lede">
-              Decide the highest company valuation you are comfortable with.
-              Reveal that limit when the window opens. Let a fixed set of rules
-              do the rest.
+              You choose how much test currency to put in and the highest
+              company value you would accept. When the round ends, the same
+              published rules decide everyone&apos;s result.
             </p>
             <ul className="sama-check-list">
               <li>
                 <Check aria-hidden="true" />
-                One clearing valuation for accepted bids
+                One shared company value for accepted bids
+              </li>
+              <li>
+                <Check aria-hidden="true" />A clear answer even when demand
+                exceeds the amount offered
               </li>
               <li>
                 <Check aria-hidden="true" />
-                Deterministic partial allocation at the margin
-              </li>
-              <li>
-                <Check aria-hidden="true" />
-                Pull-based refunds for unused deposits
+                Unused test currency can be claimed back
               </li>
             </ul>
             <a
               className="sama-quiet-link"
               href="https://sama-3.gitbook.io/sama-product-and-protocol/"
             >
-              Read the auction specification{" "}
+              Read the detailed rules{" "}
               <ArrowUpRight size={16} aria-hidden="true" />
             </a>
           </div>
           <div className="sama-limit-visual" data-reveal>
             <div className="sama-limit-top">
               <LockKeyhole size={20} />
-              <span>Sealed-bid auction</span>
+              <span>A bid with your own limit</span>
               <span className="sama-visual-index">S / 01</span>
             </div>
             <div className="sama-limit-rows">
               <div>
-                <span>Your deposit</span>
-                <strong>Public</strong>
+                <span>The amount you put in</span>
+                <strong>Visible</strong>
               </div>
               <div>
-                <span>Your valuation limit</span>
-                <strong>Sealed until reveal</strong>
+                <span>Your highest acceptable value</span>
+                <strong>Hidden until you reveal it</strong>
               </div>
               <div>
-                <span>Your allocation</span>
-                <strong>Verified onchain</strong>
+                <span>Your result</span>
+                <strong>Open to check</strong>
               </div>
             </div>
             <div className="sama-limit-seal">
               <Fingerprint size={48} strokeWidth={1} />
               <p>
-                No hidden allocation formula.
+                The amount you put in is public.
                 <br />
-                No claim of complete bid privacy.
+                Your limit is not fully private forever.
               </p>
             </div>
           </div>
@@ -254,42 +251,41 @@ export default function Home() {
       <AssemblyStory />
       <section id="how-it-works" className="page-shell sama-editorial-section">
         <div className="sama-section-lead" data-reveal>
-          <p className="eyebrow">From intent to evidence</p>
+          <p className="eyebrow">Try the demo</p>
           <h2>
-            A journey you can follow.
-            <br />A result you can check.
+            From first look
+            <br />
+            to final result.
           </h2>
         </div>
         <ol className="sama-journey">
           <li data-reveal>
             <span className="sama-journey-number">01</span>
-            <h3>Explore</h3>
+            <h3>Explore the startup</h3>
             <p>
-              Read the terms, understand the risks, and connect your testnet
-              wallet.
+              Meet the fictional company, read the round terms, and connect a
+              testnet wallet.
             </p>
           </li>
           <li data-reveal>
             <span className="sama-journey-number">02</span>
-            <h3>Commit</h3>
+            <h3>Choose a test bid</h3>
             <p>
-              Set your deposit and limit. Save your private reveal backup before
-              signing.
+              Pick an amount and your highest acceptable value. Save the backup
+              before confirming.
             </p>
           </li>
           <li data-reveal>
             <span className="sama-journey-number">03</span>
-            <h3>Reveal</h3>
-            <p>
-              Return within the reveal window to make your valuation eligible.
-            </p>
+            <h3>Reveal your choice</h3>
+            <p>Come back during the reveal window so your bid can count.</p>
           </li>
           <li data-reveal>
             <span className="sama-journey-number">04</span>
-            <h3>Settle & claim</h3>
+            <h3>See your result</h3>
             <p>
-              Verify the clearing result, then claim eligible tokens and
-              refunds.
+              Check the shared outcome, then claim any demo tokens or unused
+              test currency.
             </p>
           </li>
         </ol>

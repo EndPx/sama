@@ -24,36 +24,36 @@ export function RoundPreview() {
         <div className="round-preview-heading">
           <div>
             <span className="round-preview-overline">
-              Kirana AI · reference fixture
+              Fictional startup · example round
             </span>
-            <h2>One result. Five bids.</h2>
+            <h2>Five test bids. One outcome.</h2>
           </div>
           <span className="round-preview-chain">Arbitrum Sepolia</span>
         </div>
         <div className="round-preview-metrics">
           <div>
-            <span>Clearing FDV</span>
+            <span>Company value</span>
             <strong>
               {(Number(referenceAuction.clearingFdv) / 1_000_000).toFixed(1)}M
             </strong>
-            <small>demoUSDC</small>
+            <small>used to price the demo round</small>
           </div>
           <div>
-            <span>Accepted</span>
+            <span>Goes into the round</span>
             <strong>{Number(referenceAuction.acceptedTotal) / 1_000}K</strong>
             <small>
-              of {Number(referenceAuction.depositTotal) / 1_000}K deposited
+              of {Number(referenceAuction.depositTotal) / 1_000}K in test bids
             </small>
           </div>
           <div>
-            <span>Refundable</span>
+            <span>Can be claimed back</span>
             <strong>{Number(referenceAuction.refundTotal) / 1_000}K</strong>
-            <small>claimable after settlement</small>
+            <small>unused test currency</small>
           </div>
         </div>
         <div className="round-preview-ledger">
           <div className="round-preview-ledger-heading">
-            <span>Each bid has a destination</span>
+            <span>Where each bid went</span>
             <span>demoUSDC · thousands</span>
           </div>
           <ol className="round-preview-bids">

@@ -17,5 +17,8 @@ describe("round preview", () => {
       "Bidder A: 100,000 deposited; 0 accepted; 100,000 refundable.",
     );
     expect(html).toContain("Simulated round");
+    expect(html).toContain("Fictional startup · example round");
+    expect(html).toContain("Goes into the round");
+    expect(html).toContain("Can be claimed back");
   });
 });
