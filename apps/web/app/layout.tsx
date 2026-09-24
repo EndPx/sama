@@ -36,7 +36,7 @@ export default function RootLayout({
             <nav aria-label="Main navigation">
               <Link href="/investors">Investors</Link>
               <Link href="/founders">Founders</Link>
-              <Link href="/token-model">Token model</Link>
+              <Link href="/stakeholder-tokens">Stakeholder Tokens</Link>
               <Link href="/auction">Auction</Link>
               <a href="https://sama-3.gitbook.io/sama-product-and-protocol/">
                 Docs

@@ -185,7 +185,7 @@ export default function AuctionPage() {
           <h2 id="auction-next">What does a winner claim?</h2>
           <p>See what KIRA can do in this demo and what it cannot represent.</p>
         </div>
-        <Link href="/token-model" className="text-link">
+        <Link href="/stakeholder-tokens" className="text-link">
           Understand KIRA <ArrowUpRight size={16} aria-hidden="true" />
         </Link>
       </section>

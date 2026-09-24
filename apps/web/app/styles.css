@@ -534,8 +534,8 @@ body:has(.sama-landing) .site-header[data-scrolled="false"] a:focus-visible {
   }
   .site-header nav {
     display: flex;
-    gap: 14px;
-    font-size: 12px;
+    gap: 10px;
+    font-size: 11px;
   }
   .footer-stage-inner {
     grid-template-columns: minmax(0, 1fr);

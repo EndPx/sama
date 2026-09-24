@@ -80,7 +80,7 @@ export default function InvestorsPage() {
               rules. A listing can be filled in parts, but it still needs a
               willing buyer.
             </p>
-            <Link href="/token-model" className="text-link">
+            <Link href="/stakeholder-tokens" className="text-link">
               Understand the token
             </Link>
           </article>
