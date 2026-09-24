@@ -77,7 +77,7 @@ Installed shadcn/Radix is the reusable source layer. Primitive showcase `/design
 | WalletGate | Disconnected/loading/wrong network/connected; explicit wallet identity, no silent account substitution. |
 | EducationHero | Eyebrow, one h1, one bounded introductory paragraph, primary/secondary links, and a factual visual panel; static across Investors, Founders, Token model, Auction, and Getting started. The panel has paper and forest variants, and holds real fixture or protocol terms, never invented live numbers. |
 | DemoAuthSplit | Full viewport entry with an original SAMA artwork pane and a focused sign in pane. Ready/loading, email entry/code entry, OAuth pending/error, unavailable configuration, and authenticated transitions are explicit. No application controls are mounted before Privy reports an authenticated session. |
-| DemoWorkspace | Document scrolling application shell with a stable identity rail, accessible Round/Portfolio/Marketplace tabs, account identity, and sign out. Narrow widths stack the rail above the content without hiding destinations. Each transaction view reuses the existing receipt aware panels. |
+| DemoWorkspace | Document scrolling application shell with a stable identity rail, accessible Round/Portfolio/Marketplace view buttons, account identity, and sign out. Narrow widths stack the rail above the content without hiding destinations. Each transaction view reuses the existing receipt aware panels. |
 
 ## 6. Motion and interaction
 
