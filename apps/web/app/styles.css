@@ -176,6 +176,7 @@
   z-index: 30;
   background: rgb(246 244 237 / 96%);
   backdrop-filter: blur(14px);
+  transition: background-color 300ms var(--ease-state);
 }
 .site-header::after {
   content: "";
@@ -235,6 +236,44 @@
 }
 .site-header nav a:hover {
   color: var(--ring);
+}
+body:has(.sama-landing) .site-header[data-scrolled="false"] {
+  background: #102e27;
+  color: #f7f5e9;
+  backdrop-filter: none;
+}
+body:has(.sama-landing) .site-header[data-scrolled="false"] .wordmark {
+  color: #f7f5e9;
+}
+body:has(.sama-landing) .site-header[data-scrolled="false"] .wordmark-dot,
+body:has(.sama-landing) .site-header[data-scrolled="false"] nav a:hover {
+  color: #c5d9c6;
+}
+body:has(.sama-landing) .site-header[data-scrolled="false"] .wordmark img {
+  filter: brightness(0) invert(1);
+}
+body:has(.sama-landing)
+  .site-header[data-scrolled="false"]
+  [data-slot="button"] {
+  background: transparent;
+  border-color: rgb(247 245 233 / 48%);
+  color: #f7f5e9;
+}
+body:has(.sama-landing)
+  .site-header[data-scrolled="false"]
+  [data-slot="button"]:hover {
+  background: rgb(247 245 233 / 12%);
+}
+body:has(.sama-landing) .site-header[data-scrolled="false"] a:focus-visible {
+  outline-color: #c5d9c6;
+}
+.site-header .wordmark,
+.site-header .wordmark-dot,
+.site-header .wordmark img,
+.site-header nav a {
+  transition:
+    color 300ms var(--ease-state),
+    filter 300ms var(--ease-state);
 }
 .site-footer {
   overflow: hidden;
