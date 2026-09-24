@@ -174,21 +174,6 @@ export default function AuctionPage() {
             </p>
           </article>
         </div>
-        <aside className="education-note" aria-label="Auction privacy boundary">
-          <strong>Sealed does not mean invisible.</strong>
-          <p>
-            Commitment deposits and wallet addresses are public. Revealing
-            publishes the FDV and nonce. The five bids are seeded demo data, not
-            evidence of market demand. The exact floor, dust, and failure rules
-            live in the auction specification.
-          </p>
-          <a
-            className="text-link"
-            href="https://github.com/EndPx/sama/blob/feat/p0-vertical-slice/docs/AUCTION_SPEC.md"
-          >
-            Read the exact auction rules
-          </a>
-        </aside>
       </section>
 
       <section

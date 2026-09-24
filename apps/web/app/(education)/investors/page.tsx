@@ -36,8 +36,8 @@ export default function InvestorsPage() {
           <div>
             <h2 id="investor-path">Four decisions. A visible outcome.</h2>
             <p>
-              The demo keeps the journey small enough to inspect without
-              pretending a test token is an investment.
+              Follow fixed terms, a sealed limit, a public reveal, and a settled
+              claim without losing track of your deposit.
             </p>
           </div>
         </div>
@@ -85,14 +85,6 @@ export default function InvestorsPage() {
             </Link>
           </article>
         </div>
-        <aside className="education-note" aria-label="Prototype boundary">
-          <strong>A testnet experiment, not an investment account.</strong>
-          <p>
-            demoUSDC has no monetary value. KIRA grants no shares, dividends,
-            governance rights, or guaranteed liquidity. The public deployment
-            and complete wallet acceptance run are still release gates.
-          </p>
-        </aside>
       </section>
 
       <section

@@ -447,6 +447,15 @@
   max-width: 55ch;
   margin-top: 16px;
 }
+.education-end > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.education-end > a svg {
+  flex-shrink: 0;
+}
 .education-table {
   width: 100%;
   border-collapse: collapse;
