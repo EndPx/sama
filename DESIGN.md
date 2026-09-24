@@ -76,10 +76,14 @@ Installed shadcn/Radix is the reusable source layer. Primitive showcase `/design
 | TransactionStatus | Preparing/signing/pending/confirmed/reverted/rejected/unknown; persistent hash link, live region, retry only when safe. |
 | WalletGate | Disconnected/loading/wrong network/connected; explicit wallet identity, no silent account substitution. |
 | EducationHero | Eyebrow, one h1, one bounded introductory paragraph, primary/secondary links, and a factual visual panel; static across Investors, Founders, Token model, Auction, and Getting started. The panel has paper and forest variants, and holds real fixture or protocol terms, never invented live numbers. |
+| DemoAuthSplit | Full viewport entry with an original SAMA artwork pane and a focused sign in pane. Ready/loading, email entry/code entry, OAuth pending/error, unavailable configuration, and authenticated transitions are explicit. No application controls are mounted before Privy reports an authenticated session. |
+| DemoWorkspace | Document scrolling application shell with a stable identity rail, accessible Round/Portfolio/Marketplace tabs, account identity, and sign out. Narrow widths stack the rail above the content without hiding destinations. Each transaction view reuses the existing receipt aware panels. |
 
 ## 6. Motion and interaction
 
 State changes use 160 ms opacity/color easing `cubic-bezier(0.16,1,0.3,1)`; overlays use 200 ms. GSAP/ScrollTrigger is limited to landing storytelling: 0.5 s scrub, campus translation/scale and field-note entrance, 24 px editorial reveals over 0.65 s. No scroll hijacking, infinite ambient animation, magnetic financial buttons, animated financial counters, blur-on-text, or automated scrolling. Scene state is reversible with scroll; animations are scoped and cleaned up on unmount. Interactive CTAs remain reachable; hidden transitional content must not trap keyboard focus. Reduced motion and widths below 1024 px show the complete unpinned narrative. Busy label remains stable-width where practical. Reduced motion disables transforms, pulse/spin, and transitions; status text still conveys progress. Pending is never styled as confirmed.
+
+The demo entry uses one 260 ms opacity and 12 px translation only when the auth stage changes; it is never an ambient loop. Provider buttons use the existing 160 ms state feedback, keep stable width during pending work, and announce errors in a live region. Reduced motion shows every state immediately. Authentication does not imply a wallet transaction or an onchain eligibility decision.
 
 ## 7. Depth and surfaces
 
@@ -94,3 +98,9 @@ Visible focus, skip navigation, semantic headings, labeled inputs, 44 px primary
 Open gates: primitive showcase at three widths; full keyboard/mobile lifecycle; independent visual review; static React audit; production browser performance/accessibility measurements. No accessibility or performance debt has been accepted, and these gates are not claimed passed by the presence of this document.
 
 Education-page content addresses three readers: a first-time bidder, a founder assessing the mechanism, and a hackathon reviewer checking claims. Each page states one role-specific question, links to the next useful step, and puts release-state limits next to any demo action. Long tables reflow into labeled rows below 768 px so they do not create horizontal scrolling. Educational examples do not become simulated wallet transactions or false live state.
+
+## 9. Demo entry and workspace contract
+
+The owner supplied a two-pane sign in screenshot. It supplies the spatial grammar only: a contextual artwork pane beside a focused authentication form. SAMA keeps its own forest/ivory palette, Manrope, architectural artwork, and plain English. The [split-screen pattern](https://github.com/changeroa/StyleGallery/blob/main/patterns/split-sidebar/split-screen.md) supplies the responsive layout contract. The document, not either pane, owns vertical scroll; semantic form order stays the same when the artwork stacks above the form. At wide widths the artwork takes approximately two fifths of the viewport. At 375 px it becomes a compact introduction above a full width form. Every input and action remains visible at 200% zoom.
+
+On public testnet the demo requires a configured public Privy App ID. Privy email and enabled social methods are authentication routes, while an external wallet remains available for wallet first users. The local Anvil acceptance mode retains its existing injected wallet path. Missing Privy configuration fails closed with a clear setup message rather than silently presenting a different testnet sign in. A Privy session is a presentation gate for the workspace, not server authorization or evidence of onchain eligibility. The workspace always identifies Arbitrum Sepolia or local Anvil, never displays illustrative balances as live account state, and does not replace receipt confirmation on transaction screens.
