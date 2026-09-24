@@ -17,7 +17,7 @@ export default function Explore() {
         title="One lifecycle, clearly shown."
       >
         Explore the single fictional startup used to demonstrate SAMA&apos;s
-        sealed-bid auction on {currentNetwork.name}.
+        auction with sealed bid limits on {currentNetwork.name}.
       </PageIntro>
       <Card className="max-w-3xl">
         <CardHeader className="gap-4">

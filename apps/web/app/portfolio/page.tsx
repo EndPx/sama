@@ -11,7 +11,7 @@ export default function Portfolio() {
       <PageIntro eyebrow="Wallet view" title="Your onchain demo position.">
         <span className="block">
           Connect an eligible {currentNetwork.name} wallet to read bids, claims,
-          KIRA balances, and receipt-confirmed activity.
+          KIRA balances, and activity confirmed by transaction receipts.
         </span>
         <Badge variant="outline" className="mt-4">
           Unavailable data is never shown as zero

@@ -11,7 +11,7 @@ import { currentNetwork } from "@/lib/network-label";
 
 export const metadata: Metadata = {
   title: {
-    default: "SAMA — Startup funding, in the open",
+    default: "SAMA | Startup funding, in the open",
     template: "%s | SAMA",
   },
   description: `Explore a public startup round, place a test bid, and see one shared result on ${currentNetwork.name}. Demo only; no real equity or monetary value.`,

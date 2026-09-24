@@ -65,9 +65,9 @@ export default function Home() {
               to shared outcome.
             </h2>
             <p>
-              A round should be easy to explore before anyone joins—and easy to
-              understand when it ends. You can try that journey in our testnet
-              demo.
+              A round should be easy to explore before anyone joins. Its result
+              should be just as easy to understand. You can try that journey in
+              our testnet demo.
             </p>
             <dl className="sama-disclosure">
               <div>
@@ -305,7 +305,7 @@ export default function Home() {
               available to inspect.
             </p>
             <p>
-              Simulated equity-linked tokens carry no legal or economic rights.
+              Simulated stakeholder tokens carry no legal or economic rights.
               The protocol has not received an independent audit. There are no
               guaranteed returns or liquidity.
             </p>

@@ -10,9 +10,9 @@ export const metadata: Metadata = { title: "Kirana AI demo auction" };
 const terms = [
   ["Offered allocation", "10%"],
   ["KIRA offered", "1,000,000 KIRA"],
-  ["Maximum FDV range", "4,000,000–6,000,000 demoUSDC"],
+  ["Maximum FDV range", "4,000,000 to 6,000,000 demoUSDC"],
   ["Minimum raise", "400,000 demoUSDC"],
-  ["Revealed-bid cap", "64 bids"],
+  ["Maximum revealed bids", "64 bids"],
 ];
 export default function Kirana() {
   return (
@@ -21,9 +21,9 @@ export default function Kirana() {
         eyebrow={`Fictional startup · ${currentNetwork.name}`}
         title="Kirana AI auction demo."
       >
-        A sealed maximum-FDV auction that settles eligible revealed bids at one
-        uniform clearing price. KIRA and demoUSDC are test assets with no
-        monetary value.
+        An auction with sealed maximum FDV bids that settles eligible revealed
+        bids at one uniform clearing price. KIRA and demoUSDC are test assets
+        with no monetary value.
       </PageIntro>
       <div className="grid gap-8 lg:grid-cols-2 lg:items-start">
         <div className="space-y-6">
@@ -54,7 +54,7 @@ export default function Kirana() {
               </p>
               <p>
                 Save and export the reveal backup before signing. The backup
-                contains a private nonce needed for reveal—do not share it.
+                contains a private nonce needed for reveal. Do not share it.
               </p>
               <p>
                 Transactions are only shown as confirmed after a successful
