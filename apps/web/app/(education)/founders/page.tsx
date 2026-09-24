@@ -20,7 +20,7 @@ export default function FoundersPage() {
             Show your terms. <em>Let demand answer.</em>
           </>
         }
-        description="A founder should be able to show the round's terms before anyone bids—and explain the outcome afterward. SAMA tests that idea with one fictional startup, a public rulebook, and a price set by independent bids."
+        description="A founder should be able to show the round's terms before anyone bids and explain the outcome afterward. SAMA tests that idea with one fictional startup, a public rulebook, and a price set by independent bids."
         art={<EducationVisual kind="founder" />}
         primary={{ href: "/auction", label: "View the auction" }}
         secondary={{ href: "/explore", label: "Explore the demo" }}
@@ -46,9 +46,9 @@ export default function FoundersPage() {
             <span>01 / Terms</span>
             <h3>Publish the offer before bids arrive</h3>
             <p>
-              The example offers 1,000,000 demo tokens. Everyone sees the 4M–6M
-              company-value range, the 400,000 demoUSDC minimum, and the bid and
-              reveal deadlines in advance.
+              The example offers 1,000,000 demo tokens. Everyone sees the
+              company value range from 4M to 6M, the 400,000 demoUSDC minimum,
+              and the bid and reveal deadlines in advance.
             </p>
           </div>
           <div className="education-row">
@@ -104,9 +104,10 @@ export default function FoundersPage() {
             <p className="eyebrow">What comes later</p>
             <h3>A real founder workflow</h3>
             <p>
-              A self-service issuer dashboard, issuer diligence, legal rights,
-              and a real-money launch are outside this testnet release. Those
-              would require new product, legal, and security work.
+              A dashboard for issuers to manage their own rounds, issuer
+              diligence, legal rights, and a launch involving real money are
+              outside this testnet release. Those would require new product,
+              legal, and security work.
             </p>
             <a
               href="https://sama-3.gitbook.io/sama-product-and-protocol/"

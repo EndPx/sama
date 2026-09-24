@@ -83,7 +83,7 @@ const scenes: Record<
         width: 150,
         height: 66,
         label: "VALUE RANGE",
-        value: "4–6M",
+        value: "4M to 6M",
         fill: "#b2c9ae",
       },
       {

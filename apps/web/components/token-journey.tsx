@@ -16,7 +16,7 @@ const steps = [
     moment: "A winner claims",
     title: "Then the token enters a wallet.",
     description:
-      "A winner claims once. The offering creates only the tokens earned by that accepted bid, within the fixed one-million-token cap. An eligible wallet receives them.",
+      "A winner claims once. The offering creates only the tokens earned by that accepted bid, within the cap of one million tokens. An eligible wallet receives them.",
     from: "Claimable tokens",
     to: "Winner's wallet",
     detail: "Nothing is minted before the claim",

@@ -7,12 +7,12 @@ import {
 
 const maxDeposit = Math.max(...referenceBids.map((bid) => Number(bid.deposit)));
 
-/** The fixed auction-spec fixture, displayed as a product surface—not live demand. */
+/** The fixed auction spec fixture, displayed as a product surface rather than live demand. */
 export function RoundPreview() {
   return (
     <div
       className="round-preview"
-      aria-label="Five-bid reference round preview"
+      aria-label="Reference round preview with five bids"
     >
       <div className="round-preview-bar">
         <span className="round-preview-brand">

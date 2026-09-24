@@ -14,7 +14,7 @@ import "./stakeholder-tokens.css";
 export const metadata: Metadata = {
   title: "Stakeholder Tokens",
   description:
-    "Follow SAMA's stakeholder-token prototype from a public demo round to a wallet and an optional marketplace sale.",
+    "Follow SAMA's stakeholder token prototype from a public demo round to a wallet and an optional marketplace sale.",
 };
 
 const exampleBid = referenceBids[3];
@@ -59,7 +59,7 @@ const outcomes = [
       "You can claim demo tokens for the accepted part and reclaim the unused demoUSDC. They are separate claims.",
   },
   {
-    question: "My bid loses—or I never reveal it?",
+    question: "What if my bid loses or I never reveal it?",
     answer:
       "You receive no tokens. After settlement or cancellation, the committed demoUSDC is refundable in full.",
   },
@@ -92,7 +92,7 @@ const rules = [
     label: "Custody",
     title: "Listed tokens are actually held.",
     description:
-      "A listing moves tokens into marketplace escrow. The seller can cancel and recover the unsold amount to an eligible recipient, even while the marketplace is paused—unless token transfers themselves are paused.",
+      "A listing moves tokens into marketplace escrow. The seller can cancel and recover the unsold amount to an eligible recipient, even while the marketplace is paused. If token transfers are paused, cancellation must wait until they resume.",
   },
   {
     label: "Pricing",
@@ -154,9 +154,9 @@ export default function StakeholderTokensPage() {
             </span>
             <h2 id="token-example-title">One bid can have two outcomes.</h2>
             <p>
-              Imagine bidder B joins the five-bid reference round. They put in{" "}
-              {formatWholeUnits(exampleBid.deposit)} demoUSDC. The round settles
-              at one shared company-value figure of{" "}
+              Imagine bidder B joins the reference round with five bids. They
+              put in {formatWholeUnits(exampleBid.deposit)} demoUSDC. The round
+              settles at one shared company value of{" "}
               {formatWholeUnits(referenceAuction.clearingFdv)} demoUSDC. Only a
               part of B&apos;s bid is needed.
             </p>
@@ -260,7 +260,7 @@ export default function StakeholderTokensPage() {
           <div className="token-section-lead">
             <span className="token-kicker">The boundaries</span>
             <h2 id="token-rules-title">
-              What the system enforces—and what it doesn&apos;t.
+              What the system enforces and what it doesn&apos;t.
             </h2>
             <p>
               These rules make the demo easier to inspect. They do not remove

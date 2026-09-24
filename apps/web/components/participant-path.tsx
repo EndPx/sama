@@ -11,7 +11,7 @@ const decisions = [
     phase: "Read",
     title: "Understand the offering",
     description:
-      "The demo startup is fictional. Its token allocation, company-value range, minimum raise, and deadlines are fixed before anyone bids.",
+      "The demo startup is fictional. Its token allocation, company value range, minimum raise, and deadlines are fixed before anyone bids.",
   },
   {
     number: "02",
@@ -52,7 +52,7 @@ function DecisionPicture({
           </div>
           <div>
             <small>Value range</small>
-            <strong>4–6M</strong>
+            <strong>4M to 6M</strong>
           </div>
           <div>
             <small>Minimum raise</small>

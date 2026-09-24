@@ -21,7 +21,7 @@ export default function InvestorsPage() {
             Join a round. <em>Keep your own limit.</em>
           </>
         }
-        description="See the startup's published terms, choose the highest company value you would accept, and place a test bid. When bidding ends, every accepted bid uses one shared result—and you can see exactly what happened to your deposit."
+        description="See the startup's published terms, choose the highest company value you would accept, and place a test bid. When bidding ends, every accepted bid uses one shared result. You can see exactly what happened to your deposit."
         art={<EducationVisual kind="investor" />}
         primary={{ href: "/auction", label: "Explore the example round" }}
         secondary={{
@@ -57,11 +57,11 @@ export default function InvestorsPage() {
         <div className="education-section-heading">
           <p className="eyebrow">What you can check</p>
           <div>
-            <h2 id="investor-proof">Know what you got—and why.</h2>
+            <h2 id="investor-proof">Know what you got and why.</h2>
             <p>
               You can inspect the published terms, one clearing value, and the
-              amount each bidder can claim back. The five-bid example makes the
-              arithmetic easy to follow.
+              amount each bidder can claim back. The example with five bids
+              makes the arithmetic easy to follow.
             </p>
           </div>
         </div>

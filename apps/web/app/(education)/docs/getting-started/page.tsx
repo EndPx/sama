@@ -136,8 +136,8 @@ export default function GettingStartedPage() {
           <p>
             The repository has tests, a local lifecycle runner, and frontend
             screens. The public application URL, verified contracts, and full
-            two-wallet browser run will appear in the release record when they
-            exist.
+            browser run with two wallets will appear in the release record when
+            they exist.
           </p>
           <a
             className="text-link"
