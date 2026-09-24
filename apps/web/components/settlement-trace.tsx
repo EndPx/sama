@@ -60,7 +60,7 @@ export function SettlementTrace() {
             Simulated allocation <strong>10%</strong>
           </span>
           <span>
-            Company value range <strong>4M–6M</strong>
+            Company value range <strong>4M to 6M</strong>
           </span>
           <span>
             Test bidders <strong>5</strong>

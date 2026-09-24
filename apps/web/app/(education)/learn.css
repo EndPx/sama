@@ -127,6 +127,9 @@
   padding-block: 80px;
   border-top: 1px solid var(--border);
 }
+.education-section[id] {
+  scroll-margin-top: 96px;
+}
 .education-section-heading {
   display: grid;
   grid-template-columns: minmax(0, 0.45fr) minmax(0, 1fr);
@@ -617,6 +620,9 @@
   }
 }
 @media (max-width: 767px) {
+  .education-section[id] {
+    scroll-margin-top: 120px;
+  }
   .participant-decision {
     grid-template-columns: 46px minmax(0, 1fr);
     gap: 12px 16px;

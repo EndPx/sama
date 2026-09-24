@@ -10,7 +10,7 @@ import "./auction.css";
 export const metadata: Metadata = {
   title: "How the auction works",
   description:
-    "Follow SAMA's five-bid reference auction: 700,000 demoUSDC deposited, 4.8M FDV clearing, 480,000 accepted, and 220,000 refundable.",
+    "Follow SAMA's reference auction with five bids: 700,000 demoUSDC deposited, 4.8M FDV clearing, 480,000 accepted, and 220,000 refundable.",
 };
 
 export default function AuctionPage() {
@@ -90,7 +90,7 @@ export default function AuctionPage() {
             <p>
               These are the fixed test bids, in descending maximum FDV order.
               Amounts are whole demoUSDC units for readability; the contracts
-              account in six-decimal base units.
+              account in base units with six decimal places.
             </p>
           </div>
         </div>
@@ -142,9 +142,9 @@ export default function AuctionPage() {
             <h3>Does my limit set my own price?</h3>
             <p>
               No. Every accepted bid uses the same clearing company value, not
-              its own limit. Your limit can affect whether—and how much of—your
-              bid is accepted. A bid at the clearing tier can be accepted only
-              in part.
+              its own limit. Your limit can affect whether your bid is accepted
+              and how much of it counts. A bid at the clearing tier can be
+              accepted only in part.
             </p>
           </div>
           <div className="education-row">
@@ -170,8 +170,8 @@ export default function AuctionPage() {
             <h3>Can I just accept the market price?</h3>
             <p>
               Not in this demo. You choose a maximum company value within the
-              published 4M–6M range. The interface does not offer an automatic
-              “accept market” bid.
+              published range from 4M to 6M. The interface does not offer an
+              automatic “accept market” bid.
             </p>
           </div>
         </div>

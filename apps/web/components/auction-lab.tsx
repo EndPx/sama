@@ -184,7 +184,7 @@ export function AuctionLab() {
           </strong>
           <span className="auction-result-caption">
             {result.floorFallback
-              ? "Floor-price fallback"
+              ? "Cleared at the floor"
               : result.successful
                 ? "Highest value that fills the offer"
                 : "Minimum raise not met"}
@@ -307,8 +307,8 @@ export function AuctionLab() {
       </div>
       <p className="auction-lab-footnote">
         This illustration treats every nonzero test bid as revealed and uses the
-        demo rules with six-decimal accounting. It does not create, edit, or
-        submit a bid.{" "}
+        demo rules with accounting to six decimal places. It does not create,
+        edit, or submit a bid.{" "}
         <a href="https://sama-3.gitbook.io/sama-product-and-protocol/">
           Read the auction rules <ArrowUpRight size={14} aria-hidden="true" />
         </a>
