@@ -171,22 +171,43 @@
   color: var(--primary);
 }
 .site-header {
-  position: relative;
-  z-index: 30;
-}
-.site-header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  min-height: 88px;
-}
-body:has(.sama-landing) .site-header {
   position: sticky;
   top: 0;
-  background: rgb(246 244 237 / 94%);
-  border-bottom: 1px solid rgb(203 212 199 / 60%);
+  z-index: 30;
+  background: rgb(246 244 237 / 96%);
   backdrop-filter: blur(14px);
+}
+.site-header::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 1px;
+  background: #a9b9aa;
+  opacity: 0;
+  transform: scaleX(0.96);
+  transition:
+    opacity 260ms ease,
+    transform 260ms ease;
+  pointer-events: none;
+}
+.site-header[data-scrolled="true"]::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+.site-header-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 24px;
+  min-height: 88px;
+  width: 100%;
+  padding-inline: clamp(20px, 2.8vw, 48px);
+}
+.site-header-inner > .wordmark {
+  justify-self: start;
+}
+.site-header-inner > :last-child {
+  justify-self: end;
 }
 .wordmark {
   display: inline-flex;
@@ -428,6 +449,8 @@ body:has(.sama-landing) .site-header {
 }
 @media (max-width: 1023px) {
   .site-header-inner {
+    display: flex;
+    justify-content: space-between;
     flex-wrap: wrap;
     padding-block: 12px;
   }

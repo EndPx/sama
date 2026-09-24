@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import type { Metadata } from "next";
 import "./styles.css";
 import { DevTools } from "@/components/dev-tools";
+import { HeaderScrollFrame } from "@/components/header-scroll-frame";
 import { currentNetwork } from "@/lib/network-label";
 
 export const metadata: Metadata = {
@@ -26,8 +27,8 @@ export default function RootLayout({
         <a className="skip-link" href="#main">
           Skip to content
         </a>
-        <header className="site-header">
-          <div className="site-header-inner page-shell">
+        <HeaderScrollFrame>
+          <div className="site-header-inner">
             <Link href="/" className="wordmark" aria-label="SAMA home">
               <Image src="/brand/sama-mark.png" alt="" width={44} height={44} />
               sama<span className="wordmark-dot">.</span>
@@ -47,7 +48,7 @@ export default function RootLayout({
               </Link>
             </Button>
           </div>
-        </header>
+        </HeaderScrollFrame>
         <main id="main">{children}</main>
         <footer className="site-footer">
           <div className="footer-stage">
