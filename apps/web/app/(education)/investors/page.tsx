@@ -8,7 +8,7 @@ import { ParticipantPath } from "@/components/participant-path";
 export const metadata: Metadata = {
   title: "For participants",
   description:
-    "Explore a fictional startup round, make a valuation-limited testnet bid, and follow the result, claims, and refunds.",
+    "Choose the highest company value you would accept in a public testnet round, then follow your bid to an allocation or refund.",
 };
 
 export default function InvestorsPage() {
@@ -18,13 +18,16 @@ export default function InvestorsPage() {
         eyebrow="For participants / 01"
         title={
           <>
-            Know the terms. <em>Choose your limit.</em>
+            Join a round. <em>Keep your own limit.</em>
           </>
         }
-        description="SAMA turns a valuation preference into a bid you can trace. Read the fixed terms, decide your maximum FDV, and see how the contract treats your deposit after settlement."
+        description="See the startup's published terms, choose the highest company value you would accept, and place a test bid. When bidding ends, every accepted bid uses one shared result—and you can see exactly what happened to your deposit."
         art={<EducationVisual kind="investor" />}
-        primary={{ href: "/auction", label: "See the auction" }}
-        secondary={{ href: "/docs/getting-started", label: "How to take part" }}
+        primary={{ href: "/auction", label: "Explore the example round" }}
+        secondary={{
+          href: "/docs/getting-started",
+          label: "See how to take part",
+        }}
       />
 
       <section
@@ -34,10 +37,13 @@ export default function InvestorsPage() {
         <div className="education-section-heading">
           <p className="eyebrow">Your path</p>
           <div>
-            <h2 id="investor-path">Four decisions. A visible outcome.</h2>
+            <h2 id="investor-path">
+              Your bid, from first look to final result.
+            </h2>
             <p>
-              Follow fixed terms, a sealed limit, a public reveal, and a settled
-              claim without losing track of your deposit.
+              You do not need a private allocation or a conversation behind
+              closed doors. The same steps and result are open for every demo
+              participant.
             </p>
           </div>
         </div>
@@ -51,22 +57,22 @@ export default function InvestorsPage() {
         <div className="education-section-heading">
           <p className="eyebrow">What you can check</p>
           <div>
-            <h2 id="investor-proof">An answer beyond a balance.</h2>
+            <h2 id="investor-proof">Know what you got—and why.</h2>
             <p>
-              The reference auction is an executable fixture. Its deposits,
-              accepted capital, and refunds add up without an offchain judge
-              choosing winners.
+              You can inspect the published terms, one clearing value, and the
+              amount each bidder can claim back. The five-bid example makes the
+              arithmetic easy to follow.
             </p>
           </div>
         </div>
         <div className="education-columns">
           <article className="education-paper">
             <p className="eyebrow">Auction record</p>
-            <h3>Where did the deposit go?</h3>
+            <h3>See where your deposit went.</h3>
             <p>
-              Compare your maximum FDV with the clearing FDV, then inspect the
-              accepted amount and refundable remainder. The five-bid example
-              accepts 480,000 of 700,000 deposited demoUSDC.
+              Compare your limit with the round&apos;s result. The example accepts
+              480,000 of 700,000 deposited demoUSDC; the rest is claimable back.
+              No bidder needs to guess where their test currency went.
             </p>
             <Link href="/auction" className="text-link">
               Walk through the numbers
@@ -74,14 +80,14 @@ export default function InvestorsPage() {
           </article>
           <article className="education-paper">
             <p className="eyebrow">After the round</p>
-            <h3>What happens to the token?</h3>
+            <h3>Carry your result beyond the round.</h3>
             <p>
-              A winner may claim and transfer demo tokens under the eligibility
-              rules. A listing can be filled in parts, but it still needs a
-              willing buyer.
+              A winner can claim demo tokens, hold them, or offer them to
+              another eligible wallet. A listing can sell in parts; a sale still
+              needs a willing buyer.
             </p>
             <Link href="/stakeholder-tokens" className="text-link">
-              Understand the token
+              Follow the token path
             </Link>
           </article>
         </div>

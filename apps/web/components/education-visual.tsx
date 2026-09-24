@@ -31,7 +31,7 @@ const scenes: Record<
     title: "Bidder's view",
     index: "S / 01",
     caption: "The same limit travels from your wallet to a verifiable result.",
-    foot: "Deposit visible · FDV sealed until reveal",
+    foot: "Deposit visible · limit sealed until reveal",
     blocks: [
       {
         x: 30,
@@ -47,7 +47,7 @@ const scenes: Record<
         y: 126,
         width: 125,
         height: 68,
-        label: "MAX FDV",
+        label: "MAX VALUE",
         value: "SEALED",
         fill: "#b2c9ae",
       },
@@ -82,7 +82,7 @@ const scenes: Record<
         y: 139,
         width: 150,
         height: 66,
-        label: "FDV RANGE",
+        label: "VALUE RANGE",
         value: "4–6M",
         fill: "#b2c9ae",
       },
@@ -136,7 +136,7 @@ const scenes: Record<
   auction: {
     title: "Reference settlement",
     index: "S / 04",
-    caption: "Five revealed bids. One 4.8M clearing FDV.",
+    caption: "Five revealed bids. One 4.8M company value.",
     foot: "480K accepted · 220K refundable",
     blocks: [
       {

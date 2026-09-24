@@ -17,10 +17,10 @@ export default function FoundersPage() {
         eyebrow="For founders / 02"
         title={
           <>
-            A round with <em>readable rules.</em>
+            Show your terms. <em>Let demand answer.</em>
           </>
         }
-        description="Founders should be able to explain the terms before the first bid and the result after the last reveal. SAMA tests that idea with one fictional startup round."
+        description="A founder should be able to show the round's terms before anyone bids—and explain the outcome afterward. SAMA tests that idea with one fictional startup, a public rulebook, and a price set by independent bids."
         art={<EducationVisual kind="founder" />}
         primary={{ href: "/auction", label: "View the auction" }}
         secondary={{ href: "/explore", label: "Explore the demo" }}
@@ -33,39 +33,41 @@ export default function FoundersPage() {
         <div className="education-section-heading">
           <p className="eyebrow">The mechanism</p>
           <div>
-            <h2 id="founder-mechanism">Terms first. Demand next.</h2>
+            <h2 id="founder-mechanism">Make the round explain itself.</h2>
             <p>
-              SAMA fixes the example offering in a contract, then lets bids
-              determine the clearing FDV within the published range.
+              Instead of announcing a winner or negotiating a different price
+              for each participant, the demo puts its terms and calculation in
+              one place.
             </p>
           </div>
         </div>
         <div className="education-rows">
           <div className="education-row">
             <span>01 / Terms</span>
-            <h3>Make the boundaries visible</h3>
+            <h3>Publish the offer before bids arrive</h3>
             <p>
-              The demo offers 1,000,000 tokens, with a 4M–6M FDV range, a
-              400,000 demoUSDC minimum raise, and fixed commit and reveal
-              deadlines.
+              The example offers 1,000,000 demo tokens. Everyone sees the 4M–6M
+              company-value range, the 400,000 demoUSDC minimum, and the bid and
+              reveal deadlines in advance.
             </p>
           </div>
           <div className="education-row">
             <span>02 / Demand</span>
-            <h3>Let bidders state a limit</h3>
+            <h3>Let people set their own ceiling</h3>
             <p>
-              Each participant escrows a public deposit and later reveals a
-              maximum FDV. Their willingness to pay sets the demand curve; the
-              contract applies the same rule to every address.
+              Each participant deposits test currency and chooses the highest
+              company value they would accept. Once those limits are revealed,
+              the same calculation applies to every bid.
             </p>
           </div>
           <div className="education-row">
             <span>03 / Close</span>
-            <h3>Account for every deposit</h3>
+            <h3>Give every deposit a clear outcome</h3>
             <p>
-              Successful settlement records accepted capital, individual
-              refunds, and token allocations. Issuer proceeds can be withdrawn
-              once; bidders claim their own assets.
+              The result states how much went toward the round, what can be
+              refunded, and how many demo tokens each winner may claim. The
+              issuer can withdraw accepted test currency only after a successful
+              settlement.
             </p>
           </div>
         </div>

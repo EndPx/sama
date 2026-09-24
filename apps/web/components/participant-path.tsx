@@ -11,28 +11,28 @@ const decisions = [
     phase: "Read",
     title: "Understand the offering",
     description:
-      "The demo startup is fictional. Its offered allocation, FDV range, minimum raise, and deadlines are fixed before anyone bids.",
+      "The demo startup is fictional. Its token allocation, company-value range, minimum raise, and deadlines are fixed before anyone bids.",
   },
   {
     number: "02",
     phase: "Commit",
     title: "Set your ceiling",
     description:
-      "Escrow demoUSDC and commit a maximum FDV. Your deposit is public; the FDV is hidden by a nonce until you reveal it. Export the backup before signing.",
+      "Deposit demoUSDC and choose the highest company value you would accept. Your deposit is public; your limit stays sealed until reveal. Export the backup before signing.",
   },
   {
     number: "03",
     phase: "Reveal",
     title: "Bring your bid into the calculation",
     description:
-      "Return before the reveal deadline. A bid that is never revealed cannot win KIRA and becomes fully refundable only after the round is finalized or cancelled.",
+      "Return before the reveal deadline. A bid that is never revealed cannot earn demo tokens and becomes fully refundable after the round is finalized or cancelled.",
   },
   {
     number: "04",
     phase: "Claim",
     title: "Check what is yours",
     description:
-      "Inspect the clearing result, then claim any KIRA and positive refund separately. The app waits for a confirmed receipt before reporting success.",
+      "Inspect the round's result, then claim any demo tokens and refund separately. The app waits for a confirmed receipt before reporting success.",
   },
 ] as const;
 
@@ -51,7 +51,7 @@ function DecisionPicture({
             <strong>10%</strong>
           </div>
           <div>
-            <small>FDV range</small>
+            <small>Value range</small>
             <strong>4–6M</strong>
           </div>
           <div>
@@ -74,7 +74,7 @@ function DecisionPicture({
         </div>
         <div className="decision-commit-vault" data-path-piece>
           <span className="decision-vault-stud" />
-          <small>MAX FDV</small>
+          <small>MAX VALUE</small>
           <strong>SEALED</strong>
         </div>
         <span className="decision-backup" data-path-piece>
@@ -93,7 +93,7 @@ function DecisionPicture({
         <div className="decision-reveal-route" data-path-piece />
         <div className="decision-reveal-sheet" data-path-piece>
           <small>REVEAL TRANSACTION</small>
-          <strong>MAX FDV</strong>
+          <strong>MAX VALUE</strong>
           <span>+ NONCE / PUBLIC</span>
         </div>
       </div>
@@ -107,7 +107,7 @@ function DecisionPicture({
       <div className="decision-claim-branches">
         <div data-path-piece>
           <small>IF ALLOCATED</small>
-          <strong>KIRA</strong>
+          <strong>TOKEN</strong>
         </div>
         <div data-path-piece>
           <small>IF POSITIVE</small>
