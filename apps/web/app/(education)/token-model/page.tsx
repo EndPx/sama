@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { EducationHero } from "@/components/education-hero";
-import { EducationVisual } from "@/components/education-visual";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { TokenJourney } from "@/components/token-journey";
 import {
   formatWholeUnits,
@@ -13,231 +11,256 @@ import {
 import "./token-model.css";
 
 export const metadata: Metadata = {
-  title: "What is KIRA?",
+  title: "Token model | SAMA",
   description:
-    "Follow KIRA from a testnet startup round into a wallet and marketplace, with clear boundaries on what this demo token does and does not represent.",
+    "Understand KIRA in one place: how a demo round creates a claim, how tokens reach a wallet, and how a marketplace sale works.",
 };
 
-const marginalBid = referenceBids[3];
-const marginalKira = referenceKiraEntitlement(marginalBid.accepted);
+const exampleBid = referenceBids[3];
+const exampleKira = referenceKiraEntitlement(exampleBid.accepted);
 
-const scenarios = [
+const outcomes = [
   {
-    label: "Your bid is accepted in part",
-    outcome:
-      "You can claim KIRA for the accepted amount and claim the unused test currency back separately.",
-    note: "One bid can have both a token claim and a refund.",
+    question: "Only part of my bid counts?",
+    answer:
+      "You can claim KIRA for the accepted part and reclaim the unused demoUSDC. They are separate claims.",
   },
   {
-    label: "Your bid loses—or stays unrevealed",
-    outcome:
-      "No KIRA is allocated. After finalization or cancellation, the full committed amount is refundable.",
-    note: "An unrevealed bid never counts as demand.",
+    question: "My bid loses—or I never reveal it?",
+    answer:
+      "You receive no KIRA. After settlement or cancellation, the committed demoUSDC is refundable in full.",
   },
   {
-    label: "Your listing sells in pieces",
-    outcome:
-      "Buyers keep the KIRA they purchased. The unsold amount stays in marketplace escrow until another fill or a seller cancellation.",
-    note: "Every partial fill keeps a positive price on the remainder.",
+    question: "My listing sells in pieces?",
+    answer:
+      "Each buyer receives only what they bought. The unsold KIRA stays in marketplace escrow until another purchase or your cancellation.",
   },
   {
-    label: "A contract is paused",
-    outcome:
-      "A marketplace pause stops new listings and buys but still allows cancellation. A KIRA token pause blocks all KIRA transfers, including cancellation, until unpaused.",
-    note: "A pause is not a transfer of ownership.",
+    question: "A contract is paused?",
+    answer:
+      "A marketplace pause stops new listings and buys but still permits cancellation. A KIRA token pause temporarily blocks every KIRA transfer, including cancellation, until unpaused.",
   },
 ] as const;
 
-const controls = [
+const rules = [
   {
-    title: "A fixed upper limit",
-    answer:
-      "KIRA has a 1,000,000-token cap. The offering is intended to be the only minter in this deployment, but the administrator can manage minter roles. The cap is enforced by the token contract; role configuration remains a trust assumption.",
+    label: "Supply",
+    title: "One million is the ceiling.",
+    description:
+      "KIRA cannot exceed 1,000,000 tokens. The offering is intended to be the only minter, but an administrator can manage minter roles; that role configuration remains a trust assumption.",
   },
   {
-    title: "Eligible wallets only",
-    answer:
-      "Ordinary KIRA transfers require eligible sender and recipient addresses. Public enrollment in this testnet demo is only an access helper, not identity verification or regulatory screening.",
+    label: "Access",
+    title: "Wallet eligibility is checked.",
+    description:
+      "Ordinary transfers require eligible sender and recipient wallets. Public enrollment helps people try this testnet demo; it is not identity verification or regulatory screening.",
   },
   {
-    title: "Listed KIRA is held in escrow",
-    answer:
-      "Creating a listing moves the offered KIRA into the marketplace. A purchase moves only the bought portion to an eligible buyer. The seller can cancel and recover the unsold portion to an eligible recipient, even when the marketplace itself is paused.",
+    label: "Custody",
+    title: "Listed tokens are actually held.",
+    description:
+      "A listing moves KIRA into marketplace escrow. The seller can cancel and recover the unsold amount to an eligible recipient, even while the marketplace is paused—unless KIRA transfers themselves are paused.",
   },
   {
-    title: "Buyers approve a maximum cost",
-    answer:
-      "The contract quotes each partial fill from the listing's remaining KIRA and remaining price, rounding up in the smallest test-currency unit. It rejects a partial fill that would leave unpriced KIRA. A buyer's maximum cost protects against a changed quote.",
+    label: "Pricing",
+    title: "A partial sale still has a price.",
+    description:
+      "Each partial fill is priced from the listing's remaining tokens and remaining price, rounded up in the smallest demoUSDC unit. A buyer sets a maximum cost; a fill that would leave free KIRA is rejected.",
   },
 ] as const;
 
 export default function TokenModelPage() {
   return (
-    <>
-      <EducationHero
-        eyebrow="KIRA, explained"
-        title={<>A test token with a traceable path.</>}
-        description="KIRA lets you see what happens after a public startup round: who can claim tokens, where listed tokens sit, and how a buyer receives them. It is part of a fictional testnet demo—not a company share."
-        tone="forest"
-        art={<EducationVisual kind="token" />}
-        primary={{ href: "/auction", label: "See the demo round" }}
-        secondary={{ href: "/market/kira", label: "Open the marketplace" }}
-      />
-
-      <section className="token-example" aria-labelledby="token-example-title">
-        <div className="page-shell token-example-inner">
-          <div className="token-example-intro">
-            <span className="token-example-label">
-              From the five-bid demo round
+    <article className="token-model">
+      <header className="page-shell token-intro">
+        <div className="token-intro-copy">
+          <span className="token-kicker">The token model</span>
+          <h1>KIRA shows where a round goes next.</h1>
+          <p>
+            A startup round ends. Some bids are accepted, others are returned.
+            KIRA is the demo token a winner can claim for their accepted amount.
+            If its holder later lists it, another eligible wallet can buy it.
+            Here is that whole journey, in one place.
+          </p>
+          <div className="token-intro-actions">
+            <a href="#example-round" className="token-primary-link">
+              Follow the example <ArrowDown size={16} aria-hidden="true" />
+            </a>
+            <Link href="/auction" className="token-text-link">
+              Explore the round <ArrowUpRight size={16} aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
+        <div
+          className="token-hero-picture"
+          aria-label="KIRA token moves from a round to a wallet and then a buyer"
+        >
+          <div className="token-hero-picture-top">
+            <span>SAMA / KIRA</span>
+            <span>ARBITRUM SEPOLIA</span>
+          </div>
+          <div className="token-hero-stage">
+            <div className="token-hero-ring token-hero-ring-outer" />
+            <div className="token-hero-ring token-hero-ring-inner" />
+            <div className="token-hero-coin">K</div>
+            <div className="token-hero-connector token-hero-connector-left" />
+            <div className="token-hero-connector token-hero-connector-right" />
+            <span className="token-hero-label token-hero-label-left">
+              Round result
             </span>
-            <h2 id="token-example-title">One bid. Two things to claim.</h2>
+            <span className="token-hero-label token-hero-label-right">
+              Eligible wallets
+            </span>
+          </div>
+          <div className="token-hero-picture-bottom">
+            <strong>1,000,000</strong>
+            <span>Maximum demo KIRA. Created only when winners claim.</span>
+          </div>
+        </div>
+      </header>
+
+      <div className="page-shell token-body">
+        <section
+          className="token-example"
+          id="example-round"
+          aria-labelledby="token-example-title"
+        >
+          <div className="token-section-lead">
+            <span className="token-kicker">
+              A real example from the demo rules
+            </span>
+            <h2 id="token-example-title">One bid can have two outcomes.</h2>
             <p>
-              Take bidder B. They placed {formatWholeUnits(marginalBid.deposit)}{" "}
-              demoUSDC in the example round. Only part of that bid was accepted
-              at the shared result of{" "}
-              {formatWholeUnits(referenceAuction.clearingFdv)} demoUSDC company
-              value.
+              Imagine bidder B joins the five-bid reference round. They put in{" "}
+              {formatWholeUnits(exampleBid.deposit)} demoUSDC. The round settles
+              at one shared company-value figure of{" "}
+              {formatWholeUnits(referenceAuction.clearingFdv)} demoUSDC. Only a
+              part of B&apos;s bid is needed.
             </p>
           </div>
           <div
-            className="token-example-ledger"
-            aria-label="Example bidder B result"
+            className="token-ledger"
+            aria-label="Bidder B example allocation"
           >
-            <div className="token-ledger-topline">
-              <span>Bidder B / example outcome</span>
-              <span>Arbitrum Sepolia demo</span>
+            <div className="token-ledger-heading">
+              <span>Bidder B / round result</span>
+              <span>DEMO FIGURES</span>
+            </div>
+            <div className="token-ledger-deposit">
+              <span>Bid placed</span>
+              <strong>{formatWholeUnits(exampleBid.deposit)}</strong>
+              <small>demoUSDC</small>
             </div>
             <div
               className="token-ledger-bar"
               role="img"
-              aria-label={`${formatWholeUnits(marginalBid.accepted)} accepted and ${formatWholeUnits(marginalBid.refund)} refundable from ${formatWholeUnits(marginalBid.deposit)} demoUSDC deposited`}
+              aria-label={`${formatWholeUnits(exampleBid.accepted)} demoUSDC accepted and ${formatWholeUnits(exampleBid.refund)} demoUSDC refundable`}
             >
-              <span style={{ flexGrow: Number(marginalBid.accepted) }} />
-              <span style={{ flexGrow: Number(marginalBid.refund) }} />
+              <span style={{ flexGrow: Number(exampleBid.accepted) }} />
+              <span style={{ flexGrow: Number(exampleBid.refund) }} />
             </div>
-            <div className="token-ledger-columns">
+            <div className="token-ledger-results">
               <div>
-                <span>Counts toward the round</span>
-                <strong>{formatWholeUnits(marginalBid.accepted)}</strong>
-                <small>demoUSDC</small>
+                <span className="token-ledger-dot token-ledger-dot-accepted" />
+                <span>Accepted</span>
+                <strong>{formatWholeUnits(exampleBid.accepted)}</strong>
+                <small>demoUSDC goes toward the round</small>
               </div>
               <div>
-                <span>Can be claimed back</span>
-                <strong>{formatWholeUnits(marginalBid.refund)}</strong>
-                <small>demoUSDC</small>
+                <span className="token-ledger-dot token-ledger-dot-refund" />
+                <span>Refundable</span>
+                <strong>{formatWholeUnits(exampleBid.refund)}</strong>
+                <small>demoUSDC can be claimed back</small>
               </div>
-              <div className="token-ledger-kira">
-                <span>Can be claimed as tokens</span>
-                <strong>{formatWholeUnits(marginalKira)}</strong>
-                <small>KIRA</small>
+              <div>
+                <span className="token-ledger-dot token-ledger-dot-kira" />
+                <span>Token claim</span>
+                <strong>{formatWholeUnits(exampleKira)}</strong>
+                <small>KIRA can be claimed separately</small>
               </div>
             </div>
-            <p>
-              The refund and KIRA claim are separate transactions. These are
-              valueless test assets, not an investment return.
+            <p className="token-ledger-note">
+              The refund and KIRA require separate transactions. This is a
+              fictional testnet round using valueless demo assets.
             </p>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <TokenJourney />
+        <TokenJourney />
 
-      <section
-        className="token-scenarios page-shell"
-        aria-labelledby="token-scenarios-title"
-      >
-        <div className="token-section-head">
-          <div>
-            <h2 id="token-scenarios-title">
-              What happens if the path changes?
+        <section
+          className="token-outcomes"
+          aria-labelledby="token-outcomes-title"
+        >
+          <div className="token-section-lead">
+            <span className="token-kicker">When the path changes</span>
+            <h2 id="token-outcomes-title">
+              Not every bid or listing ends the same way.
             </h2>
-            <p>
-              You do not need to read contract code to understand the common
-              outcomes. These are the cases the demo handles today.
-            </p>
+            <p>These are the common cases, without the contract jargon.</p>
           </div>
-          <span className="token-section-index" aria-hidden="true">
-            02 / 04
-          </span>
-        </div>
-        <div className="token-scenario-grid">
-          {scenarios.map((scenario, index) => (
-            <article className="token-scenario" key={scenario.label}>
-              <span className="token-scenario-number">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <h3>{scenario.label}</h3>
-              <p>{scenario.outcome}</p>
-              <small>{scenario.note}</small>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section
-        className="token-controls"
-        aria-labelledby="token-controls-title"
-      >
-        <div className="page-shell token-controls-inner">
-          <div className="token-controls-intro">
-            <span className="token-section-index" aria-hidden="true">
-              03 / 04
-            </span>
-            <h2 id="token-controls-title">What keeps the demo bounded?</h2>
-            <p>
-              A few rules are built into the contracts. Others still depend on
-              the administrator or the testnet. Open each note for the real
-              boundary—not a promise the prototype cannot make.
-            </p>
-            <a
-              href="https://github.com/EndPx/sama/blob/feat/p0-vertical-slice/docs/THREAT_MODEL.md"
-              className="token-controls-link"
-            >
-              Read the trust model <ArrowUpRight size={16} aria-hidden="true" />
-            </a>
-          </div>
-          <div className="token-control-list">
-            {controls.map((control, index) => (
-              <details key={control.title} className="token-control">
-                <summary>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <strong>{control.title}</strong>
-                  <span className="token-control-plus" aria-hidden="true" />
-                </summary>
-                <p>{control.answer}</p>
-              </details>
+          <div className="token-outcome-list">
+            {outcomes.map((outcome) => (
+              <div className="token-outcome" key={outcome.question}>
+                <h3>{outcome.question}</h3>
+                <p>{outcome.answer}</p>
+              </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section
-        className="token-boundary page-shell"
-        aria-labelledby="token-boundary-title"
-      >
-        <div>
-          <span className="token-section-index" aria-hidden="true">
-            04 / 04
-          </span>
-          <h2 id="token-boundary-title">The token is not the company.</h2>
-        </div>
-        <div className="token-boundary-copy">
-          <p>
-            KIRA tracks units in this fictional round. It can be claimed,
-            transferred between eligible wallets, and listed for demoUSDC. It
-            does not give its holder legal equity, dividends, votes, exit
-            proceeds, or a guaranteed buyer.
-          </p>
-          <div className="token-boundary-links">
-            <Link href="/market/kira">
-              See the marketplace <ArrowUpRight size={16} aria-hidden="true" />
-            </Link>
-            <a href="https://sama-3.gitbook.io/sama-product-and-protocol/">
-              Read the docs <ArrowUpRight size={16} aria-hidden="true" />
-            </a>
+        <section className="token-rules" aria-labelledby="token-rules-title">
+          <div className="token-section-lead">
+            <span className="token-kicker">The boundaries</span>
+            <h2 id="token-rules-title">
+              What the system enforces—and what it doesn&apos;t.
+            </h2>
+            <p>
+              These rules make the demo easier to inspect. They do not remove
+              every dependency on administrators, wallets, or the testnet.
+            </p>
           </div>
-        </div>
-      </section>
-    </>
+          <div className="token-rule-list">
+            {rules.map((rule) => (
+              <div className="token-rule" key={rule.label}>
+                <span>{rule.label}</span>
+                <h3>{rule.title}</h3>
+                <p>{rule.description}</p>
+              </div>
+            ))}
+          </div>
+          <a
+            className="token-text-link token-trust-link"
+            href="https://github.com/EndPx/sama/blob/feat/p0-vertical-slice/docs/THREAT_MODEL.md"
+          >
+            Read the full trust model{" "}
+            <ArrowUpRight size={16} aria-hidden="true" />
+          </a>
+        </section>
+
+        <section className="token-close" aria-labelledby="token-close-title">
+          <div>
+            <span className="token-kicker">One important distinction</span>
+            <h2 id="token-close-title">The token is not the company.</h2>
+          </div>
+          <div>
+            <p>
+              KIRA can move between eligible wallets in this fictional demo.
+              Holding it does not give you legal shares, dividends, votes, exit
+              proceeds, or a guaranteed buyer.
+            </p>
+            <div className="token-close-actions">
+              <Link href="/market/kira">
+                Visit the marketplace{" "}
+                <ArrowUpRight size={16} aria-hidden="true" />
+              </Link>
+              <a href="https://sama-3.gitbook.io/sama-product-and-protocol/">
+                Read the docs <ArrowUpRight size={16} aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </article>
   );
 }

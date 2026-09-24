@@ -1,132 +1,95 @@
-"use client";
-
 import * as React from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 const steps = [
   {
-    id: "settle",
     number: "01",
-    tab: "Round settles",
-    title: "The result comes first.",
+    moment: "The round ends",
+    title: "First, everyone gets the same result.",
     description:
-      "The auction records how much of each bid counts and how much can be claimed back. A winner's KIRA amount is calculated here, but no KIRA is minted yet.",
-    from: "Revealed bids",
-    to: "Claimable allocation",
-    receipt: "One clearing value for every accepted bid",
-    mark: "✓",
+      "The round decides which bids count. Accepted test currency goes toward the round; unused deposits can be claimed back. KIRA is calculated for winners, but no tokens have moved yet.",
+    from: "Bids",
+    to: "One result",
+    detail: "Allocation and refund are recorded separately",
   },
   {
-    id: "claim",
     number: "02",
-    tab: "Winner claims",
-    title: "A winner claims KIRA once.",
+    moment: "A winner claims",
+    title: "Then KIRA enters a wallet.",
     description:
-      "After a successful settlement, a winner claims the amount earned by their accepted bid. The offering mints KIRA to that wallet within the fixed token cap.",
-    from: "Claimable allocation",
-    to: "Eligible wallet",
-    receipt: "Claim recorded onchain; no second claim",
-    mark: "K",
+      "A winner claims once. The offering creates only the KIRA earned by that accepted bid, within the fixed one-million-token cap. An eligible wallet receives it.",
+    from: "Claimable KIRA",
+    to: "Winner's wallet",
+    detail: "Nothing is minted before the claim",
   },
   {
-    id: "list",
     number: "03",
-    tab: "Holder lists",
-    title: "A listing puts KIRA in escrow.",
+    moment: "A holder lists",
+    title: "A listing puts tokens aside.",
     description:
-      "An eligible holder chooses an amount and total test-currency price. The marketplace holds that KIRA until buyers purchase it or the seller cancels the unsold part.",
-    from: "Holder wallet",
+      "An eligible holder sets an amount and a total demoUSDC price. The marketplace holds those KIRA tokens while the listing is open. The holder can cancel and recover any unsold amount.",
+    from: "Holder's wallet",
     to: "Marketplace escrow",
-    receipt: "Unsold KIRA remains accounted for",
-    mark: "K",
+    detail: "Unsold KIRA remains accounted for",
   },
   {
-    id: "buy",
     number: "04",
-    tab: "Buyer receives",
-    title: "A purchase moves both sides together.",
+    moment: "A buyer purchases",
+    title: "The exchange happens together.",
     description:
-      "An eligible buyer selects an amount and a maximum cost. The contract sends the exact test-currency cost to the seller and the purchased KIRA to the buyer in one transaction.",
+      "An eligible buyer chooses how much to buy and approves a maximum cost. In one transaction, the seller receives the exact demoUSDC price and the buyer receives the purchased KIRA.",
     from: "Marketplace escrow",
-    to: "Eligible buyer",
-    receipt: "Partial fills leave a priced remainder",
-    mark: "K",
+    to: "Buyer's wallet",
+    detail: "A partial sale leaves a priced remainder",
   },
 ] as const;
 
 export function TokenJourney() {
   return (
-    <section
-      className="token-journey page-shell"
-      aria-labelledby="token-journey-title"
-    >
-      <div className="token-section-head">
-        <div>
-          <h2 id="token-journey-title">Follow one token through the demo.</h2>
-          <p>
-            The round determines who can claim KIRA. A separate marketplace lets
-            eligible wallets transfer it later. Choose a step to see where the
-            record—or the token—moves.
-          </p>
-        </div>
-        <span className="token-section-index" aria-hidden="true">
-          01 / 04
-        </span>
+    <section className="token-journey" aria-labelledby="token-journey-title">
+      <div className="token-journey-intro">
+        <span className="token-kicker">The complete path</span>
+        <h2 id="token-journey-title">From a round result to another wallet.</h2>
+        <p>
+          KIRA does not appear all at once. Follow the record, the claim, and
+          the token itself through four distinct moments.
+        </p>
       </div>
-
-      <Tabs defaultValue="settle" className="token-tabs">
-        <TabsList className="token-step-list" aria-label="KIRA journey">
-          {steps.map((step) => (
-            <TabsTrigger
-              key={step.id}
-              value={step.id}
-              className="token-step-trigger"
-            >
-              <span className="token-step-number">{step.number}</span>
-              <span>{step.tab}</span>
-            </TabsTrigger>
-          ))}
-        </TabsList>
+      <ol className="token-path">
         {steps.map((step) => (
-          <TabsContent key={step.id} value={step.id} className="token-stage">
-            <div className="token-stage-copy">
-              <span className="token-stage-count">
-                Step {step.number} of 04
-              </span>
+          <li
+            className={`token-path-step token-path-step-${step.number}`}
+            key={step.number}
+          >
+            <span className="token-path-marker" aria-hidden="true">
+              {step.number}
+            </span>
+            <div className="token-path-copy">
+              <span className="token-path-moment">{step.moment}</span>
               <h3>{step.title}</h3>
               <p>{step.description}</p>
             </div>
             <div
-              className="token-transfer"
+              className="token-path-picture"
               aria-label={`${step.from} to ${step.to}`}
             >
-              <div className="token-transfer-topline">
-                <span>SAMA / KIRA route</span>
-                <span>{step.number} — 04</span>
+              <div className="token-path-picture-top">
+                <span>SAMA / KIRA</span>
+                <span>{step.number} / 04</span>
               </div>
-              <div className="token-transfer-nodes">
-                <div className="token-transfer-node">
-                  <span className="token-node-symbol">S</span>
-                  <span className="token-node-caption">From</span>
-                  <strong>{step.from}</strong>
-                </div>
-                <div className="token-transfer-rail" aria-hidden="true">
-                  <span className="token-transfer-marker">{step.mark}</span>
-                </div>
-                <div className="token-transfer-node token-transfer-node-end">
-                  <span className="token-node-symbol">K</span>
-                  <span className="token-node-caption">To</span>
-                  <strong>{step.to}</strong>
-                </div>
+              <div className="token-path-objects" aria-hidden="true">
+                <span className="token-path-object token-path-object-from" />
+                <span className="token-path-line" />
+                <span className="token-path-object token-path-object-to" />
               </div>
-              <div className="token-transfer-receipt">
-                <span>Recorded outcome</span>
-                <strong>{step.receipt}</strong>
+              <div className="token-path-labels">
+                <strong>{step.from}</strong>
+                <strong>{step.to}</strong>
               </div>
+              <span className="token-path-detail">{step.detail}</span>
             </div>
-          </TabsContent>
+          </li>
         ))}
-      </Tabs>
+      </ol>
     </section>
   );
 }
