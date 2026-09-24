@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import { TokenJourney } from "./token-journey";
 
-describe("KIRA journey", () => {
+describe("stakeholder token journey", () => {
   it("shows every custody transition in order without hidden panels", () => {
     render(<TokenJourney />);
 
@@ -17,5 +17,6 @@ describe("KIRA journey", () => {
     expect(within(steps[3]).getByText("Buyer's wallet")).toBeTruthy();
     expect(screen.queryByRole("tab")).toBeNull();
     expect(screen.queryByRole("button")).toBeNull();
+    expect(screen.queryByText(/KIRA/)).toBeNull();
   });
 });

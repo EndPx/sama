@@ -74,9 +74,9 @@ export default function InvestorsPage() {
           </article>
           <article className="education-paper">
             <p className="eyebrow">After the round</p>
-            <h3>What happens to KIRA?</h3>
+            <h3>What happens to the token?</h3>
             <p>
-              A winner may claim and transfer KIRA under the demo eligibility
+              A winner may claim and transfer demo tokens under the eligibility
               rules. A listing can be filled in parts, but it still needs a
               willing buyer.
             </p>

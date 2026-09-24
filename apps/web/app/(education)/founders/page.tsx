@@ -45,8 +45,9 @@ export default function FoundersPage() {
             <span>01 / Terms</span>
             <h3>Make the boundaries visible</h3>
             <p>
-              The demo offers 1,000,000 KIRA, with a 4M–6M FDV range, a 400,000
-              demoUSDC minimum raise, and fixed commit and reveal deadlines.
+              The demo offers 1,000,000 tokens, with a 4M–6M FDV range, a
+              400,000 demoUSDC minimum raise, and fixed commit and reveal
+              deadlines.
             </p>
           </div>
           <div className="education-row">

@@ -80,17 +80,18 @@ export default function GettingStartedPage() {
             <h3>Return before the deadline</h3>
             <p>
               Use the same wallet and backup. Revealing publishes your FDV and
-              nonce; an unrevealed bid cannot receive KIRA. The deadline is
-              exclusive, so leave time for transaction inclusion.
+              nonce; an unrevealed bid cannot receive a token allocation. The
+              deadline is exclusive, so leave time for transaction inclusion.
             </p>
           </div>
           <div className="education-row">
             <span>04 / Follow through</span>
             <h3>Check, claim, then transfer</h3>
             <p>
-              Inspect settlement and claim KIRA and any refund separately. An
-              eligible holder may list KIRA; a second eligible wallet may buy
-              part or all of it. Each action needs a confirmed receipt.
+              Inspect settlement and claim demo tokens and any refund
+              separately. An eligible holder may list tokens; a second eligible
+              wallet may buy part or all of it. Each action needs a confirmed
+              receipt.
             </p>
           </div>
         </div>

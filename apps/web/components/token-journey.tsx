@@ -6,7 +6,7 @@ const steps = [
     moment: "The round ends",
     title: "First, everyone gets the same result.",
     description:
-      "The round decides which bids count. Accepted test currency goes toward the round; unused deposits can be claimed back. KIRA is calculated for winners, but no tokens have moved yet.",
+      "The round decides which bids count. Accepted test currency goes toward the round; unused deposits can be claimed back. Token amounts are calculated for winners, but no tokens have moved yet.",
     from: "Bids",
     to: "One result",
     detail: "Allocation and refund are recorded separately",
@@ -14,10 +14,10 @@ const steps = [
   {
     number: "02",
     moment: "A winner claims",
-    title: "Then KIRA enters a wallet.",
+    title: "Then the token enters a wallet.",
     description:
-      "A winner claims once. The offering creates only the KIRA earned by that accepted bid, within the fixed one-million-token cap. An eligible wallet receives it.",
-    from: "Claimable KIRA",
+      "A winner claims once. The offering creates only the tokens earned by that accepted bid, within the fixed one-million-token cap. An eligible wallet receives them.",
+    from: "Claimable tokens",
     to: "Winner's wallet",
     detail: "Nothing is minted before the claim",
   },
@@ -26,17 +26,17 @@ const steps = [
     moment: "A holder lists",
     title: "A listing puts tokens aside.",
     description:
-      "An eligible holder sets an amount and a total demoUSDC price. The marketplace holds those KIRA tokens while the listing is open. The holder can cancel and recover any unsold amount.",
+      "An eligible holder sets an amount and a total demoUSDC price. The marketplace holds those tokens while the listing is open. The holder can cancel and recover any unsold amount.",
     from: "Holder's wallet",
     to: "Marketplace escrow",
-    detail: "Unsold KIRA remains accounted for",
+    detail: "Unsold tokens remain accounted for",
   },
   {
     number: "04",
     moment: "A buyer purchases",
     title: "The exchange happens together.",
     description:
-      "An eligible buyer chooses how much to buy and approves a maximum cost. In one transaction, the seller receives the exact demoUSDC price and the buyer receives the purchased KIRA.",
+      "An eligible buyer chooses how much to buy and approves a maximum cost. In one transaction, the seller receives the exact demoUSDC price and the buyer receives the purchased tokens.",
     from: "Marketplace escrow",
     to: "Buyer's wallet",
     detail: "A partial sale leaves a priced remainder",
@@ -50,8 +50,8 @@ export function TokenJourney() {
         <span className="token-kicker">The complete path</span>
         <h2 id="token-journey-title">From a round result to another wallet.</h2>
         <p>
-          KIRA does not appear all at once. Follow the record, the claim, and
-          the token itself through four distinct moments.
+          The token does not appear all at once. Follow the record, the claim,
+          and the token itself through four distinct moments.
         </p>
       </div>
       <ol className="token-path">
@@ -73,7 +73,7 @@ export function TokenJourney() {
               aria-label={`${step.from} to ${step.to}`}
             >
               <div className="token-path-picture-top">
-                <span>SAMA / KIRA</span>
+                <span>SAMA / TOKEN PATH</span>
                 <span>{step.number} / 04</span>
               </div>
               <div className="token-path-objects" aria-hidden="true">

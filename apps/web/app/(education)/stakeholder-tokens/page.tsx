@@ -13,32 +13,64 @@ import "./stakeholder-tokens.css";
 export const metadata: Metadata = {
   title: "Stakeholder Tokens",
   description:
-    "Understand KIRA in one place: how a demo round creates a claim, how tokens reach a wallet, and how a marketplace sale works.",
+    "Follow SAMA's stakeholder-token prototype from a public demo round to a wallet and an optional marketplace sale.",
 };
 
 const exampleBid = referenceBids[3];
 const exampleKira = referenceKiraEntitlement(exampleBid.accepted);
 
+const participants = [
+  {
+    role: "The bidder",
+    action: "Chooses a limit, commits test currency, then reveals the bid.",
+    after: "Claims any allocation and refund after settlement.",
+  },
+  {
+    role: "The issuer",
+    action: "Runs one fixed example round with published terms.",
+    after:
+      "Can withdraw only the accepted test currency after a successful result.",
+  },
+  {
+    role: "The holder",
+    action: "Keeps their claimed demo tokens or lists some for sale.",
+    after:
+      "Can cancel and recover the unsold portion, subject to token transfer rules.",
+  },
+  {
+    role: "The buyer",
+    action: "Chooses a token amount and the most demoUSDC they will pay.",
+    after:
+      "Receives the purchased tokens in the same transaction that pays the seller.",
+  },
+  {
+    role: "The administrator",
+    action: "Manages wallet eligibility and privileged token roles.",
+    after:
+      "Can pause parts of the system; this is a disclosed trust assumption.",
+  },
+] as const;
+
 const outcomes = [
   {
     question: "Only part of my bid counts?",
     answer:
-      "You can claim KIRA for the accepted part and reclaim the unused demoUSDC. They are separate claims.",
+      "You can claim demo tokens for the accepted part and reclaim the unused demoUSDC. They are separate claims.",
   },
   {
     question: "My bid loses—or I never reveal it?",
     answer:
-      "You receive no KIRA. After settlement or cancellation, the committed demoUSDC is refundable in full.",
+      "You receive no tokens. After settlement or cancellation, the committed demoUSDC is refundable in full.",
   },
   {
     question: "My listing sells in pieces?",
     answer:
-      "Each buyer receives only what they bought. The unsold KIRA stays in marketplace escrow until another purchase or your cancellation.",
+      "Each buyer receives only what they bought. The unsold tokens stay in marketplace escrow until another purchase or your cancellation.",
   },
   {
     question: "A contract is paused?",
     answer:
-      "A marketplace pause stops new listings and buys but still permits cancellation. A KIRA token pause temporarily blocks every KIRA transfer, including cancellation, until unpaused.",
+      "A marketplace pause stops new listings and buys but still permits cancellation. A token pause temporarily blocks every token transfer, including cancellation, until unpaused.",
   },
 ] as const;
 
@@ -47,7 +79,7 @@ const rules = [
     label: "Supply",
     title: "One million is the ceiling.",
     description:
-      "KIRA cannot exceed 1,000,000 tokens. The offering is intended to be the only minter, but an administrator can manage minter roles; that role configuration remains a trust assumption.",
+      "The demo supply cannot exceed 1,000,000 tokens. The offering is intended to be the only minter, but an administrator can manage minter roles; that role configuration remains a trust assumption.",
   },
   {
     label: "Access",
@@ -59,17 +91,17 @@ const rules = [
     label: "Custody",
     title: "Listed tokens are actually held.",
     description:
-      "A listing moves KIRA into marketplace escrow. The seller can cancel and recover the unsold amount to an eligible recipient, even while the marketplace is paused—unless KIRA transfers themselves are paused.",
+      "A listing moves tokens into marketplace escrow. The seller can cancel and recover the unsold amount to an eligible recipient, even while the marketplace is paused—unless token transfers themselves are paused.",
   },
   {
     label: "Pricing",
     title: "A partial sale still has a price.",
     description:
-      "Each partial fill is priced from the listing's remaining tokens and remaining price, rounded up in the smallest demoUSDC unit. A buyer sets a maximum cost; a fill that would leave free KIRA is rejected.",
+      "Each partial fill is priced from the listing's remaining tokens and remaining price, rounded up in the smallest demoUSDC unit. A buyer sets a maximum cost; a fill that would leave free tokens is rejected.",
   },
 ] as const;
 
-export default function TokenModelPage() {
+export default function StakeholderTokensPage() {
   return (
     <article className="token-model">
       <header className="page-shell token-intro">
@@ -77,12 +109,12 @@ export default function TokenModelPage() {
           <span className="token-kicker">
             Stakeholder Tokens / the demo model
           </span>
-          <h1>KIRA shows where a round goes next.</h1>
+          <h1>From a public round to a token you can hold.</h1>
           <p>
-            A startup round ends. Some bids are accepted, others are returned.
-            KIRA is the demo token a winner can claim for their accepted amount.
-            If its holder later lists it, another eligible wallet can buy it.
-            Here is that whole journey, in one place.
+            A startup opens a round to the public. People place test bids under
+            the same rules. When the round ends, winners can claim demo tokens
+            for the part of their bid that counts. Those tokens can be held or
+            offered to another eligible wallet. Here is the whole path.
           </p>
           <div className="token-intro-actions">
             <a href="#example-round" className="token-primary-link">
@@ -95,16 +127,16 @@ export default function TokenModelPage() {
         </div>
         <div
           className="token-hero-picture"
-          aria-label="KIRA token moves from a round to a wallet and then a buyer"
+          aria-label="Demo token moves from a round to a wallet and then a buyer"
         >
           <div className="token-hero-picture-top">
-            <span>SAMA / KIRA</span>
+            <span>SAMA / STAKEHOLDER TOKENS</span>
             <span>ARBITRUM SEPOLIA</span>
           </div>
           <div className="token-hero-stage">
             <div className="token-hero-ring token-hero-ring-outer" />
             <div className="token-hero-ring token-hero-ring-inner" />
-            <div className="token-hero-coin">K</div>
+            <div className="token-hero-coin">S</div>
             <div className="token-hero-connector token-hero-connector-left" />
             <div className="token-hero-connector token-hero-connector-right" />
             <span className="token-hero-label token-hero-label-left">
@@ -116,7 +148,7 @@ export default function TokenModelPage() {
           </div>
           <div className="token-hero-picture-bottom">
             <strong>1,000,000</strong>
-            <span>Maximum demo KIRA. Created only when winners claim.</span>
+            <span>Maximum demo tokens. Created only when winners claim.</span>
           </div>
         </div>
       </header>
@@ -178,17 +210,41 @@ export default function TokenModelPage() {
                 <span className="token-ledger-dot token-ledger-dot-kira" />
                 <span>Token claim</span>
                 <strong>{formatWholeUnits(exampleKira)}</strong>
-                <small>KIRA can be claimed separately</small>
+                <small>demo tokens can be claimed separately</small>
               </div>
             </div>
             <p className="token-ledger-note">
-              The refund and KIRA require separate transactions. This is a
-              fictional testnet round using valueless demo assets.
+              The refund and token claim require separate transactions. The
+              token used in this fictional testnet round is named KIRA; it has
+              no legal or monetary value.
             </p>
           </div>
         </section>
 
         <TokenJourney />
+
+        <section className="token-people" aria-labelledby="token-people-title">
+          <div className="token-section-lead">
+            <span className="token-kicker">Who does what</span>
+            <h2 id="token-people-title">
+              One round. Different responsibilities.
+            </h2>
+            <p>
+              The token does not replace the people around a raise. It makes the
+              demo&apos;s allocation and later transfers visible, while each
+              participant still has a distinct action to take.
+            </p>
+          </div>
+          <div className="token-person-list">
+            {participants.map((participant) => (
+              <div className="token-person" key={participant.role}>
+                <h3>{participant.role}</h3>
+                <p>{participant.action}</p>
+                <p>{participant.after}</p>
+              </div>
+            ))}
+          </div>
+        </section>
 
         <section
           className="token-outcomes"
@@ -247,9 +303,9 @@ export default function TokenModelPage() {
           </div>
           <div>
             <p>
-              KIRA can move between eligible wallets in this fictional demo.
-              Holding it does not give you legal shares, dividends, votes, exit
-              proceeds, or a guaranteed buyer.
+              The demo token can move between eligible wallets. Holding it does
+              not give you legal shares, dividends, votes, exit proceeds, or a
+              guaranteed buyer. This prototype has no SPV or SAFE backing.
             </p>
             <div className="token-close-actions">
               <Link href="/market/kira">
