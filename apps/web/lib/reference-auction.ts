@@ -49,3 +49,11 @@ export const referenceAuction = {
 export function formatWholeUnits(value: bigint) {
   return value.toLocaleString("en-US");
 }
+
+// Mirrors KiranaOffering.tokenEntitlementOf for the published demo fixture.
+export function referenceKiraEntitlement(accepted: bigint) {
+  if (accepted === 0n) return 0n;
+  return (
+    (accepted * referenceAuction.offeredKira) / referenceAuction.acceptedTotal
+  );
+}

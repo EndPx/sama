@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { referenceAuction, referenceBids } from "./reference-auction";
+import {
+  referenceAuction,
+  referenceBids,
+  referenceKiraEntitlement,
+} from "./reference-auction";
 
 describe("public reference auction", () => {
   it("conserves all five deposits and the published 4.8M result", () => {
@@ -35,5 +39,19 @@ describe("public reference auction", () => {
       accepted: 0n,
       refund: 100_000n,
     });
+  });
+
+  it("derives the token example from accepted capital, not the full deposit", () => {
+    const marginalBid = referenceBids[3];
+    const losingBid = referenceBids[4];
+
+    expect(referenceKiraEntitlement(marginalBid.accepted)).toBe(62_500n);
+    expect(referenceKiraEntitlement(losingBid.accepted)).toBe(0n);
+    expect(
+      referenceBids.reduce(
+        (sum, bid) => sum + referenceKiraEntitlement(bid.accepted),
+        0n,
+      ),
+    ).toBeLessThanOrEqual(referenceAuction.offeredKira);
   });
 });
