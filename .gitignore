@@ -1,9 +1,13 @@
 # Dependencies and build outputs
 node_modules/
 .next/
+.next-dev/
+.next-acceptance/
+apps/web/next-env.d.ts
 dist/
 build/
 coverage/
+*.tsbuildinfo
 out/
 cache/
 broadcast/

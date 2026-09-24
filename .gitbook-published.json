@@ -1,0 +1,19 @@
+{
+  "url": "https://sama-3.gitbook.io/sama-product-and-protocol/",
+  "organizationId": "LK8smR7zW0i2kkjHonHg",
+  "siteId": "site_KxqG4",
+  "spaceId": "ZMNGTlCkEDGD8b1RV3Vc",
+  "publication": "Space-level Git Sync",
+  "repository": "EndPx/sama",
+  "branch": "feat/p0-vertical-slice",
+  "directory": "docs",
+  "initialSyncSourceCommit": "0b28c864d7c77551c86d8dc52be14a97962cccf9",
+  "verifiedAt": "2026-09-23",
+  "verifiedPages": [
+    "https://sama-3.gitbook.io/sama-product-and-protocol/",
+    "https://sama-3.gitbook.io/sama-product-and-protocol/explore-the-demo/auction_walkthrough",
+    "https://sama-3.gitbook.io/sama-product-and-protocol/explore-the-demo/token_model",
+    "https://sama-3.gitbook.io/sama-product-and-protocol/build-and-verify/release_status",
+    "https://sama-3.gitbook.io/sama-product-and-protocol/hackathon-review/judges_guide"
+  ]
+}

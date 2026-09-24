@@ -1,0 +1,6 @@
+.next/
+.next-dev/
+.next-acceptance/
+node_modules/
+coverage/
+*.tsbuildinfo

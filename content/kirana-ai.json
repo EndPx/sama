@@ -1,0 +1,11 @@
+{
+  "slug": "kirana-ai",
+  "name": "Kirana AI",
+  "tagline": "Simulated Indonesian AI infrastructure opportunity.",
+  "disclaimer": "KIRA is a testnet-only simulated equity-linked demo token. It creates no legal or economic right.",
+  "offeredAllocationPercent": 10,
+  "offeredKira": "1000000",
+  "fdvFloorUsdc": "4000000",
+  "fdvCeilingUsdc": "6000000",
+  "minimumRaiseUsdc": "400000"
+}

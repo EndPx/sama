@@ -1,6 +1,6 @@
 # Implementation Plan
 
-Status: approved scope, implementation pending.
+Status: contract and marketplace baselines reviewed; security tooling passes at `af34ea7`. Investor application, deployment, and public documentation are in progress. The project owner handles the submission portal.
 
 ## P0 outcome
 
@@ -32,11 +32,13 @@ Exit gate: all conservation properties pass and the reference case clears at 4.8
 ### 4. KIRA and marketplace
 
 - Add capped restricted KIRA.
-- Add escrowed listings, cancellation, partial/full purchase, and atomic settlement.
+- Implement `docs/MARKETPLACE_SPEC.md`: escrowed listings, seller-controlled cancellation, deterministic partial/full purchase, and atomic settlement.
 
-Exit gate: two local wallets end with the expected USDC and KIRA balances with no stranded assets.
+Exit gate: unit, fuzz, and stateful marketplace conservation tests pass, and two local buyers end with the expected USDC and KIRA balances with no stranded protocol-accounted assets.
 
 ### 5. Security gate
+
+Baseline exit gate passed: 39 contract tests, Slither with no High findings, secret scan, and bounded settlement gas. See [security evidence](SECURITY_EVIDENCE.md). Repeat this gate whenever contracts or trust boundaries change.
 
 - Run Slither, coverage review, gas snapshots, and maximum-bid settlement.
 - Update `docs/THREAT_MODEL.md` with every accepted limitation.
@@ -48,9 +50,13 @@ Exit gate: no unresolved critical/high finding and settlement fits safely within
 - Build landing, Explore, Kirana detail, Privy onboarding, network/faucet guidance, approve/commit/reveal, settlement/claim, portfolio, and explorer flows.
 - Persist and export reveal material without sending the nonce to a server.
 
+Current implementation: original landing and shadcn primitives; wallet-bound receipt handling; block-coherent contract reads; exact-unit forms; persisted/exported reveal backups with validated recovery from corrupt local storage; offering, portfolio, and marketplace transaction panels outside the demo route; five educational routes. At the owner's request, `/demo` now enters a mock-only public product preview directly, with Overview, Round, Portfolio, and Marketplace views. The example round and portfolio derive from the locked five-bid fixture; illustrative marketplace listings support a local quote calculator with contract-equivalent ceiling rounding. The demo mounts no wallet provider or transaction panels, including when a deployment is configured. It never presents sample balances or listings as live data. Login testing is deferred. This visual iteration is not the interactive browser exit gate: restoring wallet-bound transactions to the judged path, completing the real lifecycle, and proving a public deployment remain separate work. The scripted Anvil fixture and safe manifest importer are available, but they do not satisfy that gate.
+
 Exit gate: a user completes the local lifecycle without developer tools and every transaction has honest intermediate states.
 
 ### 7. Testnet proof
+
+Use the owner-approved test currency described in [ADR 0001](decisions/0001-testnet-demo-currency.md), the existing dedicated deployment keystore, and chain ID 421614. Keep public deployment addresses separate from local fixture addresses.
 
 - Deploy and verify on Arbitrum Sepolia.
 - Fund and prepare two interactive wallets plus five seeded bidders.
@@ -73,4 +79,3 @@ Exit gate: an uninvolved reviewer can understand, reproduce, and verify the subm
 - lightweight analytics.
 
 P1 work stops immediately if it risks the P0 path, security evidence, or submission deadline.
-

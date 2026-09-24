@@ -1,5 +1,7 @@
 # Submission Checklist
 
+The project owner submits the HackQuest portal entry. These checks prepare verifiable project material; they do not claim registration, submission, eligibility approval, or a prize.
+
 ## HackQuest portal
 
 - [ ] Team is registered before the displayed registration deadline.
@@ -13,7 +15,7 @@
 ## Product evidence
 
 - [ ] Production URL works in a logged-out browser.
-- [ ] Arbitrum Sepolia chain ID and Circle test USDC address are correct.
+- [ ] Arbitrum Sepolia chain ID and dedicated demoUSDC address match the published deployment manifest; no page labels demoUSDC as Circle USDC.
 - [ ] Contracts are verified and match the submission commit.
 - [ ] Commit, reveal, settle, claim, listing, and purchase transactions are linked.
 - [ ] Two-wallet acceptance flow passes from the production interface.
@@ -36,4 +38,3 @@
 - [ ] Fallback video is available offline.
 - [ ] Demo wallets are isolated testnet identities.
 - [ ] No private browser tab, notification, API key, or wallet recovery material appears in the recording.
-
