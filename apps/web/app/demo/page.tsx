@@ -6,7 +6,7 @@ import "./demo.css";
 export const metadata: Metadata = {
   title: "Open the SAMA demo",
   description:
-    "Sign in to explore the SAMA testnet round, your demo portfolio, and the marketplace.",
+    "Explore the SAMA round workspace, reference auction, portfolio, and marketplace in preview mode.",
 };
 
 export default function DemoPage() {

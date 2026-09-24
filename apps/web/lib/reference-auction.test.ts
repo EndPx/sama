@@ -7,6 +7,10 @@ import {
 
 describe("public reference auction", () => {
   it("conserves all five deposits and the published 4.8M result", () => {
+    expect(referenceAuction.allocationPercent).toBe(10n);
+    expect(referenceAuction.fdvFloor).toBe(4_000_000n);
+    expect(referenceAuction.fdvCeiling).toBe(6_000_000n);
+    expect(referenceAuction.minimumRaise).toBe(400_000n);
     expect(referenceBids.map((bid) => bid.bidder)).toEqual([
       "E",
       "D",

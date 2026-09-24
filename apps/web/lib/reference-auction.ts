@@ -40,6 +40,9 @@ export const referenceBids = [
 export const referenceAuction = {
   offeredKira: 1_000_000n,
   allocationPercent: 10n,
+  fdvFloor: 4_000_000n,
+  fdvCeiling: 6_000_000n,
+  minimumRaise: 400_000n,
   clearingFdv: 4_800_000n,
   depositTotal: 700_000n,
   acceptedTotal: 480_000n,

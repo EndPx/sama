@@ -6,50 +6,26 @@ import {
   fireEvent,
   render,
   screen,
-  waitFor,
+  within,
 } from "@testing-library/react";
 
 const mock = vi.hoisted(() => ({
-  ready: true,
-  authenticated: false,
-  address: "0x00000000000000000000000000000000000000a1",
-  emailStatus: "idle",
-  sendCode: vi.fn(),
-  loginWithCode: vi.fn(),
-  initOAuth: vi.fn(),
-  login: vi.fn(),
-  logout: vi.fn(),
-}));
-
-vi.mock("@privy-io/react-auth", () => ({
-  usePrivy: () => ({
-    ready: mock.ready,
-    authenticated: mock.authenticated,
-    logout: mock.logout,
-  }),
-  useLogin: () => ({ login: mock.login }),
-  useLoginWithEmail: () => ({
-    sendCode: mock.sendCode,
-    loginWithCode: mock.loginWithCode,
-    state: { status: mock.emailStatus },
-  }),
-  useLoginWithOAuth: () => ({ initOAuth: mock.initOAuth, loading: false }),
+  address: undefined as string | undefined,
+  configured: false,
 }));
 
 vi.mock("wagmi", () => ({
   useAccount: () => ({ address: mock.address }),
-  useConnect: () => ({ connectors: [], connect: vi.fn(), isPending: false }),
-  useDisconnect: () => ({ disconnect: vi.fn() }),
 }));
 
 vi.mock("@/lib/config", () => ({
+  get configured() {
+    return mock.configured;
+  },
   docsUrl: "https://docs.example.test/",
-  localMode: false,
   networkBadge: "Arbitrum Sepolia Testnet",
-  privyAppId: "public-test-app-id",
 }));
 
-vi.mock("@/components/wallet/providers", () => ({ usePrivyOnboarding: true }));
 vi.mock("@/components/offering-panel", () => ({
   OfferingPanel: ({ portfolio }: { portfolio?: boolean }) =>
     portfolio ? "Portfolio transactions" : "Round transactions",
@@ -61,148 +37,83 @@ vi.mock("@/components/marketplace-panel", () => ({
 import { DemoEntry } from "./demo-entry";
 
 beforeEach(() => {
-  mock.ready = true;
-  mock.authenticated = false;
-  mock.address = "0x00000000000000000000000000000000000000a1";
-  mock.emailStatus = "idle";
-  vi.clearAllMocks();
-  mock.sendCode.mockResolvedValue(undefined);
-  mock.loginWithCode.mockResolvedValue(undefined);
-  mock.initOAuth.mockResolvedValue(undefined);
-  mock.logout.mockResolvedValue(undefined);
+  mock.address = undefined;
+  mock.configured = false;
 });
-
 afterEach(cleanup);
 
-describe("demo access", () => {
-  it("shows sign in options without mounting transaction panels before authentication", () => {
+describe("direct demo preview", () => {
+  it("opens the product without login or a connected wallet", () => {
     render(<DemoEntry />);
 
     expect(
-      screen.getByRole("heading", { name: "Sign in to SAMA." }),
-    ).toBeTruthy();
-    expect(
-      screen.getByRole("button", { name: "Continue with Google" }),
-    ).toBeTruthy();
-    expect(
-      screen.getByRole("button", { name: "Continue with Apple" }),
-    ).toBeTruthy();
-    expect(
-      screen.getByRole("button", { name: "Continue with a wallet" }),
-    ).toBeTruthy();
-    expect(screen.queryByText("Round transactions")).toBeNull();
-    expect(screen.queryByText("Marketplace transactions")).toBeNull();
-  });
-
-  it("does not show either sign in actions or workspace while Privy is initializing", () => {
-    mock.ready = false;
-    render(<DemoEntry />);
-
-    expect(screen.getByRole("status")).toBeTruthy();
-    expect(
-      screen.queryByRole("button", { name: "Continue with Google" }),
-    ).toBeNull();
-    expect(screen.queryByText("Round transactions")).toBeNull();
-  });
-
-  it("requests an email code and passes the entered code to Privy", async () => {
-    render(<DemoEntry />);
-    fireEvent.change(screen.getByLabelText("Email address"), {
-      target: { value: "reader@example.com" },
-    });
-    fireEvent.click(
-      screen.getByRole("button", { name: "Continue with email" }),
-    );
-
-    await waitFor(() =>
-      expect(mock.sendCode).toHaveBeenCalledWith({
-        email: "reader@example.com",
+      screen.getByRole("heading", {
+        name: "A clearer way to join a public round.",
       }),
-    );
-    expect(
-      screen.getByRole("heading", { name: "Check your inbox." }),
     ).toBeTruthy();
-    fireEvent.change(screen.getByLabelText("Email code"), {
-      target: { value: "123456" },
-    });
-    fireEvent.click(screen.getByRole("button", { name: "Continue to demo" }));
-    await waitFor(() =>
-      expect(mock.loginWithCode).toHaveBeenCalledWith({ code: "123456" }),
-    );
+    expect(screen.getByText("No wallet connected")).toBeTruthy();
+    expect(screen.getByText("Fixed example, not live activity")).toBeTruthy();
+    expect(screen.queryByRole("button", { name: /sign in/i })).toBeNull();
     expect(screen.queryByText("Round transactions")).toBeNull();
   });
 
-  it("shows a recoverable error if email delivery fails", async () => {
-    mock.sendCode.mockRejectedValueOnce(new Error("delivery failed"));
+  it("explains exact accepted and refundable values for a selected reference bid", () => {
     render(<DemoEntry />);
-    fireEvent.change(screen.getByLabelText("Email address"), {
-      target: { value: "reader@example.com" },
+
+    const detail = screen.getByRole("complementary", {
+      name: "Selected reference bid",
     });
-    fireEvent.click(
-      screen.getByRole("button", { name: "Continue with email" }),
-    );
+    expect(within(detail).getByText("30,000 demoUSDC")).toBeTruthy();
+    expect(within(detail).getByText("120,000 demoUSDC")).toBeTruthy();
 
-    expect(await screen.findByRole("alert")).toHaveProperty(
-      "textContent",
-      "We could not send a code. Check your email address and try again.",
-    );
+    fireEvent.click(screen.getByRole("button", { name: /Bid A/i }));
     expect(
-      screen
-        .getByRole("button", { name: "Continue with email" })
-        .hasAttribute("disabled"),
-    ).toBe(false);
+      within(detail).getByText("Accepted").parentElement?.textContent,
+    ).toContain("0 demoUSDC");
+    expect(
+      within(detail).getByText("Refundable").parentElement?.textContent,
+    ).toContain("100,000 demoUSDC");
+    expect(
+      within(detail).getByText(/full deposit can be claimed back/i),
+    ).toBeTruthy();
   });
 
-  it.each(["google", "apple"] as const)(
-    "starts %s sign in using Privy OAuth",
-    async (provider) => {
-      render(<DemoEntry />);
-      const label = provider === "google" ? "Google" : "Apple";
-      fireEvent.click(
-        screen.getByRole("button", { name: `Continue with ${label}` }),
-      );
-
-      await waitFor(() =>
-        expect(mock.initOAuth).toHaveBeenCalledWith({ provider }),
-      );
-      await waitFor(() =>
-        expect(
-          screen
-            .getByRole("button", { name: `Continue with ${label}` })
-            .hasAttribute("disabled"),
-        ).toBe(false),
-      );
-    },
-  );
-
-  it("opens Privy wallet sign in without bypassing authentication", () => {
+  it("keeps preview views reachable without fabricating transaction controls", () => {
     render(<DemoEntry />);
-    fireEvent.click(
-      screen.getByRole("button", { name: "Continue with a wallet" }),
-    );
 
-    expect(mock.login).toHaveBeenCalledWith({ loginMethods: ["wallet"] });
+    fireEvent.click(screen.getByRole("button", { name: "Explore the round" }));
+    expect(screen.getByText("The round will open here.")).toBeTruthy();
+    const terms = screen.getByRole("region", { name: "Reference offer terms" });
+    expect(within(terms).getByText("10%")).toBeTruthy();
+    expect(within(terms).getByText("4M to 6M")).toBeTruthy();
+    expect(within(terms).getByText("400,000")).toBeTruthy();
+    expect(
+      screen.getByText(/Public transactions are not available yet/i),
+    ).toBeTruthy();
     expect(screen.queryByText("Round transactions")).toBeNull();
-  });
 
-  it("keeps the existing round, portfolio, and marketplace inside the authenticated workspace", async () => {
-    mock.authenticated = true;
-    render(<DemoEntry />);
+    fireEvent.click(screen.getByRole("button", { name: "Portfolio" }));
+    expect(screen.getByText("Your activity belongs here.")).toBeTruthy();
 
-    expect(await screen.findByText("Round transactions")).toBeTruthy();
-    expect(
-      screen.queryByRole("heading", { name: "Sign in to SAMA." }),
-    ).toBeNull();
-    fireEvent.click(screen.getByRole("button", { name: "My portfolio" }));
-    expect(await screen.findByText("Portfolio transactions")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Marketplace" }));
-    expect(await screen.findByText("Marketplace transactions")).toBeTruthy();
+    expect(screen.getByText("The marketplace follows the round.")).toBeTruthy();
     expect(
       screen
         .getByRole("button", { name: "Marketplace" })
         .getAttribute("aria-pressed"),
     ).toBe("true");
-    fireEvent.click(screen.getByRole("button", { name: "Sign out" }));
-    expect(mock.logout).toHaveBeenCalledOnce();
+  });
+
+  it("mounts the existing transaction panels when a deployment is configured", async () => {
+    mock.configured = true;
+    render(<DemoEntry />);
+
+    fireEvent.click(screen.getByRole("button", { name: "The round" }));
+    expect(await screen.findByText("Round transactions")).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Portfolio" }));
+    expect(await screen.findByText("Portfolio transactions")).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Marketplace" }));
+    expect(await screen.findByText("Marketplace transactions")).toBeTruthy();
+    expect(screen.queryByText("The round will open here.")).toBeNull();
   });
 });
