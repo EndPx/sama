@@ -10,10 +10,10 @@ import { currentNetwork } from "@/lib/network-label";
 
 export const metadata: Metadata = {
   title: {
-    default: "SAMA — A price you can trace",
+    default: "SAMA — Startup funding, in the open",
     template: "%s | SAMA",
   },
-  description: `Discover a simulated startup offering, set your valuation limit, and follow every allocation on ${currentNetwork.name}. Demo only; no real equity or monetary value.`,
+  description: `Explore a public startup round, place a test bid, and see one shared result on ${currentNetwork.name}. Demo only; no real equity or monetary value.`,
   icons: { icon: "/brand/sama-mark.png" },
 };
 export default function RootLayout({
@@ -37,7 +37,9 @@ export default function RootLayout({
               <Link href="/founders">Founders</Link>
               <Link href="/token-model">Token model</Link>
               <Link href="/auction">Auction</Link>
-              <Link href="/docs/getting-started">Start here</Link>
+              <a href="https://sama-3.gitbook.io/sama-product-and-protocol/">
+                Docs
+              </a>
             </nav>
             <Button variant="outline" asChild>
               <Link href="/startups/kirana-ai#participate">
@@ -62,7 +64,7 @@ export default function RootLayout({
               className="footer-links"
               aria-label="Prototype and documentation"
             >
-              <Link href="/explore">Explore Kirana AI</Link>
+              <Link href="/explore">Explore the demo</Link>
               <Link href="/portfolio">Portfolio</Link>
               <Link href="/market/kira">Marketplace</Link>
               <a href="https://sama-3.gitbook.io/sama-product-and-protocol/">
@@ -70,9 +72,9 @@ export default function RootLayout({
               </a>
             </nav>
             <p>
-              Kirana AI is fictional. KIRA is a simulated equity-linked demo
-              token with no legal or economic rights. demoUSDC has no monetary
-              value. No guaranteed returns or liquidity.
+              The startup in this demo is fictional. KIRA is a simulated
+              equity-linked token with no legal or economic rights. demoUSDC has
+              no monetary value. No guaranteed returns or liquidity.
             </p>
           </div>
         </footer>

@@ -13,7 +13,7 @@ export default function GettingStartedPage() {
   return (
     <>
       <EducationHero
-        eyebrow="Start here / 05"
+        eyebrow="Docs / 05"
         title={
           <>
             Your first visit, <em>step by step.</em>
