@@ -70,9 +70,10 @@ export default function InvestorsPage() {
             <p className="eyebrow">Auction record</p>
             <h3>See where your deposit went.</h3>
             <p>
-              Compare your limit with the round&apos;s result. The example accepts
-              480,000 of 700,000 deposited demoUSDC; the rest is claimable back.
-              No bidder needs to guess where their test currency went.
+              Compare your limit with the round&apos;s result. The example
+              accepts 480,000 of 700,000 deposited demoUSDC; the rest is
+              claimable back. No bidder needs to guess where their test currency
+              went.
             </p>
             <Link href="/auction" className="text-link">
               Walk through the numbers

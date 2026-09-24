@@ -70,9 +70,9 @@ export default function GettingStartedPage() {
             <span>02 / Commit</span>
             <h3>Decide your limit and save it</h3>
             <p>
-              Read the demo&apos;s fixed terms. Choose a deposit and maximum FDV from
-              4M to 6M, export the private reveal backup, then approve and sign
-              the commitment. A bid cannot be edited after it is committed.
+              Read the demo&apos;s fixed terms. Choose a deposit and maximum FDV
+              from 4M to 6M, export the private reveal backup, then approve and
+              sign the commitment. A bid cannot be edited after it is committed.
             </p>
           </div>
           <div className="education-row">
